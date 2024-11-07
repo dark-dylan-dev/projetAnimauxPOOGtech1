@@ -7,3 +7,5 @@
    - Julien RODRIGUES
    - Loan RAVIN
    - Lucas MARCUCCI
+## Ressources :
+ - Le cours incroyable de William RAO FERNANDES
