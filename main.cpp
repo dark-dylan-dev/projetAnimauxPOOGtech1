@@ -30,6 +30,12 @@ public:
 			cout << nom << " est mort" << endl;
 		}
 	}
+
+	void attaquer(Animal& cible)
+	{
+		cout << nom << " attaque " << cible.getNom() << endl;
+		cible.mourir()
+	}
 };
 
 class Loup : public Animal 
