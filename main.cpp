@@ -15,12 +15,13 @@ public:
 };
 
 class Animal {
-public:
+private:
 	string nom;
 	string espece;
 	string regime;
 	bool enVie;
 	bool aFaim;
+public:
 
 	Animal(string nom, string espece, string regime, bool enVie, bool aFaim) : nom(nom), espece(espece), regime(regime), enVie(enVie), aFaim(aFaim) {}
 
@@ -37,6 +38,14 @@ public:
 		cout << nom << " attaque " << cible.getNom() << endl;
 		cible.mourir()
 	}
+
+	// GETTERS
+
+	string getNom() { return nom; }
+	string getEspece() { return espece; }
+	string getRegime() { return regime; }
+	bool getEnVie() { return enVie; }
+	bool getAFaim() { return aFaim; }
 };
 
 class Loup : public Animal 
