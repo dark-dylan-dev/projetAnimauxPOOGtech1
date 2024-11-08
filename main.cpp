@@ -23,12 +23,16 @@ public:
 
 	Animal(string nom, string espece, string regime, bool enVie, bool aFaim) : nom(n), espece(e), regime(r), enVie(ev), aFaim(af) {}
 
-	virtual void mourir() = 0;
+	virtual void mourir()
+	{
+		if enVie = false
+	}
 };
 
-class Loup : public Animal {
+class Loup : public Animal 
+{
 public:
-	Loup() : Animal("Roger", "Loup", "carivore", true, false) {}
+	Loup() : Animal("Loup noir", "Loup", "carivore", true, false) {}
 };
 
 int main()
