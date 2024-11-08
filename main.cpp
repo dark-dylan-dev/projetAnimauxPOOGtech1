@@ -1,6 +1,7 @@
 #include <iostream>
 #include <vector>
 #include <ctime>
+
 using namespace std;
 
 bool jour = true;
@@ -21,7 +22,7 @@ public:
 	bool enVie;
 	bool aFaim;
 
-	Animal(string nom, string espece, string regime, bool enVie, bool aFaim) : nom(n), espece(e), regime(r), enVie(ev), aFaim(af) {}
+	Animal(string nom, string espece, string regime, bool enVie, bool aFaim) : nom(nom), espece(espece), regime(regime), enVie(enVie), aFaim(aFaim) {}
 
 	virtual void mourir()
 	{
@@ -46,5 +47,5 @@ public:
 
 int main()
 {
-
+	cout << "test 2";
 }
