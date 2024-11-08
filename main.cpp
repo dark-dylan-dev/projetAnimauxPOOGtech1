@@ -40,5 +40,5 @@ public:
 
 int main()
 {
-
+	cout << "test";
 }
