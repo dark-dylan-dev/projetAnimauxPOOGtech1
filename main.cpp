@@ -25,7 +25,10 @@ public:
 
 	virtual void mourir()
 	{
-		if enVie = false
+		if (enVie = false)
+		{
+			cout << nom << " est mort" << endl;
+		}
 	}
 };
 
