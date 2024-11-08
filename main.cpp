@@ -27,24 +27,10 @@ public:
 
 class Loup : public Animal{
 public:
-	Loup() : Animal("Roger", "Loup", "carivore", true, false, false) {};
-
-	void attaquer(Animal& cible) override {
-		//fonction d'attaque
-	}
-	void mourir() override {
-		//fonction de mort
-	}
+	Loup() : Animal("Roger", "Loup", "carivore", true, false, false) {}
 };
 
-class environement {
-private:
-	std::vector<Animal*> nourritures;
-};
-
-
-
-int main() {
-	pass
+int main() 
+{
+	
 }
-
