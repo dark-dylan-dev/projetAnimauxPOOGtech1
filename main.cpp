@@ -34,7 +34,7 @@ public:
 	void attaquer(Animal& cible)
 	{
 		cout << nom << " attaque " << cible.getNom() << endl;
-		cible.mourir()
+        cible.mourir();
 	}
 
 	// GETTERS
@@ -62,7 +62,7 @@ public:
     void Init(vector<Animal>& animaux) {
         int nombreDAnimaux(0);
         cout << "Combien d'animaux voulez-vous creer dans votre partie (entre 3 et 25) ? > ";
-        cin >> numberDAnimaux;
+        cin >> nombreDAnimaux;
         while (cin.fail() || nombreDAnimaux < 3 || nombreDAnimaux > 25) {
             cin.clear();
             cin.ignore(9999, '\n');
@@ -74,7 +74,7 @@ public:
         int choix;
         string noms[25] = { "exemple1", "exemple2", "exemple3", "exemple4", "exemple5","exemple6", "exemple7", "exemple8", "exemple9", "exemple10", "exemple11", "exemple12", "exemple13", "exemple14", "exemple15", "exemple16", "exemple17", "exemple18", "exemple19", "exemple20", "exemple21", "exemple22", "exemple23", "exemple24", "exemple25" };
         string nomAnimal;
-        for (int i = 0; i < numberOfCharacters; ++i) {
+        for (int i = 0; i < nombreDAnimaux; ++i) {
             cout << "Quel espece voulez-vous donner a votre nouvel animal ?" << endl;
             for (int i = 0; i < LIMITE_ANIMAUX; ++i) {
                 cout << " - " << i+1 << ". " << noms[i] << endl;
@@ -117,7 +117,7 @@ int main()
 	vector<Animal> animaux;
 
     Jeu jeu;
-    jeu.Init();
+    jeu.Init(animaux);
 
     return 0;
 }
