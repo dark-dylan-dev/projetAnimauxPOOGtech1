@@ -14,16 +14,18 @@ class Joueur
 };
 
 class Animal {
-protected:
+private:
     std::string nom;
     std::string espece;
     std::string regime;
     bool aFaim;
     bool enVie;
+
+protected:
     int x, y;
 
 public:
-    Animal(const std::string& nom, const std::string& espece, const std::string& regime)
+    Animal(const string& nom, const string& espece, const string& regime)
         : nom(nom), espece(espece), regime(regime), aFaim(false), enVie(true), x(0), y(0) {
         x = rand() % 100;
         y = rand() % 100;
@@ -37,30 +39,30 @@ public:
 
     void setAFaim(bool faim) { aFaim = faim; }
 
-    virtual void deplacement() {
+    virtual void deplacement() { // Déplacement en [-1;1] par défaut
         x += (rand() % 3) - 1;
         y += (rand() % 3) - 1;
     }
 
-    double distanceAvec(const Animal& autre) const {
+    float distanceAvec(const Animal& autre) const {
         int dx = x - autre.x;
         int dy = y - autre.y;
-        return std::sqrt(dx * dx + dy * dy);
+        return (float)sqrt(dx * dx + dy * dy);
     }
 
     virtual void interagir(Animal& autre) {
         if (regime == "predateur" && autre.getRegime() == "proie" && aFaim) {
-            if (distanceAvec(autre) < 50.0) {
+            if (distanceAvec(autre) < 5.0f) {
                 std::cout << nom << " chasse " << autre.getNom() << "!\n";
             }
         }
         else if (regime == "proie" && autre.getRegime() == "predateur") {
-            if (distanceAvec(autre) < 50.0) {
+            if (distanceAvec(autre) < 5.0f) {
                 std::cout << nom << " essaie de fuir " << autre.getNom() << "!\n";
                 x += (x - autre.x);
                 y += (y - autre.y);
             }
-            else if (distanceAvec(autre) < 1.0) {
+            else if (distanceAvec(autre) < 1.0f) {
                 enVie = false;
                 std::cout << nom << " est mort\n";
             }
@@ -131,7 +133,7 @@ public:
         }
         int choix;
         cout << "---" << endl << "Les espces apres Loup sont juste des exmples pour l'instant" << endl << "---" << endl;
-        string noms[25] = { "Loup", "Lapin", "Biche", "Ours", "espece5","espece6", "espece7", "espece8", "espece9", "espece10", "espece11", "espece12", "espece13", "espece14", "espece15", "espece16", "espece17", "espece18", "espece19", "espece20", "espece21", "espece22", "espece23", "espece24", "espece25" };
+        string noms[25] = { "Loup", "Lapin", "Ours", "Biche", "espece5","espece6", "espece7", "espece8", "espece9", "espece10", "espece11", "espece12", "espece13", "espece14", "espece15", "espece16", "espece17", "espece18", "espece19", "espece20", "espece21", "espece22", "espece23", "espece24", "espece25" };
         string nomAnimal;
         for (int i = 0; i < nombreDAnimaux; ++i) {
             cout << "Quel espece voulez-vous donner a votre nouvel animal ?" << endl;
