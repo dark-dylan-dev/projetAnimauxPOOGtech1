@@ -135,6 +135,196 @@ public:
     }
 };
 
+class Cheval : public Animal {
+public:
+    Cheval(const std::string& nom) : Animal(nom, "Cheval", "proie") {}
+
+    void deplacement() override {
+        x += (rand() % 10) - 2;
+        y += (rand() % 10) - 2;
+    }
+};
+
+class Lynx : public Animal {
+public:
+    Lynx(const std::string& nom) : Animal(nom, "Lynx", "predateur") {}
+
+    void deplacement() override {
+        x += (rand() % 7) - 1;
+        y += (rand() % 7) - 1;
+    }
+};
+
+class Panda : public Animal {
+public:
+    Panda(const std::string& nom) : Animal(nom, "Panda", "proie") {}
+
+    void deplacement() override {
+        x += (rand() % 3) - 2;
+        y += (rand() % 3) - 2;
+    }
+};
+
+class Tigre : public Animal {
+public:
+    Tigre(const std::string& nom) : Animal(nom, "Tigre", "predateur") {}
+
+    void deplacement() override {
+        x += (rand() % 8) - 1;
+        y += (rand() % 8) - 1;
+    }
+};
+
+class Koala : public Animal {
+public:
+    Koala(const std::string& nom) : Animal(nom, "Koala", "proie") {}
+
+    void deplacement() override {
+        x += (rand() % 3) - 2;
+        y += (rand() % 3) - 2;
+    }
+};
+
+class Ecureuil : public Animal {
+public:
+    Ecureuil(const std::string& nom) : Animal(nom, "Ecureuil", "proie") {}
+
+    void deplacement() override {
+        x += (rand() % 6) - 2;
+        y += (rand() % 6) - 2;
+    }
+};
+
+class Puma : public Animal {
+public:
+    Puma(const std::string& nom) : Animal(nom, "Puma", "predateur") {}
+
+    void deplacement() override {
+        x += (rand() % 6) - 1;
+        y += (rand() % 6) - 1;
+    }
+};
+
+class Coyote : public Animal {
+public:
+    Coyote(const std::string& nom) : Animal(nom, "Coyote", "predateur") {}
+
+    void deplacement() override {
+        x += (rand() % 6) - 1;
+        y += (rand() % 6) - 1;
+    }
+};
+
+class Rat : public Animal {
+public:
+    Rat(const std::string& nom) : Animal(nom, "Rat", "proie") {}
+
+    void deplacement() override {
+        x += (rand() % 6) - 2;
+        y += (rand() % 6) - 2;
+    }
+};
+
+class Bison : public Animal {
+public:
+    Bison(const std::string& nom) : Animal(nom, "Bison", "predateur") {}
+
+    void deplacement() override {
+        x += (rand() % 3) - 1;
+        y += (rand() % 3) - 1;
+    }
+};
+
+class Lama : public Animal {
+public:
+    Lama(const std::string& nom) : Animal(nom, "Lama", "proie") {}
+
+    void deplacement() override {
+        x += (rand() % 5) - 2;
+        y += (rand() % 5) - 2;
+    }
+};
+
+class Aigle : public Animal {
+public:
+    Aigle(const std::string& nom) : Animal(nom, "Aigle", "predateur") {}
+
+    void deplacement() override {
+        x += (rand() % 7) - 1;
+        y += (rand() % 7) - 1;
+    }
+};
+
+class Elephant : public Animal {
+public:
+    Elephant(const std::string& nom) : Animal(nom, "Elephant", "proie") {}
+
+    void deplacement() override {
+        x += (rand() % 4) - 2;
+        y += (rand() % 4) - 2;
+    }
+};
+
+class Fennec : public Animal {
+public:
+    Fennec(const std::string& nom) : Animal(nom, "Fennec", "predateur") {}
+
+    void deplacement() override {
+        x += (rand() % 8) - 1;
+        y += (rand() % 8) - 1;
+    }
+};
+
+class Jaguar : public Animal {
+public:
+    Jaguar(const std::string& nom) : Animal(nom, "Jaguar", "predateur") {}
+
+    void deplacement() override {
+        x += (rand() % 8) - 1;
+        y += (rand() % 8) - 1;
+    }
+};
+
+class Zebre : public Animal {
+public:
+    Zebre(const std::string& nom) : Animal(nom, "Zebre", "proie") {}
+
+    void deplacement() override {
+        x += (rand() % 5) - 2;
+        y += (rand() % 5) - 2;
+    }
+};
+
+class Castor : public Animal {
+public:
+    Castor(const std::string& nom) : Animal(nom, "Castor", "proie") {}
+
+    void deplacement() override {
+        x += (rand() % 4) - 2;
+        y += (rand() % 4) - 2;
+    }
+};
+
+class Lion : public Animal {
+public:
+    Lion(const std::string& nom) : Animal(nom, "Lion", "predateur") {}
+
+    void deplacement() override {
+        x += (rand() % 7) - 1;
+        y += (rand() % 7) - 1;
+    }
+};
+
+class Capybara : public Animal {
+public:
+    Capybara(const std::string& nom) : Animal(nom, "Capybara", "proie") {}
+
+    void deplacement() override {
+        x += (rand() % 4) - 2;
+        y += (rand() % 4) - 2;
+    }
+};
+
 class Jeu {
 private:
     bool enCours;
@@ -154,7 +344,7 @@ public:
         }
         int choix;
         cout << "---" << endl << "Les espces apres Loup sont juste des exmples pour l'instant" << endl << "---" << endl;
-        string noms[25] = { "Loup", "Lapin", "Ours", "Biche", "Renard","Chevre", "espece7", "espece8", "espece9", "espece10", "espece11", "espece12", "espece13", "espece14", "espece15", "espece16", "espece17", "espece18", "espece19", "espece20", "espece21", "espece22", "espece23", "espece24", "espece25" };
+        string noms[25] = { "Loup", "Lapin", "Ours", "Biche", "Renard","Chevre", "Cheval", "Lynx", "Panda", "Tigre", "Koala", "Ecureuil", "Puma", "Coyote", "Rat", "Bison", "Lama", "Aigle", "Elephant", "Fennec", "Jaguar", "Zebre", "Castor", "Lion", "Capybara" };
         string nomAnimal;
         for (int i = 0; i < nombreDAnimaux; ++i) {
             cout << "Quel espece voulez-vous donner a votre nouvel animal ?" << endl;
@@ -184,11 +374,11 @@ public:
             cout << endl;
             // Ajout de l'animal crée dans le vecteur animaux
             switch (choix) { // A changer mardi avec les noms des espèces (vide pour l'instant)
-            case 1: animaux.push_back(Loup(nomAnimal));   break; case 6: animaux.push_back(Chevre(nomAnimal)); break; case 11: break; case 16: break; case 21: break;
-            case 2: animaux.push_back(Lapin(nomAnimal));  break; case 7:                                       break; case 12: break; case 17: break; case 22: break;
-            case 3: animaux.push_back(Ours(nomAnimal));   break; case 8:                                       break; case 13: break; case 18: break; case 23: break;
-            case 4: animaux.push_back(Biche(nomAnimal));  break; case 9:                                       break; case 14: break; case 19: break; case 24: break;
-            case 5: animaux.push_back(Renard(nomAnimal)); break; case 10:                                      break; case 15: break; case 20: break; case 25: break;
+            case 1: animaux.push_back(Loup(nomAnimal));   break; case 6: animaux.push_back(Chevre(nomAnimal)); break; case 11: animaux.push_back(Koala(nomAnimal)); break; case 16: animaux.push_back(Bison(nomAnimal)); break; case 21: animaux.push_back(Jaguar(nomAnimal)); break;
+            case 2: animaux.push_back(Lapin(nomAnimal));  break; case 7: animaux.push_back(Cheval(nomAnimal)); break; case 12: animaux.push_back(Ecureuil(nomAnimal)); break; case 17: animaux.push_back(Lama(nomAnimal)); break; case 22: animaux.push_back(Zebre(nomAnimal)); break;
+            case 3: animaux.push_back(Ours(nomAnimal));   break; case 8: animaux.push_back(Lynx(nomAnimal)); break; case 13: animaux.push_back(Puma(nomAnimal)); break; case 18: animaux.push_back(Aigle(nomAnimal)); break; case 23: animaux.push_back(Castor(nomAnimal)); break;
+            case 4: animaux.push_back(Biche(nomAnimal));  break; case 9: animaux.push_back(Panda(nomAnimal)); break; case 14: animaux.push_back(Coyote(nomAnimal)); break; case 19: animaux.push_back(Elephant(nomAnimal)); break; case 24: animaux.push_back(Lion(nomAnimal)); break;
+            case 5: animaux.push_back(Renard(nomAnimal)); break; case 10: animaux.push_back(Tigre(nomAnimal)); break; case 15: animaux.push_back(Rat(nomAnimal)); break; case 20: animaux.push_back(Fennec(nomAnimal)); break; case 25: animaux.push_back(Capybara(nomAnimal)); break;
             default: break;
             }
         }
@@ -209,9 +399,10 @@ public:
             for (int i = 0; i < animaux.size(); ++i) {
                 animaux[i].deplacement();
                 animaux[i].afficherPosition();
-                int interaction = rand() % animaux.size();
-                while (interaction == i) { interaction = rand() % animaux.size(); }
-                animaux[i].interagir(animaux[interaction]);
+                for (int j = i + 1; j < animaux.size(); ++j) {
+                    animaux[i].interagir(animaux[j]);
+                }
+                animaux[(animaux.size() - 1)].interagir(animaux[0]); // Le cas ou le dernier interagit avec le premier (impossible dans la boucle for)
             }
         }
     }
