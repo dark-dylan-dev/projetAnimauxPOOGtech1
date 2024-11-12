@@ -314,7 +314,7 @@ public:
 
 class Capybara : public Animal {
 public:
-    Capybara(const std::string& nom) : Animal(nom, "Capybara", "proie") {}
+    Capybara(const std::string& nom) : Animal(nom, "Capybara", "neutre") {}
 
     void deplacement() override {
         x += (rand() % 4) - 2;
