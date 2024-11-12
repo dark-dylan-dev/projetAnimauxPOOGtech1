@@ -1,8 +1,8 @@
 #include <iostream>
-#include <vector>
+#include <string>
+#include <cstdlib>
 #include <ctime>
-#include <cmath>
-
+#include <vector>
 using namespace std;
 
 bool jour = true;
@@ -10,97 +10,75 @@ const int LIMITE_ANIMAUX(25);
 
 class Joueur
 {
-private:
-
-public:
 
 };
 
 class Animal {
-private:
-    string nom;
-    string espece;
-    string regime;
-    bool enVie;
-    bool aFaim;
-
 protected:
+    std::string nom;
+    std::string espece;
+    std::string regime;
+    bool aFaim;
+    bool enVie;
     int x, y;
 
 public:
-
-    Animal(string nom, string espece, string regime) : nom(nom), espece(espece), regime(regime) {
+    Animal(const std::string& nom, const std::string& espece, const std::string& regime)
+        : nom(nom), espece(espece), regime(regime), aFaim(false), enVie(true), x(0), y(0) {
         x = rand() % 100;
         y = rand() % 100;
-        enVie = true;
-        aFaim = false;
     }
 
-    void mourir()
-    {
-        if (!enVie)
-        {
-            cout << nom << " est mort" << endl;
-            enVie = false;
-        }
-    }
+    std::string getNom() const { return nom; }
+    std::string getEspece() const { return espece; }
+    bool estEnVie() const { return enVie; }
+    bool aFaimStatus() const { return aFaim; }
+    std::string getRegime() const { return regime; }
 
-    void attaquer(Animal& cible) const
-    {
-        cout << nom << " attaque " << cible.getNom() << endl;
-        cible.mourir();
-    }
+    void setAFaim(bool faim) { aFaim = faim; }
 
-    void afficherPosition(Animal& concerne) const {
-        cout << " - [DEBUG] : " << concerne.getNom() << " (" << concerne.getEspece() << ") se trouve en x : " << concerne.x << " y : " << concerne.y << endl;
-    }
-
-    virtual void deplacement() { // Plage de déplacement en [-1;1] par défaut
+    virtual void deplacement() {
         x += (rand() % 3) - 1;
         y += (rand() % 3) - 1;
     }
 
+    double distanceAvec(const Animal& autre) const {
+        int dx = x - autre.x;
+        int dy = y - autre.y;
+        return std::sqrt(dx * dx + dy * dy);
+    }
+
     virtual void interagir(Animal& autre) {
-        cout << " - [DEBUG] : " << nom << " (" << espece << ") intergait avec " << autre.getNom() << " (" << autre.getEspece() << ")" << endl;
-        if (regime == "predateur" && autre.getRegime() == "proie" && aFaim) { // Est un prédateur
-            if (distanceAvec(autre) < 5.0) {
+        if (regime == "predateur" && autre.getRegime() == "proie" && aFaim) {
+            if (distanceAvec(autre) < 50.0) {
                 std::cout << nom << " chasse " << autre.getNom() << "!\n";
             }
         }
-        else if (regime == "proie" && autre.getRegime() == "predateur") { // Est une proie
-            if (distanceAvec(autre) < 5.0) {
+        else if (regime == "proie" && autre.getRegime() == "predateur") {
+            if (distanceAvec(autre) < 50.0) {
                 std::cout << nom << " essaie de fuir " << autre.getNom() << "!\n";
                 x += (x - autre.x);
                 y += (y - autre.y);
             }
+            else if (distanceAvec(autre) < 1.0) {
+                enVie = false;
+                std::cout << nom << " est mort\n";
+            }
         }
     }
 
-    // GETTERS
-
-    string getNom() { return nom; }
-    string getEspece() { return espece; }
-    string getRegime() { return regime; }
-    bool getEnVie() const { return enVie; }
-    bool getAFaim() const { return aFaim; }
-    float distanceAvec(const Animal& autre) const {
-        int dx = x - autre.x;
-        int dy = y - autre.y;
-        return (float)sqrt(dx * dx + dy * dy);
+    void afficherPosition() const {
+        std::cout << nom << " (" << espece << ") est à la position (" << x << ", " << y << ")\n";
     }
-
-    // SETTERS
-
-    void setFaim() { aFaim = true; }
 };
 
-class Loup : public Animal {
+class Lapin : public Animal {
 public:
-    Loup(string nom) : Animal(nom, "Loup", "predateur") {}
+    Lapin(const std::string& nom) : Animal(nom, "Lapin", "proie") {}
 
     void deplacement() override {
-        x += (rand() % 3) - 1;
-        y += (rand() % 3) - 1;
+        x += (rand() % 5) - 2;
+        y += (rand() % 5) - 2;
     }
 };
 
@@ -114,13 +92,13 @@ public:
     }
 };
 
-class Lapin : public Animal {
+class Loup : public Animal {
 public:
-    Lapin(string nom) : Animal(nom, "Lapin", "proie") {}
+    Loup(const std::string& nom) : Animal(nom, "Loup", "predateur") {}
 
     void deplacement() override {
-        x += (rand() % 5) - 2;
-        y += (rand() % 5) - 2;
+        x += (rand() % 3) - 1;
+        y += (rand() % 3) - 1;
     }
 };
 
@@ -207,7 +185,7 @@ public:
             cout << endl << "Tour : " << tour << endl;
             for (int i = 0; i < animaux.size(); ++i) {
                 animaux[i].deplacement();
-                animaux[i].afficherPosition(animaux[i]);
+                animaux[i].afficherPosition();
                 for (int j = i + 1; j < animaux.size(); ++j) {
                     animaux[i].interagir(animaux[j]);
                 }
@@ -217,16 +195,35 @@ public:
     }
 };
 
-int main()
-{
-    vector<Animal> animaux;
-    int tour = 0;
 
-    Jeu jeu;
-    jeu.Init(animaux);
-    jeu.BoucleDeJeu(animaux, tour);
+int main() {
+    srand(time(0));
 
-    animaux.clear();
+    std::vector<Animal*> animaux;
+    animaux.push_back(new Lapin("Lapin1"));
+    animaux.push_back(new Lapin("Lapin2"));
+    animaux.push_back(new Ours("Ours1"));
+    animaux.push_back(new Biche("Biche1"));
+    animaux.push_back(new Loup("Loup1"));
 
+    for (int tour = 0; tour < 10; ++tour) {
+        std::cout << "Tour " << tour + 1 << ":\n";
+
+        for (auto* animal : animaux) {
+            animal->deplacement();
+            animal->afficherPosition();
+        }
+
+        for (size_t i = 0; i < animaux.size(); ++i) {
+            for (size_t j = i + 1; j < animaux.size(); ++j) {
+                animaux[i]->interagir(*animaux[j]);
+            }
+        }
+        std::cout << "\n";
+    }
+
+    for (auto* animal : animaux) {
+        delete animal;
+    }
     return 0;
 }
