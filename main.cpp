@@ -199,35 +199,19 @@ public:
 int main() {
     srand(time(0));
 
+    std::vector<Animal> animaux;
+    int tour = 0;
+    animaux.push_back(Lapin("Lapin1"));
+    animaux.push_back(Lapin("Lapin2"));
+    animaux.push_back(Ours("Ours1"));
+    animaux.push_back(Biche("Biche1"));
+    animaux.push_back(Loup("Loup1"));
+
     Jeu jeu;
     jeu.Init(animaux);
     jeu.BoucleDeJeu(animaux, tour);
-    
-    std::vector<Animal*> animaux;
-    animaux.push_back(new Lapin("Lapin1"));
-    animaux.push_back(new Lapin("Lapin2"));
-    animaux.push_back(new Ours("Ours1"));
-    animaux.push_back(new Biche("Biche1"));
-    animaux.push_back(new Loup("Loup1"));
 
-    for (int tour = 0; tour < 10; ++tour) {
-        std::cout << "Tour " << tour + 1 << ":\n";
+    animaux.clear();
 
-        for (auto* animal : animaux) {
-            animal->deplacement();
-            animal->afficherPosition();
-        }
-
-        for (size_t i = 0; i < animaux.size(); ++i) {
-            for (size_t j = i + 1; j < animaux.size(); ++j) {
-                animaux[i]->interagir(*animaux[j]);
-            }
-        }
-        std::cout << "\n";
-    }
-
-    for (auto* animal : animaux) {
-        delete animal;
-    }
     return 0;
 }
