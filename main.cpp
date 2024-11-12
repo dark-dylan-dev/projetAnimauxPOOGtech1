@@ -53,13 +53,13 @@ public:
         cout << " - [DEBUG] : " << concerne.getNom() << " (" << concerne.getEspece() << ") se trouve en x : " << concerne.x << " y : " << concerne.y << endl;
     }
 
-    virtual void deplacement() { // Plage de déplacement en [-1;1] par défaut
+    virtual void deplacement() { // Plage de dÃ©placement en [-1;1] par dÃ©faut
         x += (rand() % 3) - 1;
         y += (rand() % 3) - 1;
     }
 
     virtual void interagir(Animal& autre) {
-        if (regime == "predateur" && autre.getRegime() == "proie" && aFaim) { // Est un prédateur
+        if (regime == "predateur" && autre.getRegime() == "proie" && aFaim) { // Est un prÃ©dateur
             if (distanceAvec(autre) < 5.0) {
                 std::cout << nom << " chasse " << autre.getNom() << "!\n";
             }
@@ -134,13 +134,13 @@ public:
         string nomAnimal;
         for (int i = 0; i < nombreDAnimaux; ++i) {
             cout << "Quel espece voulez-vous donner a votre nouvel animal ?" << endl;
-            for (int i = 0; i < LIMITE_ANIMAUX; ++i) { // Affichage des choix d'espèces
+            for (int i = 0; i < LIMITE_ANIMAUX; ++i) { // Affichage des choix d'espÃ¨ces
                 if (i < 8)
                     cout << " - " << i + 1 << ".  " << noms[i] << endl;
                 if (i > 8)
                     cout << " - " << i + 1 << ". " << noms[i] << endl;
             }
-            // Création de l'animal avec l'espèce choisie
+            // CrÃ©ation de l'animal avec l'espÃ¨ce choisie
             cout << endl << "Votre choix > ";
             cin >> choix;
             while (cin.fail() || choix < 1 || choix > LIMITE_ANIMAUX) {
@@ -158,8 +158,8 @@ public:
                 cin >> nomAnimal;
             }
             cout << endl;
-            // Ajout de l'animal crée dans le vecteur animaux
-            switch (choix) { // A changer mardi avec les noms des espèces (vide pour l'instant)
+            // Ajout de l'animal crÃ©e dans le vecteur animaux
+            switch (choix) { // A changer mardi avec les noms des espÃ¨ces (vide pour l'instant)
             case 1: animaux.push_back(Loup(nomAnimal));  break; case 6:  break; case 11: break; case 16: break; case 21: break;
             case 2: animaux.push_back(Lapin(nomAnimal)); break; case 7:  break; case 12: break; case 17: break; case 22: break;
             case 3:                                      break; case 8:  break; case 13: break; case 18: break; case 23: break;
@@ -168,7 +168,7 @@ public:
             default: break;
             }
         }
-        // Affichage des infos des animaux crées
+        // Affichage des infos des animaux crÃ©es
         cout << "Infos des animaux crees :" << endl;
         for (int i = 0; i < animaux.size(); ++i) {
             cout << endl << " - Nom : "                  << animaux[i].getNom()    << endl;
@@ -180,7 +180,7 @@ public:
     void BoucleDeJeu(vector<Animal>& animaux, int& tour) {
         while (tour < 10)
         {
-            tour++; // On commence au tour n°1
+            tour++; // On commence au tour nÂ°1
             cout << endl << "Tour : " << tour << endl;
             for (int i = 0; i < animaux.size(); ++i) {
                 animaux[i].deplacement();
