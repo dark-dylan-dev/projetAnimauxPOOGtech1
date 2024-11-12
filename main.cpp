@@ -131,7 +131,7 @@ public:
         }
         int choix;
         cout << "---" << endl << "Les espces apres Loup sont juste des exmples pour l'instant" << endl << "---" << endl;
-        string noms[25] = { "Loup", "Lapin", "espece3", "espece4", "espece5","espece6", "espece7", "espece8", "espece9", "espece10", "espece11", "espece12", "espece13", "espece14", "espece15", "espece16", "espece17", "espece18", "espece19", "espece20", "espece21", "espece22", "espece23", "espece24", "espece25" };
+        string noms[25] = { "Loup", "Lapin", "Biche", "Ours", "espece5","espece6", "espece7", "espece8", "espece9", "espece10", "espece11", "espece12", "espece13", "espece14", "espece15", "espece16", "espece17", "espece18", "espece19", "espece20", "espece21", "espece22", "espece23", "espece24", "espece25" };
         string nomAnimal;
         for (int i = 0; i < nombreDAnimaux; ++i) {
             cout << "Quel espece voulez-vous donner a votre nouvel animal ?" << endl;
@@ -163,8 +163,8 @@ public:
             switch (choix) { // A changer mardi avec les noms des espèces (vide pour l'instant)
             case 1: animaux.push_back(Loup(nomAnimal));  break; case 6:  break; case 11: break; case 16: break; case 21: break;
             case 2: animaux.push_back(Lapin(nomAnimal)); break; case 7:  break; case 12: break; case 17: break; case 22: break;
-            case 3:                                      break; case 8:  break; case 13: break; case 18: break; case 23: break;
-            case 4:                                      break; case 9:  break; case 14: break; case 19: break; case 24: break;
+            case 3: animaux.push_back(Ours(nomAnimal));  break; case 8:  break; case 13: break; case 18: break; case 23: break;
+            case 4: animaux.push_back(Biche(nomAnimal)); break; case 9:  break; case 14: break; case 19: break; case 24: break;
             case 5:                                      break; case 10: break; case 15: break; case 20: break; case 25: break;
             default: break;
             }
