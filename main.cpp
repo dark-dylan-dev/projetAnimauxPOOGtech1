@@ -6,11 +6,13 @@
 
 using namespace std;
 
+const int rayonReperage = 23;
+
 class Animal {
 private:
-    std::string nom;
-    std::string espece;
-    std::string regime;
+    string nom;
+    string espece;
+    string regime;
     bool aFaim;
     bool enVie;
 
@@ -24,11 +26,13 @@ public:
         y = rand() % 100;
     }
 
-    std::string getNom() const { return nom; }
-    std::string getEspece() const { return espece; }
+    string getNom() const { return nom; }
+    string getEspece() const { return espece; }
     bool estEnVie() const { return enVie; }
     bool aFaimStatus() const { return aFaim; }
-    std::string getRegime() const { return regime; }
+    string getRegime() const { return regime; }
+    int getPosX() const { return x; }
+    int getPosY() const { return y; }
 
 
     virtual void deplacement() { // Déplacement en [-1;1] par défaut
@@ -45,26 +49,30 @@ public:
     virtual void interagir(Animal& autre) {
         aFaim = true;
         if (regime == "predateur" && autre.getRegime() == "proie" && aFaim) {
-            if (distanceAvec(autre) < 5.0) {
-                std::cout << nom << " chasse " << autre.getNom() << "!\n";
+            cout << nom << " chasse " << autre.getNom() << "!\n";
+            autre.x += (autre.x - x);
+            autre.y += (autre.y - y);
+            if (distanceAvec(autre) == 0) {
+                autre.setVie(false);
+                cout << autre.getNom() << " est mort\n";
             }
         }
         else if (regime == "proie" && autre.getRegime() == "predateur") {
-            if (distanceAvec(autre) < 5.0) {
-                std::cout << nom << " essaie de fuir " << autre.getNom() << "!\n";
-                x += (x - autre.x);
-                y += (y - autre.y);
-            }
-            else if (distanceAvec(autre) < 1.0f) {
+            cout << nom << " essaie de fuir " << autre.getNom() << "!\n";
+            x += (x - autre.x);
+            y += (y - autre.y);
+            if (distanceAvec(autre) == 0) {
                 enVie = false;
-                std::cout << nom << " est mort\n";
+                cout << nom << " est mort\n";
             }
         }
     }
 
     void afficherPosition() const {
-        std::cout << nom << " (" << espece << ") est a la position (" << x << ", " << y << ")\n";
+        cout << nom << " (" << espece << ") est a la position (" << x << ", " << y << ")\n";
     }
+
+    void setVie(bool etat) { enVie = etat; }
 };
 
 class Joueur
@@ -74,7 +82,7 @@ class Joueur
 
 class Lapin : public Animal {
 public:
-    Lapin(const std::string& nom) : Animal(nom, "Lapin", "proie") {}
+    Lapin(const string& nom) : Animal(nom, "Lapin", "proie") {}
 
     void deplacement() override {
         x += (rand() % 5) - 2;
@@ -84,7 +92,7 @@ public:
 
 class Chevre : public Animal {
 public:
-    Chevre(const std::string& nom) : Animal(nom, "Chevre", "proie") {}
+    Chevre(const string& nom) : Animal(nom, "Chevre", "proie") {}
 
     void deplacement() override {
         x += (rand() % 6) - 2;
@@ -94,7 +102,7 @@ public:
 
 class Biche : public Animal {
 public:
-    Biche(const std::string& nom) : Animal(nom, "Biche", "proie") {}
+    Biche(const string& nom) : Animal(nom, "Biche", "proie") {}
 
     void deplacement() override {
         x += (rand() % 5) - 2;
@@ -104,7 +112,7 @@ public:
 
 class Loup : public Animal {
 public:
-    Loup(const std::string& nom) : Animal(nom, "Loup", "predateur") {}
+    Loup(const string& nom) : Animal(nom, "Loup", "predateur") {}
 
     void deplacement() override {
         x += (rand() % 5) - 1;
@@ -114,7 +122,7 @@ public:
 
 class Ours : public Animal {
 public:
-    Ours(const std::string& nom) : Animal(nom, "Ours", "predateur") {}
+    Ours(const string& nom) : Animal(nom, "Ours", "predateur") {}
 
     void deplacement() override {
         x += (rand() % 3) - 1;
@@ -124,7 +132,7 @@ public:
 
 class Renard : public Animal {
 public:
-    Renard(const std::string& nom) : Animal(nom, "Renard", "predateur") {}
+    Renard(const string& nom) : Animal(nom, "Renard", "predateur") {}
 
     void deplacement() override {
         x += (rand() % 6) - 1;
@@ -134,7 +142,7 @@ public:
 
 class Cheval : public Animal {
 public:
-    Cheval(const std::string& nom) : Animal(nom, "Cheval", "proie") {}
+    Cheval(const string& nom) : Animal(nom, "Cheval", "proie") {}
 
     void deplacement() override {
         x += (rand() % 10) - 2;
@@ -144,7 +152,7 @@ public:
 
 class Lynx : public Animal {
 public:
-    Lynx(const std::string& nom) : Animal(nom, "Lynx", "predateur") {}
+    Lynx(const string& nom) : Animal(nom, "Lynx", "predateur") {}
 
     void deplacement() override {
         x += (rand() % 7) - 1;
@@ -154,7 +162,7 @@ public:
 
 class Panda : public Animal {
 public:
-    Panda(const std::string& nom) : Animal(nom, "Panda", "proie") {}
+    Panda(const string& nom) : Animal(nom, "Panda", "proie") {}
 
     void deplacement() override {
         x += (rand() % 3) - 2;
@@ -164,7 +172,7 @@ public:
 
 class Tigre : public Animal {
 public:
-    Tigre(const std::string& nom) : Animal(nom, "Tigre", "predateur") {}
+    Tigre(const string& nom) : Animal(nom, "Tigre", "predateur") {}
 
     void deplacement() override {
         x += (rand() % 8) - 1;
@@ -174,7 +182,7 @@ public:
 
 class Koala : public Animal {
 public:
-    Koala(const std::string& nom) : Animal(nom, "Koala", "proie") {}
+    Koala(const string& nom) : Animal(nom, "Koala", "proie") {}
 
     void deplacement() override {
         x += (rand() % 3) - 2;
@@ -184,7 +192,7 @@ public:
 
 class Ecureuil : public Animal {
 public:
-    Ecureuil(const std::string& nom) : Animal(nom, "Ecureuil", "proie") {}
+    Ecureuil(const string& nom) : Animal(nom, "Ecureuil", "proie") {}
 
     void deplacement() override {
         x += (rand() % 6) - 2;
@@ -194,7 +202,7 @@ public:
 
 class Puma : public Animal {
 public:
-    Puma(const std::string& nom) : Animal(nom, "Puma", "predateur") {}
+    Puma(const string& nom) : Animal(nom, "Puma", "predateur") {}
 
     void deplacement() override {
         x += (rand() % 6) - 1;
@@ -204,7 +212,7 @@ public:
 
 class Coyote : public Animal {
 public:
-    Coyote(const std::string& nom) : Animal(nom, "Coyote", "predateur") {}
+    Coyote(const string& nom) : Animal(nom, "Coyote", "predateur") {}
 
     void deplacement() override {
         x += (rand() % 6) - 1;
@@ -214,7 +222,7 @@ public:
 
 class Rat : public Animal {
 public:
-    Rat(const std::string& nom) : Animal(nom, "Rat", "proie") {}
+    Rat(const string& nom) : Animal(nom, "Rat", "proie") {}
 
     void deplacement() override {
         x += (rand() % 6) - 2;
@@ -224,7 +232,7 @@ public:
 
 class Bison : public Animal {
 public:
-    Bison(const std::string& nom) : Animal(nom, "Bison", "predateur") {}
+    Bison(const string& nom) : Animal(nom, "Bison", "predateur") {}
 
     void deplacement() override {
         x += (rand() % 3) - 1;
@@ -234,7 +242,7 @@ public:
 
 class Lama : public Animal {
 public:
-    Lama(const std::string& nom) : Animal(nom, "Lama", "proie") {}
+    Lama(const string& nom) : Animal(nom, "Lama", "proie") {}
 
     void deplacement() override {
         x += (rand() % 5) - 2;
@@ -244,7 +252,7 @@ public:
 
 class Aigle : public Animal {
 public:
-    Aigle(const std::string& nom) : Animal(nom, "Aigle", "predateur") {}
+    Aigle(const string& nom) : Animal(nom, "Aigle", "predateur") {}
 
     void deplacement() override {
         x += (rand() % 7) - 1;
@@ -254,7 +262,7 @@ public:
 
 class Elephant : public Animal {
 public:
-    Elephant(const std::string& nom) : Animal(nom, "Elephant", "proie") {}
+    Elephant(const string& nom) : Animal(nom, "Elephant", "proie") {}
 
     void deplacement() override {
         x += (rand() % 4) - 2;
@@ -264,7 +272,7 @@ public:
 
 class Fennec : public Animal {
 public:
-    Fennec(const std::string& nom) : Animal(nom, "Fennec", "predateur") {}
+    Fennec(const string& nom) : Animal(nom, "Fennec", "predateur") {}
 
     void deplacement() override {
         x += (rand() % 8) - 1;
@@ -274,7 +282,7 @@ public:
 
 class Jaguar : public Animal {
 public:
-    Jaguar(const std::string& nom) : Animal(nom, "Jaguar", "predateur") {}
+    Jaguar(const string& nom) : Animal(nom, "Jaguar", "predateur") {}
 
     void deplacement() override {
         x += (rand() % 8) - 1;
@@ -284,7 +292,7 @@ public:
 
 class Zebre : public Animal {
 public:
-    Zebre(const std::string& nom) : Animal(nom, "Zebre", "proie") {}
+    Zebre(const string& nom) : Animal(nom, "Zebre", "proie") {}
 
     void deplacement() override {
         x += (rand() % 5) - 2;
@@ -294,7 +302,7 @@ public:
 
 class Castor : public Animal {
 public:
-    Castor(const std::string& nom) : Animal(nom, "Castor", "proie") {}
+    Castor(const string& nom) : Animal(nom, "Castor", "proie") {}
 
     void deplacement() override {
         x += (rand() % 4) - 2;
@@ -304,7 +312,7 @@ public:
 
 class Lion : public Animal {
 public:
-    Lion(const std::string& nom) : Animal(nom, "Lion", "predateur") {}
+    Lion(const string& nom) : Animal(nom, "Lion", "predateur") {}
 
     void deplacement() override {
         x += (rand() % 7) - 1;
@@ -314,7 +322,7 @@ public:
 
 class Capybara : public Animal {
 public:
-    Capybara(const std::string& nom) : Animal(nom, "Capybara", "proie") {}
+    Capybara(const string& nom) : Animal(nom, "Capybara", "proie") {}
 
     void deplacement() override {
         x += (rand() % 4) - 2;
@@ -394,12 +402,19 @@ public:
             tour++; // On commence au tour n°1
             cout << endl << "Tour : " << tour << endl;
             for (int i = 0; i < animaux.size(); ++i) {
+            spawn:
                 animaux[i].deplacement();
                 animaux[i].afficherPosition();
-                for (int j = i + 1; j < animaux.size(); ++j) {
-                    animaux[i].interagir(animaux[j]);
+                int j = i + 1;
+                if (j == animaux.size()) { j = 0; }
+                for (int x = -rayonReperage; x < rayonReperage; ++x) {
+                    for (int y = -rayonReperage; y < rayonReperage; ++y) {
+                        if ((animaux[j].getPosX() - animaux[i].getPosX()) == x && (animaux[j].getPosY() - animaux[i].getPosY()) == y) {
+                            animaux[i].interagir(animaux[j]);
+                            goto spawn;
+                        }
+                    }
                 }
-                animaux[(animaux.size() - 1)].interagir(animaux[0]); // Le cas ou le dernier interagit avec le premier (impossible dans la boucle for)
             }
         }
     }
@@ -409,7 +424,7 @@ public:
 int main() {
     srand(time(0));
 
-    std::vector<Animal> animaux;
+    vector<Animal> animaux;
     int tour = 0;
 
     Jeu jeu;
