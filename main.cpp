@@ -71,7 +71,7 @@ public:
     }
 
     void afficherPosition() const {
-        std::cout << nom << " (" << espece << ") est à la position (" << x << ", " << y << ")\n";
+        std::cout << nom << " (" << espece << ") est a la position (" << x << ", " << y << ")\n";
     }
 };
 
