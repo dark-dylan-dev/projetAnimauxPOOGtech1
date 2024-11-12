@@ -104,6 +104,16 @@ public:
     }
 };
 
+class Biche : public Animal {
+public:
+    Biche(const std::string& nom) : Animal(nom, "Biche", "proie") {}
+
+    void deplacement() override {
+        x += (rand() % 5) - 2;
+        y += (rand() % 5) - 2;
+    }
+};
+
 class Lapin : public Animal {
 public:
     Lapin(string nom) : Animal(nom, "Lapin", "proie") {}
@@ -111,6 +121,16 @@ public:
     void deplacement() override {
         x += (rand() % 5) - 2;
         y += (rand() % 5) - 2;
+    }
+};
+
+class Ours : public Animal {
+public:
+    Ours(const std::string& nom) : Animal(nom, "Ours", "predateur") {}
+
+    void deplacement() override {
+        x += (rand() % 3) - 1;
+        y += (rand() % 3) - 1;
     }
 };
 
