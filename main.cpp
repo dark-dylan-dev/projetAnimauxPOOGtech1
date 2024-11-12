@@ -201,11 +201,6 @@ int main() {
 
     std::vector<Animal> animaux;
     int tour = 0;
-    animaux.push_back(Lapin("Lapin1"));
-    animaux.push_back(Lapin("Lapin2"));
-    animaux.push_back(Ours("Ours1"));
-    animaux.push_back(Biche("Biche1"));
-    animaux.push_back(Loup("Loup1"));
 
     Jeu jeu;
     jeu.Init(animaux);
