@@ -45,7 +45,7 @@ public:
     virtual void interagir(Animal& autre) {
         aFaim = true;
         if (regime == "predateur" && autre.getRegime() == "proie" && aFaim) {
-            if (distanceAvec(autre) < 5.0) {
+            if (distanceAvec(autre) < 10.0) {
                 std::cout << nom << " chasse " << autre.getNom() << "!\n";
             }
         }
