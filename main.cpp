@@ -9,11 +9,6 @@ using namespace std;
 bool jour = true;
 const int LIMITE_ANIMAUX(25);
 
-class Joueur
-{
-
-};
-
 class Animal {
 private:
     std::string nom;
@@ -73,6 +68,11 @@ public:
     void afficherPosition() const {
         std::cout << nom << " (" << espece << ") est a la position (" << x << ", " << y << ")\n";
     }
+};
+
+class Joueur
+{
+
 };
 
 class Lapin : public Animal {
