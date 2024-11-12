@@ -224,11 +224,11 @@ public:
 
 class Bison : public Animal {
 public:
-    Bison(const std::string& nom) : Animal(nom, "Bison", "predateur") {}
+    Bison(const std::string& nom) : Animal(nom, "Bison", "proie") {}
 
     void deplacement() override {
-        x += (rand() % 3) - 1;
-        y += (rand() % 3) - 1;
+        x += (rand() % 3) - 2;
+        y += (rand() % 3) - 2;
     }
 };
 
