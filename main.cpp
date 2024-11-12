@@ -35,7 +35,6 @@ public:
     bool aFaimStatus() const { return aFaim; }
     std::string getRegime() const { return regime; }
 
-    void setAFaim(bool faim) { aFaim = faim; }
 
     virtual void deplacement() {
         x += (rand() % 3) - 1;
@@ -49,21 +48,25 @@ public:
     }
 
     virtual void interagir(Animal& autre) {
+        aFaim = true;
         if (regime == "predateur" && autre.getRegime() == "proie" && aFaim) {
-            if (distanceAvec(autre) < 50.0) {
+            if (distanceAvec(autre) < 30.0) {
                 std::cout << nom << " chasse " << autre.getNom() << "!\n";
             }
         }
         else if (regime == "proie" && autre.getRegime() == "predateur") {
-            if (distanceAvec(autre) < 50.0) {
+            if (distanceAvec(autre) < 30.0) {
                 std::cout << nom << " essaie de fuir " << autre.getNom() << "!\n";
                 x += (x - autre.x);
                 y += (y - autre.y);
             }
-            else if (distanceAvec(autre) < 1.0) {
+            else if (distanceAvec(autre) < 10.0) {
                 enVie = false;
                 std::cout << nom << " est mort\n";
             }
+        }
+        else {
+
         }
     }
 
