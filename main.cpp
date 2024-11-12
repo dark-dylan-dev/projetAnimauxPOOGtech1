@@ -6,9 +6,6 @@
 
 using namespace std;
 
-bool jour = true;
-const int LIMITE_ANIMAUX(25);
-
 class Animal {
 private:
     std::string nom;
@@ -348,7 +345,7 @@ public:
         string nomAnimal;
         for (int i = 0; i < nombreDAnimaux; ++i) {
             cout << "Quel espece voulez-vous donner a votre nouvel animal ?" << endl;
-            for (int i = 0; i < LIMITE_ANIMAUX; ++i) { // Affichage des choix d'espèces
+            for (int i = 0; i < 25; ++i) { // Affichage des choix d'espèces
                 if (i < 8)
                     cout << " - " << i + 1 << ".  " << noms[i] << endl;
                 if (i > 8)
@@ -357,7 +354,7 @@ public:
             // Création de l'animal avec l'espèce choisie
             cout << endl << "Votre choix > ";
             cin >> choix;
-            while (cin.fail() || choix < 1 || choix > LIMITE_ANIMAUX) {
+            while (cin.fail() || choix < 1 || choix > 25) {
                 cin.clear();
                 cin.ignore(9999, '\n');
                 cout << endl << "Veuillez entrer un choix correct, entre 1 et 25 > ";
@@ -374,11 +371,11 @@ public:
             cout << endl;
             // Ajout de l'animal crée dans le vecteur animaux
             switch (choix) { // A changer mardi avec les noms des espèces (vide pour l'instant)
-            case 1: animaux.push_back(Loup(nomAnimal));   break; case 6: animaux.push_back(Chevre(nomAnimal)); break; case 11: animaux.push_back(Koala(nomAnimal)); break; case 16: animaux.push_back(Bison(nomAnimal)); break; case 21: animaux.push_back(Jaguar(nomAnimal)); break;
-            case 2: animaux.push_back(Lapin(nomAnimal));  break; case 7: animaux.push_back(Cheval(nomAnimal)); break; case 12: animaux.push_back(Ecureuil(nomAnimal)); break; case 17: animaux.push_back(Lama(nomAnimal)); break; case 22: animaux.push_back(Zebre(nomAnimal)); break;
-            case 3: animaux.push_back(Ours(nomAnimal));   break; case 8: animaux.push_back(Lynx(nomAnimal)); break; case 13: animaux.push_back(Puma(nomAnimal)); break; case 18: animaux.push_back(Aigle(nomAnimal)); break; case 23: animaux.push_back(Castor(nomAnimal)); break;
-            case 4: animaux.push_back(Biche(nomAnimal));  break; case 9: animaux.push_back(Panda(nomAnimal)); break; case 14: animaux.push_back(Coyote(nomAnimal)); break; case 19: animaux.push_back(Elephant(nomAnimal)); break; case 24: animaux.push_back(Lion(nomAnimal)); break;
-            case 5: animaux.push_back(Renard(nomAnimal)); break; case 10: animaux.push_back(Tigre(nomAnimal)); break; case 15: animaux.push_back(Rat(nomAnimal)); break; case 20: animaux.push_back(Fennec(nomAnimal)); break; case 25: animaux.push_back(Capybara(nomAnimal)); break;
+            case 1: animaux.push_back(Loup(nomAnimal));   break; case 6: animaux.push_back(Chevre(nomAnimal)); break; case 11: animaux.push_back(Koala(nomAnimal));    break; case 16: animaux.push_back(Bison(nomAnimal));    break; case 21: animaux.push_back(Jaguar(nomAnimal));   break;
+            case 2: animaux.push_back(Lapin(nomAnimal));  break; case 7: animaux.push_back(Cheval(nomAnimal)); break; case 12: animaux.push_back(Ecureuil(nomAnimal)); break; case 17: animaux.push_back(Lama(nomAnimal));     break; case 22: animaux.push_back(Zebre(nomAnimal));    break;
+            case 3: animaux.push_back(Ours(nomAnimal));   break; case 8: animaux.push_back(Lynx(nomAnimal));   break; case 13: animaux.push_back(Puma(nomAnimal));     break; case 18: animaux.push_back(Aigle(nomAnimal));    break; case 23: animaux.push_back(Castor(nomAnimal));   break;
+            case 4: animaux.push_back(Biche(nomAnimal));  break; case 9: animaux.push_back(Panda(nomAnimal));  break; case 14: animaux.push_back(Coyote(nomAnimal));   break; case 19: animaux.push_back(Elephant(nomAnimal)); break; case 24: animaux.push_back(Lion(nomAnimal));     break;
+            case 5: animaux.push_back(Renard(nomAnimal)); break; case 10: animaux.push_back(Tigre(nomAnimal)); break; case 15: animaux.push_back(Rat(nomAnimal));      break; case 20: animaux.push_back(Fennec(nomAnimal));   break; case 25: animaux.push_back(Capybara(nomAnimal)); break;
             default: break;
             }
         }
