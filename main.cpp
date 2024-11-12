@@ -23,22 +23,24 @@ private:
     string regime;
     bool enVie;
     bool aFaim;
+
+protected:
     int x, y;
 
 public:
 
-    Animal(string nom, string espece, string regime, bool enVie, bool aFaim, int x, int y) : nom(nom), espece(espece), regime(regime), enVie(enVie), aFaim(aFaim), posX(x), posY(y) {
+    Animal(string nom, string espece, string regime) : nom(nom), espece(espece), regime(regime) {
         x = rand() % 100;
         y = rand() % 100;
         enVie = true;
         aFaim = false;
     }
 
-    void mourir() const
+    void mourir()
     {
-        if (!enVie) 
-        { 
-            cout << nom << " est mort" << endl; 
+        if (!enVie)
+        {
+            cout << nom << " est mort" << endl;
             enVie = false;
         }
     }
@@ -59,6 +61,7 @@ public:
     }
 
     virtual void interagir(Animal& autre) {
+        cout << " - [DEBUG] : " << nom << " (" << espece << ") intergait avec " << autre.getNom() << " (" << autre.getEspece() << ")" << endl;
         if (regime == "predateur" && autre.getRegime() == "proie" && aFaim) { // Est un prédateur
             if (distanceAvec(autre) < 5.0) {
                 std::cout << nom << " chasse " << autre.getNom() << "!\n";
@@ -75,11 +78,11 @@ public:
 
     // GETTERS
 
-    string getNom()       { return nom;    }
-    string getEspece()    { return espece; }
-    string getRegime()    { return regime; }
-    bool getEnVie() const { return enVie;  }
-    bool getAFaim() const { return aFaim;  }
+    string getNom() { return nom; }
+    string getEspece() { return espece; }
+    string getRegime() { return regime; }
+    bool getEnVie() const { return enVie; }
+    bool getAFaim() const { return aFaim; }
     float distanceAvec(const Animal& autre) const {
         int dx = x - autre.x;
         int dy = y - autre.y;
@@ -171,9 +174,9 @@ public:
         // Affichage des infos des animaux crées
         cout << "Infos des animaux crees :" << endl;
         for (int i = 0; i < animaux.size(); ++i) {
-            cout << endl << " - Nom : "                  << animaux[i].getNom()    << endl;
-            cout <<         "   - Espece : "             << animaux[i].getEspece() << endl;
-            cout <<         "   - Regime alimentaire : " << animaux[i].getRegime() << endl;
+            cout << endl << " - Nom : " << animaux[i].getNom() << endl;
+            cout << "   - Espece : " << animaux[i].getEspece() << endl;
+            cout << "   - Regime alimentaire : " << animaux[i].getRegime() << endl;
         }
     }
 
@@ -184,7 +187,7 @@ public:
             cout << endl << "Tour : " << tour << endl;
             for (int i = 0; i < animaux.size(); ++i) {
                 animaux[i].deplacement();
-                animaux[i].afficherPosition();
+                animaux[i].afficherPosition(animaux[i]);
                 for (int j = i + 1; j < animaux.size(); ++j) {
                     animaux[i].interagir(animaux[j]);
                 }
