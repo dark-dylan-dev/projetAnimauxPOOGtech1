@@ -50,12 +50,12 @@ public:
     virtual void interagir(Animal& autre) {
         aFaim = true;
         if (regime == "predateur" && autre.getRegime() == "proie" && aFaim) {
-            if (distanceAvec(autre) < 30.0) {
+            if (distanceAvec(autre) < 40.0) {
                 std::cout << nom << " chasse " << autre.getNom() << "!\n";
             }
         }
         else if (regime == "proie" && autre.getRegime() == "predateur") {
-            if (distanceAvec(autre) < 30.0) {
+            if (distanceAvec(autre) < 5.0) {
                 std::cout << nom << " essaie de fuir " << autre.getNom() << "!\n";
                 x += (x - autre.x);
                 y += (y - autre.y);
@@ -100,8 +100,8 @@ public:
     Loup(const std::string& nom) : Animal(nom, "Loup", "predateur") {}
 
     void deplacement() override {
-        x += (rand() % 3) - 1;
-        y += (rand() % 3) - 1;
+        x += (rand() % 5) - 1;
+        y += (rand() % 5) - 1;
     }
 };
 
@@ -112,6 +112,16 @@ public:
     void deplacement() override {
         x += (rand() % 3) - 1;
         y += (rand() % 3) - 1;
+    }
+};
+
+class Renard : public Animal {
+public:
+    Renard(const std::string& nom) : Animal(nom, "Renard", "predateur") {}
+
+    void deplacement() override {
+        x += (rand() % 6) - 1;
+        y += (rand() % 6) - 1;
     }
 };
 
@@ -134,7 +144,7 @@ public:
         }
         int choix;
         cout << "---" << endl << "Les espces apres Loup sont juste des exmples pour l'instant" << endl << "---" << endl;
-        string noms[25] = { "Loup", "Lapin", "Biche", "Ours", "espece5","espece6", "espece7", "espece8", "espece9", "espece10", "espece11", "espece12", "espece13", "espece14", "espece15", "espece16", "espece17", "espece18", "espece19", "espece20", "espece21", "espece22", "espece23", "espece24", "espece25" };
+        string noms[25] = { "Loup", "Lapin", "Biche", "Ours", "Renard","espece6", "espece7", "espece8", "espece9", "espece10", "espece11", "espece12", "espece13", "espece14", "espece15", "espece16", "espece17", "espece18", "espece19", "espece20", "espece21", "espece22", "espece23", "espece24", "espece25" };
         string nomAnimal;
         for (int i = 0; i < nombreDAnimaux; ++i) {
             cout << "Quel espece voulez-vous donner a votre nouvel animal ?" << endl;
@@ -168,7 +178,7 @@ public:
             case 2: animaux.push_back(Lapin(nomAnimal)); break; case 7:  break; case 12: break; case 17: break; case 22: break;
             case 3: animaux.push_back(Ours(nomAnimal));  break; case 8:  break; case 13: break; case 18: break; case 23: break;
             case 4: animaux.push_back(Biche(nomAnimal)); break; case 9:  break; case 14: break; case 19: break; case 24: break;
-            case 5:                                      break; case 10: break; case 15: break; case 20: break; case 25: break;
+            case 5: animaux.push_back(Renard(nomAnimal)); break; case 10: break; case 15: break; case 20: break; case 25: break;
             default: break;
             }
         }
