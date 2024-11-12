@@ -209,10 +209,9 @@ public:
             for (int i = 0; i < animaux.size(); ++i) {
                 animaux[i].deplacement();
                 animaux[i].afficherPosition();
-                for (int j = i + 1; j < animaux.size(); ++j) {
-                    animaux[i].interagir(animaux[j]);
-                }
-                animaux[(animaux.size() - 1)].interagir(animaux[0]); // Le cas ou le dernier interagit avec le premier (impossible dans la boucle for)
+                int interaction = rand() % animaux.size();
+                while (interaction == i) { interaction = rand() % animaux.size(); }
+                animaux[i].interagir(animaux[interaction]);
             }
         }
     }
