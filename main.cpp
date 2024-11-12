@@ -17,41 +17,78 @@ public:
 
 class Animal {
 private:
-    string nom;
-    string espece;
-    string regime;
-    bool enVie;
+    std::string nom;
+    std::string espece;
+    std::string regime;
     bool aFaim;
+    bool enVie;
+    int x, y;
+
 public:
-
-    Animal(string nom, string espece, string regime, bool enVie, bool aFaim) : nom(nom), espece(espece), regime(regime), enVie(enVie), aFaim(aFaim) {}
-
-    void mourir()
-    {
-        if (!enVie) { cout << nom << " est mort" << endl; }
+    Animal(const std::string& nom, const std::string& espece, const std::string& regime)
+        : nom(nom), espece(espece), regime(regime), aFaim(false), enVie(true), x(0), y(0) {
+        x = rand() % 100;
+        y = rand() % 100;
     }
 
-    void attaquer(Animal& cible)
-    {
-        cout << nom << " attaque " << cible.getNom() << endl;
-        cible.mourir();
+    std::string getNom() const { return nom; }
+    std::string getEspece() const { return espece; }
+    bool estEnVie() const { return enVie; }
+    bool aFaimStatus() const { return aFaim; }
+    std::string getRegime() const { return regime; }
+
+    void setAFaim(bool faim) { aFaim = faim; }
+
+    virtual void deplacement() {
+        x += (rand() % 3) - 1;
+        y += (rand() % 3) - 1;
     }
 
-    // GETTERS
+    double distanceAvec(const Animal& autre) const {
+        int dx = x - autre.x;
+        int dy = y - autre.y;
+        return std::sqrt(dx * dx + dy * dy);
+    }
 
-    string getNom() { return nom; }
-    string getEspece() { return espece; }
-    string getRegime() { return regime; }
-    bool getEnVie() { return enVie; }
-    bool getAFaim() { return aFaim; }
+    virtual void interagir(Animal& autre) {
+        if (regime == "predateur" && autre.getRegime() == "proie" && aFaim) {
+            if (distanceAvec(autre) < 5.0) {
+                std::cout << nom << " chasse " << autre.getNom() << "!\n";
+            }
+        }
+        else if (regime == "proie" && autre.getRegime() == "predateur") {
+            if (distanceAvec(autre) < 5.0) {
+                std::cout << nom << " essaie de fuir " << autre.getNom() << "!\n";
+                x += (x - autre.x);
+                y += (y - autre.y);
+            }
+        }
+    }
+
+    void afficherPosition() const {
+        std::cout << nom << " (" << espece << ") est Ã  la position (" << x << ", " << y << ")\n";
+    }
 };
 
-class Loup : public Animal
-{
+class Lapin : public Animal {
 public:
-    Loup(string nom) : Animal(nom, "Loup", "carivore", true, false) {}
+    Lapin(const std::string& nom) : Animal(nom, "Lapin", "proie") {}
+
+    void deplacement() override {
+        x += (rand() % 5) - 2;
+        y += (rand() % 5) - 2;
+    }
 };
 
+class Loup : public Animal {
+public:
+    Loup(const std::string& nom) : Animal(nom, "Loup", "predateur") {}
+
+    void deplacement() override {
+        x += (rand() % 3) - 1;
+        y += (rand() % 3) - 1;
+    }
+};
 class Jeu {
 private:
     bool enCours;
@@ -75,13 +112,13 @@ public:
         string nomAnimal;
         for (int i = 0; i < nombreDAnimaux; ++i) {
             cout << "Quel espece voulez-vous donner a votre nouvel animal ?" << endl;
-            for (int i = 0; i < LIMITE_ANIMAUX; ++i) { // Affichage des choix d'espèces
+            for (int i = 0; i < LIMITE_ANIMAUX; ++i) { // Affichage des choix d'espÃ¨ces
                 if (i < 8)
                     cout << " - " << i + 1 << ".  " << noms[i] << endl;
                 if (i > 8)
                     cout << " - " << i + 1 << ". " << noms[i] << endl;
             }
-            // Création de l'animal avec l'espèce choisie
+            // CrÃ©ation de l'animal avec l'espÃ¨ce choisie
             cout << endl << "Votre choix > ";
             cin >> choix;
             while (cin.fail() || choix < 1 || choix > LIMITE_ANIMAUX) {
@@ -99,8 +136,8 @@ public:
                 cin >> nomAnimal;
             }
             cout << endl;
-            // Ajout de l'animal crée dans le vecteur animaux
-            switch (choix) { // A changer mardi avec les noms des espèces (vide pour l'instant)
+            // Ajout de l'animal crÃ©e dans le vecteur animaux
+            switch (choix) { // A changer mardi avec les noms des espÃ¨ces (vide pour l'instant)
             case 1: animaux.push_back(Loup(nomAnimal)); break; case 6:  break; case 11: break; case 16: break; case 21: break;
             case 2:                                     break; case 7:  break; case 12: break; case 17: break; case 22: break;
             case 3:                                     break; case 8:  break; case 13: break; case 18: break; case 23: break;
@@ -109,7 +146,7 @@ public:
             default: break;
             }
         }
-        // Affichage des infos des animaux crées
+        // Affichage des infos des animaux crÃ©es
         cout << "Infos des animaux crees :" << endl;
         for (int i = 0; i < animaux.size(); ++i) {
             cout << endl << " - Nom : " << animaux[i].getNom() << endl;
@@ -119,12 +156,33 @@ public:
     }
 };
 
-int main()
-{
-    vector<Animal> animaux;
+int main() {
+    srand(time(0));
 
-    Jeu jeu;
-    jeu.Init(animaux);
+    std::vector<Animal*> animaux;
+    animaux.push_back(new Lapin("Lapin1"));
+    animaux.push_back(new Lapin("Lapin2"));
+    animaux.push_back(new Loup("Loup1"));
 
+    for (int tour = 0; tour < 10; ++tour) {
+        std::cout << "Tour " << tour + 1 << ":\n";
+
+        for (auto* animal : animaux) {
+            animal->deplacement();
+            animal->afficherPosition();
+        }
+
+        for (size_t i = 0; i < animaux.size(); ++i) {
+            for (size_t j = i + 1; j < animaux.size(); ++j) {
+                animaux[i]->interagir(*animaux[j]);
+            }
+        }
+
+        std::cout << "\n";
+    }
+
+    for (auto* animal : animaux) {
+        delete animal;
+    }
     return 0;
 }
