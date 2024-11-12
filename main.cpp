@@ -6,7 +6,7 @@
 
 using namespace std;
 
-const int rayonReperage = 23;
+const int rayonReperage = 25;
 
 class Animal {
 private:
@@ -55,6 +55,7 @@ public:
             if (distanceAvec(autre) == 0) {
                 autre.setVie(false);
                 cout << autre.getNom() << " est mort\n";
+            }
         }
         else if (regime == "proie" && autre.getRegime() == "predateur") {
             cout << nom << " essaie de fuir " << autre.getNom() << "!\n";
@@ -88,7 +89,6 @@ public:
         y += (rand() % 5) - 2;
     }
 };
-
 class Chevre : public Animal {
 public:
     Chevre(const string& nom) : Animal(nom, "Chevre", "proie") {}
@@ -98,7 +98,6 @@ public:
         y += (rand() % 6) - 2;
     }
 };
-
 class Biche : public Animal {
 public:
     Biche(const string& nom) : Animal(nom, "Biche", "proie") {}
@@ -108,7 +107,6 @@ public:
         y += (rand() % 5) - 2;
     }
 };
-
 class Loup : public Animal {
 public:
     Loup(const string& nom) : Animal(nom, "Loup", "predateur") {}
@@ -118,7 +116,6 @@ public:
         y += (rand() % 5) - 1;
     }
 };
-
 class Ours : public Animal {
 public:
     Ours(const string& nom) : Animal(nom, "Ours", "predateur") {}
@@ -128,7 +125,6 @@ public:
         y += (rand() % 3) - 1;
     }
 };
-
 class Renard : public Animal {
 public:
     Renard(const string& nom) : Animal(nom, "Renard", "predateur") {}
@@ -138,7 +134,6 @@ public:
         y += (rand() % 6) - 1;
     }
 };
-
 class Cheval : public Animal {
 public:
     Cheval(const string& nom) : Animal(nom, "Cheval", "proie") {}
@@ -148,7 +143,6 @@ public:
         y += (rand() % 10) - 2;
     }
 };
-
 class Lynx : public Animal {
 public:
     Lynx(const string& nom) : Animal(nom, "Lynx", "predateur") {}
@@ -158,7 +152,6 @@ public:
         y += (rand() % 7) - 1;
     }
 };
-
 class Panda : public Animal {
 public:
     Panda(const string& nom) : Animal(nom, "Panda", "proie") {}
@@ -168,7 +161,6 @@ public:
         y += (rand() % 3) - 2;
     }
 };
-
 class Tigre : public Animal {
 public:
     Tigre(const string& nom) : Animal(nom, "Tigre", "predateur") {}
@@ -178,7 +170,6 @@ public:
         y += (rand() % 8) - 1;
     }
 };
-
 class Koala : public Animal {
 public:
     Koala(const string& nom) : Animal(nom, "Koala", "proie") {}
@@ -188,7 +179,6 @@ public:
         y += (rand() % 3) - 2;
     }
 };
-
 class Ecureuil : public Animal {
 public:
     Ecureuil(const string& nom) : Animal(nom, "Ecureuil", "proie") {}
@@ -198,7 +188,6 @@ public:
         y += (rand() % 6) - 2;
     }
 };
-
 class Puma : public Animal {
 public:
     Puma(const string& nom) : Animal(nom, "Puma", "predateur") {}
@@ -208,7 +197,6 @@ public:
         y += (rand() % 6) - 1;
     }
 };
-
 class Coyote : public Animal {
 public:
     Coyote(const string& nom) : Animal(nom, "Coyote", "predateur") {}
@@ -218,7 +206,6 @@ public:
         y += (rand() % 6) - 1;
     }
 };
-
 class Rat : public Animal {
 public:
     Rat(const string& nom) : Animal(nom, "Rat", "proie") {}
@@ -228,7 +215,6 @@ public:
         y += (rand() % 6) - 2;
     }
 };
-
 class Bison : public Animal {
 public:
     Bison(const std::string& nom) : Animal(nom, "Bison", "proie") {}
@@ -238,7 +224,6 @@ public:
         y += (rand() % 3) - 2;
     }
 };
-
 class Lama : public Animal {
 public:
     Lama(const string& nom) : Animal(nom, "Lama", "proie") {}
@@ -248,7 +233,6 @@ public:
         y += (rand() % 5) - 2;
     }
 };
-
 class Aigle : public Animal {
 public:
     Aigle(const string& nom) : Animal(nom, "Aigle", "predateur") {}
@@ -258,7 +242,6 @@ public:
         y += (rand() % 7) - 1;
     }
 };
-
 class Elephant : public Animal {
 public:
     Elephant(const string& nom) : Animal(nom, "Elephant", "proie") {}
@@ -268,7 +251,6 @@ public:
         y += (rand() % 4) - 2;
     }
 };
-
 class Fennec : public Animal {
 public:
     Fennec(const string& nom) : Animal(nom, "Fennec", "predateur") {}
@@ -278,7 +260,6 @@ public:
         y += (rand() % 8) - 1;
     }
 };
-
 class Jaguar : public Animal {
 public:
     Jaguar(const string& nom) : Animal(nom, "Jaguar", "predateur") {}
@@ -288,7 +269,6 @@ public:
         y += (rand() % 8) - 1;
     }
 };
-
 class Zebre : public Animal {
 public:
     Zebre(const string& nom) : Animal(nom, "Zebre", "proie") {}
@@ -298,7 +278,6 @@ public:
         y += (rand() % 5) - 2;
     }
 };
-
 class Castor : public Animal {
 public:
     Castor(const string& nom) : Animal(nom, "Castor", "proie") {}
@@ -308,7 +287,6 @@ public:
         y += (rand() % 4) - 2;
     }
 };
-
 class Lion : public Animal {
 public:
     Lion(const string& nom) : Animal(nom, "Lion", "predateur") {}
@@ -318,7 +296,6 @@ public:
         y += (rand() % 7) - 1;
     }
 };
-
 class Capybara : public Animal {
 public:
     Capybara(const std::string& nom) : Animal(nom, "Capybara", "neutre") {}
@@ -396,9 +373,8 @@ public:
     }
 
     void BoucleDeJeu(vector<Animal>& animaux, int& tour) {
-        while (tour < 10)
-        {
-            tour++; // On commence au tour n°1
+        while (tour < 10) {
+            tour++;
             cout << endl << "Tour : " << tour << endl;
             for (int i = 0; i < animaux.size(); ++i) {
             spawn:
