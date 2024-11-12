@@ -199,6 +199,10 @@ public:
 int main() {
     srand(time(0));
 
+    Jeu jeu;
+    jeu.Init(animaux);
+    jeu.BoucleDeJeu(animaux, tour);
+    
     std::vector<Animal*> animaux;
     animaux.push_back(new Lapin("Lapin1"));
     animaux.push_back(new Lapin("Lapin2"));
