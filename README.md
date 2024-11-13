@@ -1,4 +1,5 @@
-# Projet animaux POO GTECH1
+# Instinct
+### Projet POO C++ GTECH1
 ## Infos :
  - Projet en C++ avec utilisation de classes sur le thème de la simulation d'évolution d'espèces animales.
  - Durée du projet : 1 semaine (du 11/09/2024 au 15/09/2024)
