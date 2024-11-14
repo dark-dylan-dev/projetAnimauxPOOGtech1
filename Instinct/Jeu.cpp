@@ -82,6 +82,7 @@ void Jeu::BoucleDeJeu(vector<Animal>& animaux, int& tour, bool debug, Joueur& jo
     const int rayonReperageAnimaux = 15;
     const int rayonReperageNourriture = 20;
     int nbInteractions = 0;
+    int demieJourneeNumero = 0;
     string periode;
     bool seNourrit = false;
     while (true) {
@@ -145,8 +146,11 @@ void Jeu::BoucleDeJeu(vector<Animal>& animaux, int& tour, bool debug, Joueur& jo
             seNourrit = false;
             if (animaux[i].getFaimCount() == 20) 
                 animaux[i].setVie(false);
+            if (!animaux[i].aFaimStatus() && demieJourneeNumero % 4 == 0)
+                animaux[i].setFaim(true);
         }
         system("PAUSE");
         estJour = !estJour;
+        demieJourneeNumero++;
     }
 }

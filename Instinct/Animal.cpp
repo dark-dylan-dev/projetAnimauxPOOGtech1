@@ -46,18 +46,17 @@ float Animal::distanceAvecNourr(const Nourriture& nourriture) const {
 }
 
 void Animal::interagir(Animal& autre) {
-    aFaim = true;
     if (regime == "predateur" && autre.getRegime() == "proie" && aFaim) {
         cout << nom << " chasse " << autre.getNom() << "\n";
         autre.x += 2*(autre.x - x);
         autre.y += 2*(autre.y - y);
         if (distanceAvec(autre) == 0) {
             autre.setVie(false);
-            cout << autre.getNom() << " est mort\n";
+            cout << autre.getNom() << " est mort, chasse par " << getNom() << " (" << getEspece() << ")" << endl;
         }
     }
     else if (regime == "proie" && autre.getRegime() == "predateur") {
-        cout << nom << " essaie de fuir " << autre.getNom() << "\n";
+        cout << nom << " (" << getEspece() << ") essaie de fuir " << autre.getNom() << " (" << autre.getEspece() << ")" << endl;
         x += (x - autre.x);
         y += (y - autre.y);
         if (distanceAvec(autre) == 0) {

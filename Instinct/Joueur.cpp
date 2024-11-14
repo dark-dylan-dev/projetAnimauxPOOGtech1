@@ -133,8 +133,8 @@ char Joueur::choixJoueur(int choix, vector<Animal>& animaux) {
         cout << "Ton choix > ";
         cin >> choixSpecifique;
         if (cin.fail() || choixSpecifique < 1 || choixSpecifique > animaux.size()) { choixSpecifique = WhileCinFail(choixSpecifique, animaux); }
-        if (animaux[choixSpecifique - 1].aFaimStatus()) { cout << animaux[choixSpecifique - 1].getNom() << " n'a pas besoin de manger pour l'instant" << endl; break; }
-        animaux[choixSpecifique - 1].setFaim(true);
+        if (!animaux[choixSpecifique - 1].aFaimStatus()) { cout << animaux[choixSpecifique - 1].getNom() << " n'a pas besoin de manger pour l'instant" << endl; break; }
+        animaux[choixSpecifique - 1].setFaim(false);
         cout << " - Tu as rempli la pense de " << animaux[choixSpecifique - 1].getNom() << endl;
         break;
     case 2: // Option : 'Tuer' -> Rajouter des vérifications
@@ -170,11 +170,13 @@ char Joueur::choixJoueur(int choix, vector<Animal>& animaux) {
                 cout << endl << " - " << animaux[choixAnimalUn - 1].getNom()   << " (" << animaux[choixAnimalUn - 1].getEspece()   << ") a battu " 
                                       << animaux[choixAnimalDeux - 1].getNom() << " (" << animaux[choixAnimalDeux - 1].getEspece() << ")" << endl;
                 animaux[choixAnimalDeux - 1].setVie(false);
+                animaux[choixAnimalUn - 1].setFaim(false);
                 break;
             }
             cout << endl << " - " << animaux[choixAnimalDeux - 1].getNom() << " (" << animaux[choixAnimalDeux - 1].getEspece() << ") a battu " 
                                   << animaux[choixAnimalUn - 1].getNom()   << " (" << animaux[choixAnimalUn - 1].getEspece()   << ")" << endl;
             animaux[choixAnimalUn - 1].setVie(false);
+            animaux[choixAnimalDeux - 1].setFaim(false);
         }
         else if (animaux[choixAnimalUn - 1].getRegime() == "predateur") { 
             // Les deux combattants sont des prédateurs -> issue aléatoire
@@ -184,10 +186,12 @@ char Joueur::choixJoueur(int choix, vector<Animal>& animaux) {
             if (choixRandom == 0) {
                 cout << endl << " - " << animaux[choixAnimalDeux - 1].getNom() << " (" << animaux[choixAnimalDeux - 1].getEspece() << ") a battu "
                                       << animaux[choixAnimalUn - 1].getNom()   << " (" << animaux[choixAnimalUn - 1].getEspece()   << ")" << endl;
+                animaux[choixAnimalDeux - 1].setFaim(false);
                 break;
             }
             cout << endl << " - " << animaux[choixAnimalUn - 1].getNom()   << " (" << animaux[choixAnimalUn - 1].getEspece()   << ") a battu "
                                   << animaux[choixAnimalDeux - 1].getNom() << " (" << animaux[choixAnimalDeux - 1].getEspece() << ")" << endl;
+            animaux[choixAnimalUn].setFaim(false);
         }
         else { 
             // Les deux combattants sont des proies -> ils se font la paix
