@@ -235,7 +235,7 @@ char Joueur::choixJoueur(int choix, vector<Animal>& animaux) {
         cout << "Quels animaux veux-tu rapprocher ? \n\n - Animal 1 >";
         cin >> choixAnimalUn;
         if (cin.fail() || choixAnimalUn < 1 || choixAnimalUn > animaux.size()) { choixAnimalUn = WhileCinFail(choixAnimalUn, animaux); }
-        cout << endl << " - Animal 2 > ";
+        cout << " - Animal 2 > ";
         cin >> choixAnimalDeux;
         while (cin.fail() || choixAnimalDeux < 1 || choixAnimalDeux > animaux.size() || choixAnimalDeux == choixAnimalUn) {
             if (choixAnimalDeux == choixAnimalUn) { cout << "Un animal ne peut pas se rapprocher de lui même\n"; }
@@ -244,6 +244,7 @@ char Joueur::choixJoueur(int choix, vector<Animal>& animaux) {
             cout << "Fais un choix correct, entre 1 et " << animaux.size() << " > ";
             cin >> choixAnimalDeux;
         }
+        cout << endl;
         // Cette méthode deplace animalUn vers animalDeux et inversement d'une case en diagonale
         temp.deplacerVers(animaux[choixAnimalUn - 1], animaux[choixAnimalDeux - 1]);
         temp.deplacerVers(animaux[choixAnimalDeux - 1], animaux[choixAnimalUn - 1]);

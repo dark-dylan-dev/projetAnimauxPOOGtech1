@@ -79,11 +79,13 @@ void Jeu::Init(vector<Animal>& animaux, vector<Nourriture>& nourritures) {
 }
 
 void Jeu::BoucleDeJeu(vector<Animal>& animaux, int& tour, bool debug, Joueur& joueur, vector<Nourriture>& nourritures) {
-    const int rayonReperage = 25;
-    const int rayonBouffe = 30;
-    int interConte = 0;
+    const int rayonReperageAnimaux = 25;
+    const int rayonReperageNourriture = 30;
+    int nbInteractions = 0;
     string periode;
-    while (1) {
+    int interAnimal = 0;
+    bool seNourrit = false;
+    while (true) {
         if (!debug) { system("cls"); }
         tour++;
         estJour ? periode = "Jour" : periode = "Nuit";
@@ -101,46 +103,55 @@ void Jeu::BoucleDeJeu(vector<Animal>& animaux, int& tour, bool debug, Joueur& jo
         int choixJoueur = joueur.afficherInfos(animaux);
         if (joueur.choixJoueur(choixJoueur, animaux) == 'Q') { exit(0); }
         for (unsigned int i = 0; i < animaux.size(); ++i) {
-            estJour ? animaux[i].deplacement() : animaux[i].enTrainDeDormir();
-            if (debug) { animaux[i].afficherPosition(); }
-            //--- RECHERCHE D'ANIMAL DANS UN RAYON DE (rayonReperage) blocs ---//
-            bool animalTrouve = false;
-            while (!animalTrouve) {
-                for (int x = -rayonReperage; x < rayonReperage; ++x) {
-                    for (int y = -rayonReperage; y < rayonReperage; ++y) {
-                        for (auto animal : animaux) {
-                            if ((animaux[i].getPosX() - animal.getPosX()) == x && (animaux[i].getPosY() - animal.getPosY()) == y) {
-                                if (x != 0 && y != 0) {
-                                    animaux[i].interagir(animal);
-                                    // Intéragit si et seulement si l'animal n'a jamais été concerné pendant cette itération
-                                    interConte++;
-                                    animalTrouve = true;
+            if (animaux[i].estEnVie()) {
+                estJour ? animaux[i].deplacement() : animaux[i].enTrainDeDormir();
+                if (debug) { animaux[i].afficherPosition(); }
+                //--- RECHERCHE D'ANIMAL DANS UN RAYON DE (rayonReperage) blocs ---//
+                bool animalTrouve = false;
+                while (!animalTrouve) {
+                    for (int x = -rayonReperageAnimaux; x < rayonReperageAnimaux; ++x) {
+                        for (int y = -rayonReperageAnimaux; y < rayonReperageAnimaux; ++y) {
+                            for (auto& animal : animaux) {
+                                if (animal.estEnVie() == true && (animaux[i].getPosX() - animal.getPosX()) == x && (animaux[i].getPosY() - animal.getPosY()) == y) {
+                                    if (x != 0 && y != 0) {
+                                        animaux[i].interagir(animal);
+                                        nbInteractions++;
+                                        if (animal.estEnVie() == false) { seNourrit = true; }
+                                        animalTrouve = true;
+                                    }
                                 }
                             }
                         }
                     }
+                    animalTrouve = true;
                 }
-                animalTrouve = true;
             }
-
-            //--- FIN DE RECHERCHE ---//
-            if (interConte == 0 && animaux[i].aFaimStatus() == true) {
-                bool nourrTrouve = false;
-                while (!nourrTrouve) {
-                    for (int x = -rayonBouffe; x < rayonBouffe; ++x) {
-                        for (int y = -rayonBouffe; y < rayonBouffe; ++y) {
-                            for (auto nourrElem : nourritures) {
-                                if ((animaux[i].getPosX() - nourrElem.getPosX()) == x && (animaux[i].getPosY() - nourrElem.getPosY()) == y) {
-                                    animaux[i].cherchNourr(nourrElem, nourritures);
-                                    nourrTrouve = true;
+            if (interAnimal == 0 && animaux[i].aFaimStatus() == true) {
+                bool nourritureTrouvee = false;
+                while (!nourritureTrouvee) {
+                    for (int x = -rayonReperageNourriture; x < rayonReperageNourriture; ++x) {
+                        for (int y = -rayonReperageNourriture; y < rayonReperageNourriture; ++y) {
+                            for (auto& nourriture : nourritures) {
+                                if (nourriture.getEtat() == true && (animaux[i].getPosX() - nourriture.getPosX()) == x && (animaux[i].getPosY() - nourriture.getPosY()) == y) {
+                                    animaux[i].cherchNourr(nourriture, nourritures);
+                                    nourritureTrouvee = true;
+                                    if (nourriture.getEtat() == false) { seNourrit = true; } // si y'a eu contact dans l'interaction alors l'animal a mangé
                                 }
                             }
                         }
                     }
-                    nourrTrouve = true; //pour arreter de chercher si y'a rien
+                    nourritureTrouvee = true; //pour arreter de chercher si y'a rien
                 }
             }
-            interConte = 0; //pour reset le conte d'interaction pour le prochain animal
+            nbInteractions = 0;
+            if (!seNourrit)
+                animaux[i].setFaimCount(1);
+            else {
+                animaux[i].setFaimCount(0); 
+            }
+            seNourrit = false;
+            if (animaux[i].getFaimCount() == 20) 
+                animaux[i].setVie(false);
         }
         system("PAUSE");
         estJour = !estJour;
