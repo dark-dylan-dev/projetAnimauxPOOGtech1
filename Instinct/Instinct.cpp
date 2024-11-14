@@ -9,7 +9,7 @@
 using namespace std;
 
 int main() {
-    srand(time(NULL));
+    srand((int)time(NULL));
 
     vector<Animal> animaux;
     vector<Nourriture> nourritures;

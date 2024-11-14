@@ -79,11 +79,10 @@ void Jeu::Init(vector<Animal>& animaux, vector<Nourriture>& nourritures) {
 }
 
 void Jeu::BoucleDeJeu(vector<Animal>& animaux, int& tour, bool debug, Joueur& joueur, vector<Nourriture>& nourritures) {
-    const int rayonReperageAnimaux = 25;
-    const int rayonReperageNourriture = 30;
+    const int rayonReperageAnimaux = 15;
+    const int rayonReperageNourriture = 20;
     int nbInteractions = 0;
     string periode;
-    int interAnimal = 0;
     bool seNourrit = false;
     while (true) {
         if (!debug) { system("cls"); }
@@ -106,43 +105,37 @@ void Jeu::BoucleDeJeu(vector<Animal>& animaux, int& tour, bool debug, Joueur& jo
             if (animaux[i].estEnVie()) {
                 estJour ? animaux[i].deplacement() : animaux[i].enTrainDeDormir();
                 if (debug) { animaux[i].afficherPosition(); }
-                //--- RECHERCHE D'ANIMAL DANS UN RAYON DE (rayonReperage) blocs ---//
-                bool animalTrouve = false;
-                while (!animalTrouve) {
-                    for (int x = -rayonReperageAnimaux; x < rayonReperageAnimaux; ++x) {
-                        for (int y = -rayonReperageAnimaux; y < rayonReperageAnimaux; ++y) {
-                            for (auto& animal : animaux) {
-                                if (animal.estEnVie() == true && (animaux[i].getPosX() - animal.getPosX()) == x && (animaux[i].getPosY() - animal.getPosY()) == y) {
-                                    if (x != 0 && y != 0) {
-                                        animaux[i].interagir(animal);
-                                        nbInteractions++;
-                                        if (animal.estEnVie() == false) { seNourrit = true; }
-                                        animalTrouve = true;
-                                    }
+                //--- RECHERCHE D'ANIMAUX ---//
+                for (int x = -rayonReperageAnimaux; x < rayonReperageAnimaux; ++x) {
+                    for (int y = -rayonReperageAnimaux; y < rayonReperageAnimaux; ++y) {
+                        for (auto& animal : animaux) {
+                            if (animal.estEnVie() == true && (animaux[i].getPosX() - animal.getPosX()) == x && (animaux[i].getPosY() - animal.getPosY()) == y) {
+                                if (x != 0 && y != 0) {
+                                    animaux[i].interagir(animal);
+                                    nbInteractions++;
+                                    if (animal.estEnVie() == false) { seNourrit = true; }
+                                    goto sortie;
                                 }
                             }
                         }
                     }
-                    animalTrouve = true;
                 }
             }
-            if (interAnimal == 0 && animaux[i].aFaimStatus() == true) {
-                bool nourritureTrouvee = false;
-                while (!nourritureTrouvee) {
-                    for (int x = -rayonReperageNourriture; x < rayonReperageNourriture; ++x) {
-                        for (int y = -rayonReperageNourriture; y < rayonReperageNourriture; ++y) {
-                            for (auto& nourriture : nourritures) {
-                                if (nourriture.getEtat() == true && (animaux[i].getPosX() - nourriture.getPosX()) == x && (animaux[i].getPosY() - nourriture.getPosY()) == y) {
-                                    animaux[i].cherchNourr(nourriture, nourritures);
-                                    nourritureTrouvee = true;
-                                    if (nourriture.getEtat() == false) { seNourrit = true; } // si y'a eu contact dans l'interaction alors l'animal a mangé
-                                }
+            //--- RECHERCHE DE NOURRITURE (si aucun animal rencontré) ---//
+            if (nbInteractions == 0 && animaux[i].aFaimStatus() && animaux[i].estEnVie()) {
+                for (int x = -rayonReperageNourriture; x < rayonReperageNourriture; ++x) {
+                    for (int y = -rayonReperageNourriture; y < rayonReperageNourriture; ++y) {
+                        for (auto& nourriture : nourritures) {
+                            if (nourriture.getEtat() == true && (animaux[i].getPosX() - nourriture.getPosX()) == x && (animaux[i].getPosY() - nourriture.getPosY()) == y) {
+                                animaux[i].cherchNourr(nourriture, nourritures);
+                                if (nourriture.getEtat() == false) { seNourrit = true; } // si y'a eu contact dans l'interaction alors l'animal a mangé
+                                goto sortie;
                             }
                         }
                     }
-                    nourritureTrouvee = true; //pour arreter de chercher si y'a rien
                 }
             }
+            sortie:
             nbInteractions = 0;
             if (!seNourrit)
                 animaux[i].setFaimCount(1);
