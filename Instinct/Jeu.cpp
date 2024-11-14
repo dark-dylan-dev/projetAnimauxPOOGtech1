@@ -87,7 +87,7 @@ void Jeu::BoucleDeJeu(vector<Animal>& animaux, int& tour, bool debug, Joueur& jo
         tour++;
         cout << endl << "Tour : " << tour << endl;
         int choixJoueur = joueur.afficherInfos(animaux);
-        joueur.choixJoueur(choixJoueur, animaux);
+        if (joueur.choixJoueur(choixJoueur, animaux) == 'Q') { exit(0); }
         for (unsigned int i = 0; i < animaux.size(); ++i) {
             estJour ? animaux[i].deplacement() : animaux[i].enTrainDeDormir();
             if (debug) { animaux[i].afficherPosition(); }
