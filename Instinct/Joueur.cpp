@@ -172,13 +172,27 @@ char Joueur::choixJoueur(int choix, vector<Animal>& animaux) {
         cout << endl << nomDuBebe << " (" << especeDuBebe << ", " << regimeDuBebe << ") est le resultat de l'amour passionnel entre "
             << animaux[choixAnimalUn - 1].getNom() << " et " << animaux[choixAnimalDeux - 1].getNom() << endl;
         break;
-    case 5: // Option : 'Creer un animal'
-    cout << "Tu as choisis de créer un nouvel animal\n";
-    afficherInfosSolo(animaux);
-    cout << "Choisis l'animal que tu veux créer" <<
-    break;
-    case 6: // Option : 'Rapprocher deux animaux'
-    break;
+     case 5: // Option : 'Creer un animal'
+     cout << "Tu as choisis de créer un nouvel animal\n";
+     afficherInfosSolo(animaux);
+     cout << "Choisis l'animal que tu veux créer" <<
+         break;
+     case 6: // Option : 'Rapprocher deux animaux'
+     cout << "Tu as choisis de rapprocher deux animaux\n";
+     afficherInfosSolo(animaux);
+     cout << "Quels animaux veux-tu rapprocher ? \n\n - Animal 1 >";
+     cin >> choixAnimalUn;
+     if (cin.fail() || choixAnimalUn < 1 || choixAnimalUn > animaux.size()) { choixAnimalUn = WhileCinFail(choixAnimalUn, animaux); }
+     cout << endl << " - Animal 2 > ";
+     cin >> choixAnimalDeux;
+     while (cin.fail() || choixAnimalDeux < 1 || choixAnimalDeux > animaux.size() || choixAnimalDeux == choixAnimalUn) {
+         if (choixAnimalDeux == choixAnimalUn) { cout << "Un animal ne peut pas se rapprocher de lui même\n"; }
+         cin.clear();
+         cin.ignore(9999, '\n');
+         cout << "Fais un choix correct, entre 1 et " << animaux.size() << " > ";
+         cin >> choixAnimalDeux;
+     }
+         break;
     case 7: // Option : 'Ne rien faire'
         break;
     case 9: // Option : 'Quitter'
