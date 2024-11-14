@@ -6,18 +6,18 @@
 #include "Animal.h"
 #include "Nourriture.h"
 
-Animal::Animal(const std::string& nom, const std::string& espece, const std::string& regime)
+Animal::Animal(const string& nom, const string& espece, const string& regime)
     : nom(nom), espece(espece), regime(regime), aFaim(false), enVie(true), x(0), y(0), id(-1), aFaimCount(0) {
     x = rand() % 100;
     y = rand() % 100;
 }
 
 // GETTERS
-std::string Animal::getNom() const { return nom; }
-std::string Animal::getEspece() const { return espece; }
+string Animal::getNom() const { return nom; }
+string Animal::getEspece() const { return espece; }
 bool Animal::estEnVie() const { return enVie; }
 bool Animal::aFaimStatus() const { return aFaim; }
-std::string Animal::getRegime() const { return regime; }
+string Animal::getRegime() const { return regime; }
 int Animal::getPosX() const { return x; }
 int Animal::getPosY() const { return y; }
 int Animal::getFaimCount() const { return aFaimCount; }
@@ -29,8 +29,8 @@ void Animal::deplacement() {
 
 void Animal::enTrainDeDormir() const {
     if (getEspece() == "Capybara")
-        cout << " - " << getNom() << " (" << getEspece() << ") est en train de se balader." << endl; return;
-    cout << " - " << getNom() << " (" << getEspece() << ") est en train de dormir..." << endl;
+        cout << " - " << getNom() << " (" << getEspece() << ") est en train de se balader." << endl << endl; return;
+    cout << " - " << getNom() << " (" << getEspece() << ") est en train de dormir..." << endl << endl;
 }
 
 float Animal::distanceAvec(const Animal& autre) const {
@@ -52,22 +52,22 @@ void Animal::interagir(Animal& autre) {
         autre.y += 2*(autre.y - y);
         if (distanceAvec(autre) == 0) {
             autre.setVie(false);
-            cout << autre.getNom() << " est mort, chasse par " << getNom() << " (" << getEspece() << ")" << endl;
+            cout << autre.getNom() << " est mort, chasse par " << getNom() << " (" << getEspece() << ")" << endl << endl;
         }
     }
     else if (regime == "proie" && autre.getRegime() == "predateur") {
-        cout << nom << " (" << getEspece() << ") essaie de fuir " << autre.getNom() << " (" << autre.getEspece() << ")" << endl;
+        cout << nom << " (" << getEspece() << ") essaie de fuir " << autre.getNom() << " (" << autre.getEspece() << ")" << endl << endl;
         x += (x - autre.x);
         y += (y - autre.y);
         if (distanceAvec(autre) == 0) {
             enVie = false;
-            cout << nom << " est mort\n";
+            cout << nom << " est mort\n" << endl;
         }
     }
 }
 
 void Animal::afficherPosition() const {
-    cout << nom << " (" << espece << ") est a la position (" << x << ", " << y << ")\n";
+    cout << " - [DEBUG] > " << nom << " (" << espece << ") est a la position (" << x << ", " << y << ")\n";
 }
 
 void Animal::setPosition(int newPosX, int newPosY) {
@@ -82,21 +82,22 @@ void Animal::deplacerVers(Animal& AnimalUn, Animal& AnimalDeux) {
 }
 
 void Animal::cherchNourr(Nourriture& nourr, vector<Nourriture>& nourritures) {
-    std::cout << nom << " se dirige vers : " << nourr.getType() << std::endl;
+    cout << nom << " se dirige vers : " << nourr.getType() << endl;
     x += (x - nourr.getPosX());
     y += (y - nourr.getPosY());
     if (Animal::distanceAvecNourr(nourr) == 0) {
-        std::cout << nom << " mange : " << nourr.getType() << std::endl;
+        cout << nom << " mange : " << nourr.getType() << endl;
         aFaim = false;
         nourr.setEtat(false);
     }
+    cout << endl;
 }
 
 // SETTERS
 void Animal::setVie(bool etat) { enVie = etat; }
 void Animal::setFaim(bool etat) { aFaim = etat; }
 void Animal::setID(int idSet) { id = idSet; }
-void Animal::setNom(std::string nomSet) { nom = nomSet; }
+void Animal::setNom(string nomSet) { nom = nomSet; }
 void Animal::setFaimCount(int nb) {
     if (nb != 0) { aFaimCount += nb; }
     else { aFaimCount = nb; } //pour à la fois ajouter au conte si nb = 1 et le reset si nb = 0

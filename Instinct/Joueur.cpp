@@ -86,11 +86,11 @@ void Joueur::CreerUnAnimal(vector<Animal>& animaux) { // Copier-coller de la mê
 int Joueur::afficherInfos(vector<Animal>& animaux) const {
     int choix(0);
     centrerTexte("---------------------------");
-    for (int i = 0; i < 10; ++i) {
-        centrerTexte(menu[i]);
-        if(i < 8)
-            cout << endl;
-    }
+                  for (int i = 0; i < 10; ++i) {
+                     centrerTexte(menu[i]);
+                     if(i < 9)
+                         cout << endl;
+                  }
     centrerTexte("---------------------------");
     cout << endl << "\nQue voulez-vous faire durant ce tour ? > ";
     cin >> choix;
@@ -105,8 +105,7 @@ int Joueur::afficherInfos(vector<Animal>& animaux) const {
 void Joueur::afficherInfosSolo(vector<Animal>& animaux) {
     for (unsigned int i = 0; i < animaux.size(); ++i) {
         if (animaux[i].estEnVie() == false) { continue; }
-        if (i < 9) { cout << endl << " - " << animaux[i].id << ". " << animaux[i].getNom() << " (" << animaux[i].getEspece() << ")"; }
-        else { cout << endl << " - " << animaux[i].id << "." << animaux[i].getNom() << " (" << animaux[i].getEspece() << ")"; }
+        cout << endl << " - " << i + 1 << ". " << animaux[i].getNom() << " (" << animaux[i].getEspece() << ")";
     }
     cout << endl;
 }
@@ -129,8 +128,8 @@ void Joueur::effetTornade(vector<Animal>& animaux, int tailleMap) {
 
     animaux.erase(
         std::remove_if(animaux.begin(), animaux.end(), [&](Animal& animal) {
-            float dx = endX - startX;
-            float dy = endY - startY;
+            float dx = (float)(endX - startX);
+            float dy = (float)(endY - startY);
             float distance = abs(dy * animal.getPosX() - dx * animal.getPosY() + endX * startY - endY * startX) / sqrt(dx * dx + dy * dy); // calcul bizarre pour le rayon
             if (distance <= 5) {
                 cout << animal.getNom() << " a ete tue par la tornade !" << endl;
@@ -147,7 +146,7 @@ void Joueur::effetMeteorite(vector<Animal>& animaux, int tailleMap) {
     cout << "Une meteorite frappe la position (" << impactX << ", " << impactY << ")" << endl;
     animaux.erase(
         std::remove_if(animaux.begin(), animaux.end(), [&](Animal& animal) {
-            float distance = sqrt(pow(animal.getPosX() - impactX, 2) + pow(animal.getPosY() - impactY, 2)); // calcul bizarre pour le rayon
+            float distance = (float)(sqrt(pow(animal.getPosX() - impactX, 2) + pow(animal.getPosY() - impactY, 2))); // calcul bizarre pour le rayon
 
             if (distance <= 20) {
                 cout << animal.getNom() << " a ete tue par la meteorite !" << endl;
@@ -167,25 +166,32 @@ char Joueur::choixJoueur(int choix, vector<Animal>& animaux) {
     Animal temp("Default", "Default", "Default");
     switch (choix) {
     case 1: // Option : 'Nourrir' -> Rajouter des vérifications
+        cout << endl;
         cout << "Tu as choisi de nourrir un animal, quel animal veux-tu nourrir ? ";
         afficherInfosSolo(animaux);
+        cout << endl;
         cout << "Ton choix > ";
         cin >> choixSpecifique;
         if (cin.fail() || choixSpecifique < 1 || choixSpecifique > animaux.size()) { choixSpecifique = WhileCinFail(choixSpecifique, animaux); }
-        if (!animaux[choixSpecifique - 1].aFaimStatus()) { cout << animaux[choixSpecifique - 1].getNom() << " n'a pas besoin de manger pour l'instant" << endl; break; }
+        if (!animaux[choixSpecifique - 1].aFaimStatus()) { cout << endl << animaux[choixSpecifique - 1].getNom() << " n'a pas besoin de manger pour l'instant" << endl << endl; break; }
         animaux[choixSpecifique - 1].setFaim(false);
+        cout << endl;
         cout << " - Tu as rempli la pense de " << animaux[choixSpecifique - 1].getNom() << endl;
         break;
     case 2: // Option : 'Tuer' -> Rajouter des vérifications
+        cout << endl;
         cout << "Tu as choisi de tuer un animal, quel animal veux-tu tuer ? ";
         afficherInfosSolo(animaux);
+        cout << endl;
         cout << "Ton choix > ";
         cin >> choixSpecifique;
         if (cin.fail() || choixSpecifique < 1 || choixSpecifique > animaux.size()) { choixSpecifique = WhileCinFail(choixSpecifique, animaux); }
         animaux[choixSpecifique - 1].setVie(false);
-        cout << " - Tu as ote la vie de " << animaux[choixSpecifique - 1].getNom() << endl;
+        cout << endl;
+        cout << " - Tu as ote la vie de " << animaux[choixSpecifique - 1].getNom() << endl << endl;
         break;
     case 3: // Option : 'Provoquer un conflit' -> Rajouter des vérifications
+        cout << endl;
         cout << "Tu as choisi de provoquer un conflit entre deux animaux, lesquels veux-tu se faire affronter ?";
         afficherInfosSolo(animaux);
         cout << "Ton choix pour le combattant numero 1 > ";
@@ -239,6 +245,7 @@ char Joueur::choixJoueur(int choix, vector<Animal>& animaux) {
         }
         break;
     case 4: // Option : 'Reproduction'
+        cout << endl;
         cout << "Tu as choisi de se faire reproduire entre eux deux animaux" << endl;
         afficherInfosSolo(animaux);
         cout << endl << "Quels animaux veux-tu se faire reproduire ? \n\n - Animal 1 > ";
@@ -257,24 +264,27 @@ char Joueur::choixJoueur(int choix, vector<Animal>& animaux) {
         animauxRandRegime[0] = animaux[choixAnimalUn-1].getRegime(); animauxRandRegime[1] = animaux[choixAnimalDeux-1].getRegime();
         choixRandom = rand() % 2;
         if(choixRandom == 1) 
-            nomDuBebe = animaux[choixAnimalUn - 1].getNom() + " Jr.";
-        else
             nomDuBebe = animaux[choixAnimalDeux - 1].getNom() + " Jr.";
+        else
+            nomDuBebe = animaux[choixAnimalUn - 1].getNom() + " Jr.";
         especeDuBebe = animauxRandEspece[choixRandom];
         regimeDuBebe = animauxRandRegime[choixRandom];
-        
+        cout << endl;
         animaux.push_back(Animal::Animal(nomDuBebe, especeDuBebe, regimeDuBebe));
         cout << endl << nomDuBebe << " (" << especeDuBebe     << ", "   << regimeDuBebe << ") est le resultat de l'amour passionnel entre "
                      << animaux[choixAnimalUn - 1].getNom()   << " (" << animaux[choixAnimalUn - 1].getEspece() << ") et " 
                      << animaux[choixAnimalDeux - 1].getNom() << " (" << animaux[choixAnimalDeux - 1].getEspece() << ")" << endl;
         break;
     case 5: // Option : 'Creer un animal'
+        cout << endl;
         cout << "Tu as choisis de creer un nouvel animal\n";
         CreerUnAnimal(animaux);
         break;
     case 6: // Option : 'Rapprocher deux animaux'
+        cout << endl;
         cout << "Tu as choisis de rapprocher deux animaux\n";
         afficherInfosSolo(animaux);
+        cout << endl;
         cout << "Quels animaux veux-tu rapprocher ? \n\n - Animal 1 >";
         cin >> choixAnimalUn;
         if (cin.fail() || choixAnimalUn < 1 || choixAnimalUn > animaux.size()) { choixAnimalUn = WhileCinFail(choixAnimalUn, animaux); }
@@ -299,28 +309,33 @@ char Joueur::choixJoueur(int choix, vector<Animal>& animaux) {
         break;
     case 8: // Option : 'Effets meteorologiques'
         int rep;
+        cout << endl;
         cout << "Vous pouvez choisir d'appliquer un effet meteorologique !" << endl;
         cout << "1 - Lancer une tornade" << endl;
         cout << "2 - Lancer une meteorite" << endl;
         cout << "3 - Ne rien faire" << endl;
-        cout << "Choisir > ";
+        cout << endl;
+        cout << "Choisir l'effet meteorologiue souhaite > ";
         cin >> rep;
 
         while (cin.fail() || rep < 1 || rep > 3) {
             cin.clear();
             cin.ignore(9999, '\n');
-            cout << endl << "Choisir > ";
+            cout << endl << "Choisir un effet meeorologique correct (entre 1 et 3) > ";
             cin >> rep;
         }
-
-        if (rep == 1) {
+        switch (rep) {
+        case 1:
             effetTornade(animaux, tailleMap);
-        }
-        else if (rep == 2) {
+            break;
+        case 2:
             effetMeteorite(animaux, tailleMap);
-        }
-        else if (rep == 3) {
-            cout << "Aucun effet meteorologique applique" << endl;
+            break;
+        case 3:
+            cout << endl << "Aucun effet meteorologique applique" << endl;
+            break;
+        default:
+            break;
         }
         break;
     case 9: // Option : 'Ne rien faire'
