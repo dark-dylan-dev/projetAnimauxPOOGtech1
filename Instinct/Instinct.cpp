@@ -25,6 +25,7 @@ int main() {
     jeu.BoucleDeJeu(animaux, tour, debugMode, joueur,nourritures);
 
     animaux.clear();
+    nourritures.clear();
 
     return 0;
 }

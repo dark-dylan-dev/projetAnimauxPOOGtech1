@@ -78,6 +78,7 @@ void Animal::cherchNourr(Nourriture& nourr, vector<Nourriture>& nourritures) {
     if (Animal::distanceAvecNourr(nourr) == 0) {
         std::cout << nom << " mange : " << nourr.getType() << std::endl;
         aFaim = false;
+        nourr.setEtat(false);
     }
 }
 

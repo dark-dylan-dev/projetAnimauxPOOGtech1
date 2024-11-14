@@ -17,6 +17,7 @@ public:
 	int getPosX() const { return x; }
 	int getPosY() const { return y; }
 	int getEtat() const { return etat; }
+	void setEtat(bool nvEtat) { etat = nvEtat; }
 };
 
 #endif

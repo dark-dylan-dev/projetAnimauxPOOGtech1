@@ -112,7 +112,7 @@ void Jeu::BoucleDeJeu(vector<Animal>& animaux, int& tour, bool debug, Joueur& jo
             }
 
             //--- FIN DE RECHERCHE ---//
-            if (interConte == 0 && animaux[i].aFaimStatus() == true) { 
+            if (interConte == 0 && animaux[i].aFaimStatus() == true) {
                 bool nourrTrouve = false;
                 while (!nourrTrouve) {
                     for (int x = -rayonBouffe; x < rayonBouffe; ++x) {
