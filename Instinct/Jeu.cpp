@@ -82,8 +82,6 @@ void Jeu::BoucleDeJeu(vector<Animal>& animaux, int& tour, bool debug, Joueur& jo
     const int rayonReperage = 25;
     const int rayonBouffe = 30; //(2 * rayonReperage) / 3.14; pour un rayon nourriture plus étroit que rayon animal
     int interConte = 0;
-    int distanceAnimal;
-    int distanceNourr;
     while (tour < 10) {
         if (!debug) { system("cls"); }
         tour++;
