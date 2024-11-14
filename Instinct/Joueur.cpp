@@ -164,7 +164,7 @@ char Joueur::choixJoueur(int choix, vector<Animal>& animaux) {
     cout << "Tu as choisis de créer un nouvel animal\n";
     afficherInfosSolo(animaux);
     break;
-case 6: // Option : 'Rapprocher deux animaux'
+    case 6: // Option : 'Rapprocher deux animaux'
     cout << "Tu as choisis de rapprocher deux animaux\n";
     afficherInfosSolo(animaux);
     cout << "Quels animaux veux-tu rapprocher ? \n\n - Animal 1 >";
