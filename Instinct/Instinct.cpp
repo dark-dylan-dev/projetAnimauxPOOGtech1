@@ -8,7 +8,7 @@
 using namespace std;
 
 int main() {
-    srand(time(0));
+    srand(time(NULL));
 
     vector<Animal> animaux;
     int tour = 0;
