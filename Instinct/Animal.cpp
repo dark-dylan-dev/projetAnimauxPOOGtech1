@@ -49,8 +49,8 @@ void Animal::interagir(Animal& autre) {
     aFaim = true;
     if (regime == "predateur" && autre.getRegime() == "proie" && aFaim) {
         cout << nom << " chasse " << autre.getNom() << "\n";
-        autre.x += (autre.x - x);
-        autre.y += (autre.y - y);
+        autre.x += 2*(autre.x - x);
+        autre.y += 2*(autre.y - y);
         if (distanceAvec(autre) == 0) {
             autre.setVie(false);
             cout << autre.getNom() << " est mort\n";
