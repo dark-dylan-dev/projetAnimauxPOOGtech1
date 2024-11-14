@@ -1,6 +1,6 @@
 #include <vector>
 #include <iostream>
 
-#include "Animal.h"
+#include "Nourriture.h"
 
-// Code ici
+Nourriture::Nourriture(std::string type) : type(type), x(rand() % 100), y(rand() % 100) {}

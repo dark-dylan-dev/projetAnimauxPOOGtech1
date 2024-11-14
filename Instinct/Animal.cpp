@@ -1,8 +1,10 @@
 #include <iostream>
 #include <vector>
 #include <string>
+#include <algorithm>
 
 #include "Animal.h"
+#include "Nourriture.h"
 
 Animal::Animal(const std::string& nom, const std::string& espece, const std::string& regime)
     : nom(nom), espece(espece), regime(regime), aFaim(false), enVie(true), x(0), y(0), id(-1) {
@@ -37,6 +39,12 @@ float Animal::distanceAvec(const Animal& autre) const {
     return (float)sqrt(dx * dx + dy * dy);
 }
 
+float Animal::distanceAvecNourr(const Nourriture& nourriture) const {
+    int dx = x - nourriture.getPosX();
+    int dy = y - nourriture.getPosY();
+    return (float)sqrt(dx * dx + dy * dy);
+}
+
 void Animal::interagir(Animal& autre) {
     aFaim = true;
     if (regime == "predateur" && autre.getRegime() == "proie" && aFaim) {
@@ -61,6 +69,16 @@ void Animal::interagir(Animal& autre) {
 
 void Animal::afficherPosition() const {
     cout << nom << " (" << espece << ") est a la position (" << x << ", " << y << ")\n";
+}
+
+void Animal::cherchNourr(Nourriture& nourr, vector<Nourriture>& nourritures) {
+    std::cout << nom << " se dirige vers : " << nourr.getType() << std::endl;
+    x += (x - nourr.getPosX());
+    y += (y - nourr.getPosY());
+    if (Animal::distanceAvecNourr(nourr) == 0) {
+        std::cout << nom << " mange : " << nourr.getType() << std::endl;
+        aFaim = false;
+    }
 }
 
 // SETTERS

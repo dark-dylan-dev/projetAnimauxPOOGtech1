@@ -13,8 +13,8 @@ public:
     Jeu() : enCours(true), estJour(true) {}
     ~Jeu() {}
 
-    void Init(std::vector<Animal>& animaux);
-    void BoucleDeJeu(std::vector<Animal>& animaux, int& tour, bool debug, Joueur& joueur);
+    void Init(std::vector<Animal>& animaux, std::vector<Nourriture>& nourritures);
+    void BoucleDeJeu(std::vector<Animal>& animaux, int& tour, bool debug, Joueur& joueur, std::vector<Nourriture>& nourritures);
 };
 
 #endif

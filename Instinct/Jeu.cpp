@@ -5,10 +5,18 @@
 #include "Joueur.h"
 #include "Animal.h"
 #include "AnimalDerive.h"
+#include "Nourriture.h"
 
 using namespace std;
 
-void Jeu::Init(vector<Animal>& animaux) {
+void Jeu::Init(vector<Animal>& animaux, vector<Nourriture>& nourritures) {
+
+    const int NB_NOURRITURE = 500; // Grille de 100x100, 10.000 cases -> 500 nourritures = 5%
+    std::string typeNourriture[7] = { "fruits", "champignons","insectes","feuilles","cadavre","bambou","canne a sucre" };
+    for (int i = 0; i < NB_NOURRITURE; i++) {
+        nourritures.push_back(Nourriture(typeNourriture[rand() % 7]));
+    }
+
     int nombreDAnimaux(0);
     cout << "Combien d'animaux voulez-vous creer dans votre partie (entre 3 et 25) ? > ";
     cin >> nombreDAnimaux;
@@ -70,44 +78,61 @@ void Jeu::Init(vector<Animal>& animaux) {
     }
 }
 
-void Jeu::BoucleDeJeu(vector<Animal>& animaux, int& tour, bool debug, Joueur& joueur) {
+void Jeu::BoucleDeJeu(vector<Animal>& animaux, int& tour, bool debug, Joueur& joueur, vector<Nourriture>& nourritures) {
     const int rayonReperage = 25;
+    const int rayonBouffe = 30; //(2 * rayonReperage) / 3.14; pour un rayon nourriture plus étroit que rayon animal
+    int interConte = 0;
+    int distanceAnimal;
+    int distanceNourr;
     while (tour < 10) {
-        string cLeJour;
         if (!debug) { system("cls"); }
         tour++;
-        estJour ? cLeJour = "Jour" : cLeJour = "Nuit";
-        cout << endl << "Tour : " << tour << "\nJour(s) restant(s) avant la saison des amours : " << joueur.compteurAmour << "\n" << cLeJour << endl;
-        if (joueur.compteurAmour > 0 || joueur.compteurAmour <= 2) 
-             { joueur.incrCompteur(); }
-        else { joueur.resetCompteur(); }
+        cout << endl << "Tour : " << tour << endl;
         int choixJoueur = joueur.afficherInfos(animaux);
         joueur.choixJoueur(choixJoueur, animaux);
         for (unsigned int i = 0; i < animaux.size(); ++i) {
             estJour ? animaux[i].deplacement() : animaux[i].enTrainDeDormir();
             if (debug) { animaux[i].afficherPosition(); }
             //--- RECHERCHE D'ANIMAL DANS UN RAYON DE (rayonReperage) blocs ---//
-            int* idVus = new int[animaux.size()];
-            for (unsigned int l = 0; l < animaux.size(); ++l) { idVus[l] = -1; }
-            int j = i + 1;
-            if (j == animaux.size()) { j = 0; }
-            for (int x = -rayonReperage; x < rayonReperage; ++x) {
-                for (int y = -rayonReperage; y < rayonReperage; ++y) {
-                    if ((animaux[i].getPosX() - animaux[j].getPosX()) == x && (animaux[i].getPosY() - animaux[j].getPosY()) == y) {
-                        for (unsigned int k = 0; k < animaux.size(); ++k)
-                            for (unsigned int k2 = 0; k2 < animaux.size(); ++k2)
-                                if (idVus[k] == k2) { break; }
-                        idVus[i] = animaux[i].id;
-                        animaux[i].interagir(animaux[j]);
-                        // Intéragit si et seulement si l'animal n'a jamais été concerné pendant cette itération
+            bool animalTrouve = false;
+            while (!animalTrouve) {
+                for (int x = -rayonReperage; x < rayonReperage; ++x) {
+                    for (int y = -rayonReperage; y < rayonReperage; ++y) {
+                        for (auto animal : animaux) {
+                            if ((animaux[i].getPosX() - animal.getPosX()) == x && (animaux[i].getPosY() - animal.getPosY()) == y) {
+                                if (x != 0 && y != 0) {
+                                    animaux[i].interagir(animal);
+                                    // Intéragit si et seulement si l'animal n'a jamais été concerné pendant cette itération
+                                    interConte++;
+                                    animalTrouve = true;
+                                }
+                            }
+                        }
                     }
                 }
+                animalTrouve = true;
             }
-            delete[] idVus;
+
             //--- FIN DE RECHERCHE ---//
+            if (interConte == 0 && animaux[i].aFaimStatus() == true) { 
+                bool nourrTrouve = false;
+                while (!nourrTrouve) {
+                    for (int x = -rayonBouffe; x < rayonBouffe; ++x) {
+                        for (int y = -rayonBouffe; y < rayonBouffe; ++y) {
+                            for (auto nourrElem : nourritures) {
+                                if ((animaux[i].getPosX() - nourrElem.getPosX()) == x && (animaux[i].getPosY() - nourrElem.getPosY()) == y) {
+                                    animaux[i].cherchNourr(nourrElem,nourritures);
+                                    nourrTrouve = true;
+                                }
+                            }
+                        }
+                    }
+                    nourrTrouve = true; //pour arreter de chercher si y'a rien
+                }
+            }
+            interConte = 0; //pour reset le conte d'interaction pour le prochain animal
         }
         system("PAUSE");
         estJour = !estJour;
     }
 }
-// Code

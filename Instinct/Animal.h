@@ -5,6 +5,8 @@
 #include <vector>
 #include <string>
 
+#include "Nourriture.h"
+
 using namespace std;
 
 class Animal {
@@ -25,7 +27,9 @@ public:
     virtual void deplacement();
     void enTrainDeDormir() const;
     float distanceAvec(const Animal& autre) const;
+    float distanceAvecNourr(const Nourriture& nourriture) const;
     virtual void interagir(Animal& autre);
+    void cherchNourr(Nourriture& nourr, vector<Nourriture>& nourritures);
     void afficherPosition() const;
 
     // GETTERS
