@@ -73,9 +73,14 @@ void Jeu::Init(vector<Animal>& animaux) {
 void Jeu::BoucleDeJeu(vector<Animal>& animaux, int& tour, bool debug, Joueur& joueur) {
     const int rayonReperage = 25;
     while (tour < 10) {
+        string cLeJour;
         if (!debug) { system("cls"); }
         tour++;
-        cout << endl << "Tour : " << tour << endl;
+        estJour ? cLeJour = "Jour" : cLeJour = "Nuit";
+        cout << endl << "Tour : " << tour << "\nJour(s) restant(s) avant la saison des amours : " << joueur.compteurAmour << "\n" << cLeJour << endl;
+        if (joueur.compteurAmour > 0 || joueur.compteurAmour <= 2) 
+             { joueur.incrCompteur(); }
+        else { joueur.resetCompteur(); }
         int choixJoueur = joueur.afficherInfos(animaux);
         joueur.choixJoueur(choixJoueur, animaux);
         for (unsigned int i = 0; i < animaux.size(); ++i) {

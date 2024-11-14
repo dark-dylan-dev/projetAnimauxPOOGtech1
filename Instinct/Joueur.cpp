@@ -7,6 +7,18 @@
 
 using namespace std;
 
+int compteurAmour = 0;
+bool saisonDesAmours = false;
+
+bool Joueur::getPeriodeDeReproduction() const { return saisonDesAmours; }
+void Joueur::setPeriodeDeReproduction(bool pdr) { 
+    saisonDesAmours = pdr; 
+    compteurAmour = 2; 
+    cout << "Tu as demare la saison des amours";
+} //update
+void Joueur::incrCompteur() { if (compteurAmour == 0) { return; } compteurAmour -= 1; } //update
+void Joueur::resetCompteur() { compteurAmour = 0; } //update
+
 void Joueur::choixDebugMode(bool& debugMode) {
     cout << "Debug mode [y/N] ? > ";
     std::string ans;
@@ -29,16 +41,16 @@ void Joueur::choixDebugMode(bool& debugMode) {
 
 int Joueur::afficherInfos(vector<Animal>& animaux) const {
     int choix(0);
-    for (int i = 0; i < 8; ++i) {
+    for (int i = 0; i < 9; ++i) {
         centrerTexte(menu[i]);
         cout << endl;
     }
     cout << "\nQue voulez-vous faire durant ce tour ? > ";
     cin >> choix;
-    while (cin.fail() || choix < 1 || choix > 8) {
+    while (cin.fail() || choix < 1 || choix > 9) {
         cin.clear();
         cin.ignore(9999, '\n');
-        cout << "Fais un choix correct, entre 1 et 8 > ";
+        cout << "Fais un choix correct, entre 1 et 9 > ";
         cin >> choix;
     }
     return choix;
@@ -164,9 +176,11 @@ char Joueur::choixJoueur(int choix, vector<Animal>& animaux) {
         break;
     case 6: // Option : 'Rapprocher deux animaux'
         break;
-    case 7: // Option : 'Ne rien faire'
+    case 7: // Option : 'Saison des amours'
+        setPeriodeDeReproduction(true);
+    case 8: // Option : 'Ne rien faire'
         break;
-    case 8: // Option : 'Quitter'
+    case 9: // Option : 'Quitter'
         return 'Q';
     default:
         break;
