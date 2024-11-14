@@ -86,7 +86,7 @@ void Joueur::CreerUnAnimal(vector<Animal>& animaux) { // Copier-coller de la mê
 int Joueur::afficherInfos(vector<Animal>& animaux) const {
     int choix(0);
     centrerTexte("---------------------------");
-    for (int i = 0; i < 9; ++i) {
+    for (int i = 0; i < 10; ++i) {
         centrerTexte(menu[i]);
         if(i < 8)
             cout << endl;
@@ -94,10 +94,10 @@ int Joueur::afficherInfos(vector<Animal>& animaux) const {
     centrerTexte("---------------------------");
     cout << endl << "\nQue voulez-vous faire durant ce tour ? > ";
     cin >> choix;
-    while (cin.fail() || choix < 1 || choix > 9) {
+    while (cin.fail() || choix < 1 || choix > 10) {
         cin.clear();
         cin.ignore(9999, '\n');
-        cout << "Fais un choix correct, entre 1 et 9 > ";
+        cout << "Fais un choix correct, entre 1 et 10 > ";
         cin >> choix;
     }
     return choix;
@@ -118,6 +118,45 @@ int Joueur::WhileCinFail(unsigned int var, vector<Animal>& animaux) {
         cin >> var;
     }
     return var;
+}
+void Joueur::effetTornade(vector<Animal>& animaux, int tailleMap) {
+    int startX = rand() % tailleMap;
+    int startY = rand() % tailleMap;
+    int endX = rand() % tailleMap;
+    int endY = rand() % tailleMap;
+
+    cout << "Une tornade se deplace de (" << startX << ", " << startY << ") à (" << endX << ", " << endY << ")" << endl;
+
+    animaux.erase(
+        std::remove_if(animaux.begin(), animaux.end(), [&](Animal& animal) {
+            float dx = endX - startX;
+            float dy = endY - startY;
+            float distance = abs(dy * animal.getPosX() - dx * animal.getPosY() + endX * startY - endY * startX) / sqrt(dx * dx + dy * dy); // calcul bizarre pour le rayon
+            if (distance <= 5) {
+                cout << animal.getNom() << " a ete tue par la tornade !" << endl;
+                return true;
+            }
+            return false;
+            }),
+        animaux.end()
+    );
+}
+void Joueur::effetMeteorite(vector<Animal>& animaux, int tailleMap) {
+    int impactX = rand() % tailleMap;
+    int impactY = rand() % tailleMap;
+    cout << "Une meteorite frappe la position (" << impactX << ", " << impactY << ")" << endl;
+    animaux.erase(
+        std::remove_if(animaux.begin(), animaux.end(), [&](Animal& animal) {
+            float distance = sqrt(pow(animal.getPosX() - impactX, 2) + pow(animal.getPosY() - impactY, 2)); // calcul bizarre pour le rayon
+
+            if (distance <= 20) {
+                cout << animal.getNom() << " a ete tue par la meteorite !" << endl;
+                return true;
+            }
+            return false;
+            }),
+        animaux.end()
+    );
 }
 char Joueur::choixJoueur(int choix, vector<Animal>& animaux) {
     unsigned int choixSpecifique(0);
@@ -258,9 +297,35 @@ char Joueur::choixJoueur(int choix, vector<Animal>& animaux) {
     case 7: // Option : '[EVENEMENT] Saison des amours'
         setPeriodeDeReproduction(true);
         break;
-    case 8: // Option : 'Ne rien faire'
+    case 8: // Option : 'Effets meteorologiques'
+        int rep;
+        cout << "Vous pouvez choisir d'appliquer un effet meteorologique !" << endl;
+        cout << "1 - Lancer une tornade" << endl;
+        cout << "2 - Lancer une meteorite" << endl;
+        cout << "3 - Ne rien faire" << endl;
+        cout << "Choisir > ";
+        cin >> rep;
+
+        while (cin.fail() || rep < 1 || rep > 3) {
+            cin.clear();
+            cin.ignore(9999, '\n');
+            cout << endl << "Choisir > ";
+            cin >> rep;
+        }
+
+        if (rep == 1) {
+            effetTornade(animaux, tailleMap);
+        }
+        else if (rep == 2) {
+            effetMeteorite(animaux, tailleMap);
+        }
+        else if (rep == 3) {
+            cout << "Aucun effet meteorologique applique" << endl;
+        }
         break;
-    case 9: // Option : 'Quitter'
+    case 9: // Option : 'Ne rien faire'
+        break;
+    case 10: // Option : 'Quitter'
         return 'Q';
     default:
         break;

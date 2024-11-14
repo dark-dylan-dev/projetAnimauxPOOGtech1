@@ -9,10 +9,11 @@
 class Joueur
 {
 private:
-    string menu[9] = { "1. Nourrir", "2. Tuer", "3. Provoquer un conflit", "4. Reproduction", "5. Creer un animal", "6. Rapprocher deux animaux", "7. Saison des amours", "8. Ne rien faire", "9. Quitter"};
+    string menu[10] = { "1. Nourrir", "2. Tuer", "3. Provoquer un conflit", "4. Reproduction", "5. Creer un animal", "6. Rapprocher deux animaux", "7. Saison des amours", "8. Effets meteorologiques", "9. Ne rien faire", "10. Quitter" }; 
 public:
     bool saisonDesAmours = false;
     int compteurAmour = 0;
+    int tailleMap = 100;
     bool getPeriodeDeReproduction() const;
     void setPeriodeDeReproduction(bool prd);
     void incrCompteur();
@@ -22,6 +23,8 @@ public:
     void afficherInfosSolo(std::vector<Animal>& animaux);
     int WhileCinFail(unsigned int var, std::vector<Animal>& animaux);
     char choixJoueur(int choix, std::vector<Animal>& animaux);
+    void effetTornade(vector<Animal>& animaux, int tailleMap);
+    void effetMeteorite(vector<Animal>& animaux, int tailleMap);
 };
 
 #endif
