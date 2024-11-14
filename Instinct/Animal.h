@@ -16,6 +16,7 @@ private:
     string regime;
     bool aFaim;
     bool enVie;
+    int aFaimCount;
 
 protected:
     int x, y;
@@ -40,12 +41,14 @@ public:
     bool aFaimStatus()      const;
     int getPosX()           const;
     int getPosY()           const;
+    int getFaimCount()     const;
 
     // SETTERS
     void setVie(bool etat);
     void setFaim(bool etat);
     void setID(int idSet);
     void setNom(std::string nomSet);
+    void setFaimCount(int nb);
 };
 
 #endif

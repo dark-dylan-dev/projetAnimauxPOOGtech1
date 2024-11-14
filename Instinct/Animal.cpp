@@ -7,7 +7,7 @@
 #include "Nourriture.h"
 
 Animal::Animal(const std::string& nom, const std::string& espece, const std::string& regime)
-    : nom(nom), espece(espece), regime(regime), aFaim(false), enVie(true), x(0), y(0), id(-1) {
+    : nom(nom), espece(espece), regime(regime), aFaim(false), enVie(true), x(0), y(0), id(-1), aFaimCount(0) {
     x = rand() % 100;
     y = rand() % 100;
 }
@@ -20,7 +20,7 @@ bool Animal::aFaimStatus() const { return aFaim; }
 std::string Animal::getRegime() const { return regime; }
 int Animal::getPosX() const { return x; }
 int Animal::getPosY() const { return y; }
-
+int Animal::getFaimCount() const { return aFaimCount; }
 
 void Animal::deplacement() {
     x += (rand() % 3) - 1;
@@ -87,3 +87,7 @@ void Animal::setVie(bool etat) { enVie = etat; }
 void Animal::setFaim(bool etat) { aFaim = etat; }
 void Animal::setID(int idSet) { id = idSet; }
 void Animal::setNom(std::string nomSet) { nom = nomSet; }
+void Animal::setFaimCount(int nb) { 
+    if (nb != 0) { aFaimCount += nb; } 
+    else { aFaimCount = nb; } //pour à la fois ajouter au conte si nb = 1 et le reset si nb = 0
+}
