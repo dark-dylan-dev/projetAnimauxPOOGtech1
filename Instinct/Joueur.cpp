@@ -173,12 +173,12 @@ char Joueur::choixJoueur(int choix, vector<Animal>& animaux) {
             << animaux[choixAnimalUn - 1].getNom() << " et " << animaux[choixAnimalDeux - 1].getNom() << endl;
         break;
     case 5: // Option : 'Creer un animal'
-        break;
+    cout << "Tu as choisis de créer un nouvel animal\n";
+    afficherInfosSolo(animaux);
+    break;
     case 6: // Option : 'Rapprocher deux animaux'
-        break;
-    case 7: // Option : 'Saison des amours'
-        setPeriodeDeReproduction(true);
-    case 8: // Option : 'Ne rien faire'
+    break;
+    case 7: // Option : 'Ne rien faire'
         break;
     case 9: // Option : 'Quitter'
         return 'Q';
