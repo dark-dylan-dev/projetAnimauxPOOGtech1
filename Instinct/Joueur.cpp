@@ -14,7 +14,7 @@ bool Joueur::getPeriodeDeReproduction() const { return saisonDesAmours; }
 void Joueur::setPeriodeDeReproduction(bool pdr) { 
     saisonDesAmours = pdr; 
     compteurAmour = 2; 
-    cout << "Tu as demare la saison des amours";
+    cout << "Tu as demare la saison des amours" << endl;
 } //update
 void Joueur::incrCompteur() { if (compteurAmour == 0) { return; } compteurAmour -= 1; } //update
 void Joueur::resetCompteur() { compteurAmour = 0; } //update
@@ -175,7 +175,7 @@ char Joueur::choixJoueur(int choix, vector<Animal>& animaux) {
      case 5: // Option : 'Creer un animal'
      cout << "Tu as choisis de créer un nouvel animal\n";
      afficherInfosSolo(animaux);
-     cout << "Choisis l'animal que tu veux créer" <<
+     cout << "Choisis l'animal que tu veux créer" << endl;
          break;
      case 6: // Option : 'Rapprocher deux animaux'
      cout << "Tu as choisis de rapprocher deux animaux\n";
@@ -193,7 +193,9 @@ char Joueur::choixJoueur(int choix, vector<Animal>& animaux) {
          cin >> choixAnimalDeux;
      }
          break;
-    case 7: // Option : 'Ne rien faire'
+     case 7: // Option : 'Saison des amours'
+        setPeriodeDeReproduction(true);
+    case 8:// Option : 'Ne rien faire'
         break;
     case 9: // Option : 'Quitter'
         return 'Q';
