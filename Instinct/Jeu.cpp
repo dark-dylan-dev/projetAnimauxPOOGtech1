@@ -110,3 +110,4 @@ void Jeu::BoucleDeJeu(vector<Animal>& animaux, int& tour, bool debug, Joueur& jo
         estJour = !estJour;
     }
 }
+// Code
