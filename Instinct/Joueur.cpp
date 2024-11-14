@@ -172,11 +172,51 @@ char Joueur::choixJoueur(int choix, vector<Animal>& animaux) {
         cout << endl << nomDuBebe << " (" << especeDuBebe << ", " << regimeDuBebe << ") est le resultat de l'amour passionnel entre "
             << animaux[choixAnimalUn - 1].getNom() << " et " << animaux[choixAnimalDeux - 1].getNom() << endl;
         break;
-     case 5: // Option : 'Creer un animal'
-     cout << "Tu as choisis de créer un nouvel animal\n";
-     afficherInfosSolo(animaux);
-     cout << "Choisis l'animal que tu veux créer" << endl;
-         break;
+    case 5: // Option : 'Creer un animal'
+    cout << "Tu as choisis de créer un nouvel animal\n";
+    afficherInfosSolo(animaux);
+    cout << "Choisis l'animal que tu veux créer" << endl;
+    int choix;
+    string noms[25] = { "Loup", "Lapin", "Ours", "Biche", "Renard","Chevre", "Cheval", "Lynx", "Panda", "Tigre", "Koala", "Ecureuil", "Puma", "Coyote", "Rat", "Bison", "Lama", "Aigle", "Elephant", "Fennec", "Jaguar", "Zebre", "Castor", "Lion", "Capybara" };
+    string nomAnimal;
+    for (int i = 0; i < nombreDAnimaux; ++i) {
+        for (int i = 0; i < 25; ++i) { // Affichage des choix d'espèces
+            if (i < 8)
+                cout << " - " << i + 1 << ".  " << noms[i] << endl;
+            if (i > 8)
+                cout << " - " << i + 1 << ". " << noms[i] << endl;
+        }
+        // Création de l'animal avec l'espèce choisie
+        cout << endl << "Votre choix > ";
+        cin >> choix;
+        while (cin.fail() || choix < 1 || choix > 25) {
+            cin.clear();
+            cin.ignore(9999, '\n');
+            cout << endl << "Veuillez entrer un choix correct, entre 1 et 25 > ";
+            cin >> choix;
+        }
+        cout << endl << "Quel est le nom que vous voulez donner a votre nouveau " << noms[choix - 1] << " ? > ";
+        cin >> nomAnimal;
+        while (cin.fail()) {
+            cin.clear();
+            cin.ignore(9999, '\n');
+            cout << endl << "Veuillez donner un nom valide a votre animal > ";
+            cin >> nomAnimal;
+        }
+        cout << endl;
+        // Ajout de l'animal crée dans le vecteur animaux
+        switch (choix) { // A changer mardi avec les noms des espèces (vide pour l'instant)
+        case 1: animaux.push_back(Loup(nomAnimal));   break; case 6: animaux.push_back(Chevre(nomAnimal)); break; case 11: animaux.push_back(Koala(nomAnimal));    break; case 16: animaux.push_back(Bison(nomAnimal));    break; case 21: animaux.push_back(Jaguar(nomAnimal));   break;
+        case 2: animaux.push_back(Lapin(nomAnimal));  break; case 7: animaux.push_back(Cheval(nomAnimal)); break; case 12: animaux.push_back(Ecureuil(nomAnimal)); break; case 17: animaux.push_back(Lama(nomAnimal));     break; case 22: animaux.push_back(Zebre(nomAnimal));    break;
+        case 3: animaux.push_back(Ours(nomAnimal));   break; case 8: animaux.push_back(Lynx(nomAnimal));   break; case 13: animaux.push_back(Puma(nomAnimal));     break; case 18: animaux.push_back(Aigle(nomAnimal));    break; case 23: animaux.push_back(Castor(nomAnimal));   break;
+        case 4: animaux.push_back(Biche(nomAnimal));  break; case 9: animaux.push_back(Panda(nomAnimal));  break; case 14: animaux.push_back(Coyote(nomAnimal));   break; case 19: animaux.push_back(Elephant(nomAnimal)); break; case 24: animaux.push_back(Lion(nomAnimal));     break;
+        case 5: animaux.push_back(Renard(nomAnimal)); break; case 10: animaux.push_back(Tigre(nomAnimal)); break; case 15: animaux.push_back(Rat(nomAnimal));      break; case 20: animaux.push_back(Fennec(nomAnimal));   break; case 25: animaux.push_back(Capybara(nomAnimal)); break;
+        default: break;
+    }
+    for (unsigned int i = 0; i < animaux.size(); ++i) {
+        animaux[i].id = i + 1; // 1, 2, 3... animaux.size()
+    }
+    break;
      case 6: // Option : 'Rapprocher deux animaux'
      cout << "Tu as choisis de rapprocher deux animaux\n";
      afficherInfosSolo(animaux);
