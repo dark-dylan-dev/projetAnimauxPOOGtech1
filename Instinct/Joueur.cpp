@@ -29,121 +29,125 @@ void Joueur::choixDebugMode(bool& debugMode) {
 
 int Joueur::afficherInfos(vector<Animal>& animaux) const {
     int choix(0);
-    for (int i = 0; i < 7; ++i) {
+    for (int i = 0; i < 8; ++i) {
         centrerTexte(menu[i]);
         cout << endl;
     }
+    cout << "\nQue voulez-vous faire durant ce tour ? > ";
     cin >> choix;
-    while (cin.fail() || choix < 1 || choix > 7) {
+    while (cin.fail() || choix < 1 || choix > 8) {
         cin.clear();
         cin.ignore(9999, '\n');
-        cout << "Fais un choix correct, entre 1 et 7 > ";
+        cout << "Fais un choix correct, entre 1 et 8 > ";
         cin >> choix;
     }
     return choix;
 }
 void Joueur::afficherInfosSolo(vector<Animal>& animaux) {
-    for (int i = 0; i < animaux.size(); ++i) {
+    for (unsigned int i = 0; i < animaux.size(); ++i) {
         if (animaux[i].estEnVie() == false) { continue; }
         if (i < 9) { cout << endl << " - " << animaux[i].id << ". " << animaux[i].getNom() << " (" << animaux[i].getEspece() << ")"; }
         else { cout << endl << " - " << animaux[i].id << "." << animaux[i].getNom() << " (" << animaux[i].getEspece() << ")"; }
     }
     cout << endl;
 }
+int Joueur::WhileCinFail(unsigned int var, vector<Animal>& animaux) {
+    while (cin.fail() || var < 1 || var > animaux.size()) {
+        cin.clear();
+        cin.ignore(9999, '\n');
+        cout << "Fais un choix correct, entre 1 et " << animaux.size() << " > ";
+        cin >> var;
+    }
+    return var;
+}
 char Joueur::choixJoueur(int choix, vector<Animal>& animaux) {
-    int choixSpecifique(0);
-    int choixCombattantUn(0), choixCombattantDeux(0);
+    unsigned int choixSpecifique(0);
+    unsigned int choixAnimalUn(0), choixAnimalDeux(0);
     switch (choix) {
-    case 1:
+    case 1: // Option : 'Nourrir' -> Rajouter des vérifications
         cout << "Tu as choisi de nourrir un animal, quel animal veux-tu nourrir ? ";
         afficherInfosSolo(animaux);
         cout << "Ton choix > ";
         cin >> choixSpecifique;
-        while (cin.fail() || choixSpecifique < 1 || choixSpecifique > animaux.size()) {
-            cin.clear();
-            cin.ignore(9999, '\n');
-            cout << "Fais un choix correct, entre 1 et " << animaux.size() << " > ";
-            cin >> choixSpecifique;
-        }
+        if (cin.fail() || choixSpecifique < 1 || choixSpecifique > animaux.size()) { choixSpecifique = WhileCinFail(choixSpecifique, animaux); }
+        if (animaux[choixSpecifique - 1].aFaimStatus()) { cout << animaux[choixSpecifique - 1].getNom() << " n'a pas besoin de manger pour l'instant" << endl; break; }
         animaux[choixSpecifique - 1].setFaim(true);
-        cout << " - Tu as rempli la pense de " << animaux[choixSpecifique - 1].getNom() << " (" << animaux[choixSpecifique - 1].getEspece() << ")" << endl;
+        cout << " - Tu as rempli la pense de " << animaux[choixSpecifique - 1].getNom() << endl;
         break;
-    case 2:
+    case 2: // Option : 'Tuer' -> Rajouter des vérifications
         cout << "Tu as choisi de tuer un animal, quel animal veux-tu tuer ? ";
         afficherInfosSolo(animaux);
         cout << "Ton choix > ";
         cin >> choixSpecifique;
-        while (cin.fail() || choixSpecifique < 1 || choixSpecifique > animaux.size()) {
-            cin.clear();
-            cin.ignore(9999, '\n');
-            cout << "Fais un choix correct, entre 1 et " << animaux.size() << " > ";
-            cin >> choixSpecifique;
-        }
+        if (cin.fail() || choixSpecifique < 1 || choixSpecifique > animaux.size()) { choixSpecifique = WhileCinFail(choixSpecifique, animaux); }
         animaux[choixSpecifique - 1].setVie(false);
-        cout << " - Tu as ote la vie de " << animaux[choixSpecifique - 1].getNom() << " (" << animaux[choixSpecifique - 1].getEspece() << ")" << endl;
+        cout << " - Tu as ote la vie de " << animaux[choixSpecifique - 1].getNom() << endl;
         break;
-    case 3:
+    case 3: // Option : 'Provoquer un conflit' -> Rajouter des vérifications
         cout << "Tu as choisi de provoquer un conflit entre deux animaux, lesquels veux-tu se faire affronter ?";
         afficherInfosSolo(animaux);
         cout << "Ton choix pour le combattant numero 1 > ";
-        cin >> choixCombattantUn;
-        while (cin.fail() || choixCombattantUn < 1 || choixCombattantUn > animaux.size()) {
-            cin.clear();
-            cin.ignore(9999, '\n');
-            cout << "Fais un choix correct, entre 1 et " << animaux.size() << " > ";
-            cin >> choixCombattantUn;
-        }
-        cout << "Ton choix pour le combattant numero 2 > ";
-        cin >> choixCombattantDeux;
-        while (cin.fail() || choixCombattantDeux < 1 || choixCombattantDeux > animaux.size() || choixCombattantDeux == choixCombattantUn) {
+        cin >> choixAnimalUn;
+        if (cin.fail() || choixAnimalUn < 1 || choixAnimalUn > animaux.size()) { choixAnimalUn = WhileCinFail(choixAnimalUn, animaux); }
+        cout << endl << "Ton choix pour le combattant numero 2 > ";
+        cin >> choixAnimalDeux;
+        while (cin.fail() || choixAnimalDeux < 1 || choixAnimalDeux > animaux.size() || choixAnimalDeux == choixAnimalUn) {
             cin.clear();
             cin.ignore(9999, '\n');
             cout << "Fais un choix correct, entre 1 et " << animaux.size() << " et different du combattant numero 1 > ";
-            cin >> choixCombattantDeux;
+            cin >> choixAnimalDeux;
         }
-        if (animaux[choixCombattantUn - 1].getRegime() == "neutre") {
-            animaux[choixCombattantDeux - 1].setVie(false);
-            break;
+        if (animaux[choixAnimalUn - 1].getRegime() == "neutre" || animaux[choixAnimalDeux - 1].getRegime() == "neutre") {
+            cout << endl << "Les capybaras ne se battent jamais" << endl;
+            break; 
         }
-        if (animaux[choixCombattantDeux - 1].getRegime() == "neutre") {
-            animaux[choixCombattantUn - 1].setVie(false);
-            break;
-        }
-        if (animaux[choixCombattantUn - 1].getRegime() != animaux[choixCombattantDeux - 1].getRegime()) {
-            if (animaux[choixCombattantUn - 1].getRegime() == "predateur") {
-                cout << " - " << animaux[choixCombattantUn - 1].getNom() << " (" << animaux[choixCombattantUn - 1].getEspece() << ") a battu " <<
-                    animaux[choixCombattantDeux - 1].getNom() << " (" << animaux[choixCombattantDeux - 1].getEspece() << ")" << endl;
-                animaux[choixCombattantDeux - 1].setVie(false);
+        if (animaux[choixAnimalUn - 1].getRegime() != animaux[choixAnimalDeux - 1].getRegime()) {
+            // L'un des combattant est prédateur, l'autre une proie -> le prédateur tue et mange la proie
+            if (animaux[choixAnimalUn - 1].getRegime() == "predateur") {
+                cout << endl << " - " << animaux[choixAnimalUn - 1].getNom() << " (" << animaux[choixAnimalUn - 1].getEspece() << ") a battu " <<
+                    animaux[choixAnimalDeux - 1].getNom() << " (" << animaux[choixAnimalDeux - 1].getEspece() << ")" << endl;
+                animaux[choixAnimalDeux - 1].setVie(false);
                 break;
             }
-            cout << " - " << animaux[choixCombattantDeux - 1].getNom() << " (" << animaux[choixCombattantDeux - 1].getEspece() << ") a battu " <<
-                animaux[choixCombattantUn - 1].getNom() << " (" << animaux[choixCombattantUn - 1].getEspece() << ")" << endl;
-            animaux[choixCombattantUn - 1].setVie(false);
+            cout << endl << " - " << animaux[choixAnimalDeux - 1].getNom() << " (" << animaux[choixAnimalDeux - 1].getEspece() << ") a battu " <<
+                animaux[choixAnimalUn - 1].getNom() << " (" << animaux[choixAnimalUn - 1].getEspece() << ")" << endl;
+            animaux[choixAnimalUn - 1].setVie(false);
         }
-        else if (animaux[choixCombattantUn - 1].getRegime() == "predateur") {
-            int combattants[2] = { choixCombattantUn, choixCombattantDeux };
-            int choixRandom = rand() % 2;
+        else if (animaux[choixAnimalUn - 1].getRegime() == "predateur") { 
+            // Les deux combattants sont des prédateurs -> issue aléatoire
+            int combattants[2] = { choixAnimalUn, choixAnimalDeux };
+            unsigned int choixRandom = rand() % 2;
             animaux[combattants[choixRandom]].setVie(false);
             if (choixRandom == 0) {
-                cout << " - " << animaux[choixCombattantDeux - 1].getNom() << " (" << animaux[choixCombattantDeux - 1].getEspece() << ") a battu "
-                    << animaux[choixCombattantUn - 1].getNom() << " (" << animaux[choixCombattantUn - 1].getEspece() << ")" << endl;
+                cout << endl << " - " << animaux[choixAnimalDeux - 1].getNom() << " (" << animaux[choixAnimalDeux - 1].getEspece() << ") a battu "
+                    << animaux[choixAnimalUn - 1].getNom() << " (" << animaux[choixAnimalUn - 1].getEspece() << ")" << endl;
                 break;
             }
-            cout << " - " << animaux[choixCombattantUn - 1].getNom() << " (" << animaux[choixCombattantUn - 1].getEspece() << ") a battu "
-                << animaux[choixCombattantDeux - 1].getNom() << " (" << animaux[choixCombattantDeux - 1].getEspece() << ")" << endl;
+            cout << endl << " - " << animaux[choixAnimalUn - 1].getNom() << " (" << animaux[choixAnimalUn - 1].getEspece() << ") a battu "
+                << animaux[choixAnimalDeux - 1].getNom() << " (" << animaux[choixAnimalDeux - 1].getEspece() << ")" << endl;
         }
-        else {
-            cout << "Les deux proies " << animaux[choixCombattantUn - 1].getNom() << " (" << animaux[choixCombattantUn - 1].getEspece() << ") et" << animaux[choixCombattantDeux - 1].getNom() << " (" << animaux[choixCombattantDeux - 1].getEspece() << ") se font la paix!" << endl;
+        else { 
+            // Les deux combattants sont des proies -> ils se font la paix
+            cout << endl << "Les deux proies " << animaux[choixAnimalUn - 1].getNom()   << " (" << animaux[choixAnimalUn - 1].getEspece()   << ") et" 
+                                               << animaux[choixAnimalDeux - 1].getNom() << " (" << animaux[choixAnimalDeux - 1].getEspece() << ") se font la paix!" << endl;
         }
         break;
-    case 4:
+    case 4: // Option : 'Reproduction'
+        cout << "Tu as choisi de se faire reproduire entre eux deux animaux\n   - Attention : Reproduction possible uniquement si les deux animaux ont le meme regime alimentaire" << endl;
+        afficherInfosSolo(animaux);
+        cout << "Quels animaux veux-tu se faire reproduire ? \n\n - Animal 1 > ";
+        cin >> choixAnimalUn;
+        if (cin.fail() || choixAnimalUn < 1 || choixAnimalUn > animaux.size()) { choixAnimalUn = WhileCinFail(choixAnimalUn, animaux); }
+        // Continuer ICI (Dylan Hollemaert) le 14/11/2024 à 9h
         break;
-    case 5:
+    case 5: // Option : 'Creer un animal'
         break;
-    case 6:
+    case 6: // Option : 'Rapprocher deux animaux'
         break;
-    case 7:
-        return 'Q'; // QUIT
+    case 7: // Option : 'Ne rien faire'
+        break;
+    case 8: // Option : 'Quitter'
+        return 'Q';
     default:
         break;
     }
