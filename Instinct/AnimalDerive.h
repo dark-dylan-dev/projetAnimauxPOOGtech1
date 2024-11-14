@@ -1,7 +1,10 @@
 #ifndef DERIVE_ANIMAL_H
 #define DERIVE_ANIMAL_H
-#include "Animal.h"
+
 #include <string>
+
+#include "Animal.h"
+
 using namespace std;
 class Loup : public Animal {
 public:

@@ -22,7 +22,7 @@ int main() {
 
     Jeu jeu;
     jeu.Init(animaux, nourritures);
-    jeu.BoucleDeJeu(animaux, tour, debugMode, joueur,nourritures);
+    jeu.BoucleDeJeu(animaux, tour, debugMode, joueur, nourritures);
 
     animaux.clear();
     nourritures.clear();

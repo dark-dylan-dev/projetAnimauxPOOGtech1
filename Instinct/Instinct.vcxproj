@@ -132,6 +132,7 @@
     <ClCompile Include="Instinct.cpp" />
     <ClCompile Include="Jeu.cpp" />
     <ClCompile Include="Joueur.cpp" />
+    <ClCompile Include="Nourriture.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Animal.h" />

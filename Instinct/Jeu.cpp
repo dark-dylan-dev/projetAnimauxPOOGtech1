@@ -6,6 +6,7 @@
 #include "Animal.h"
 #include "AnimalDerive.h"
 #include "Nourriture.h"
+#include "CentrerTexte.h"
 
 using namespace std;
 
@@ -27,7 +28,6 @@ void Jeu::Init(vector<Animal>& animaux, vector<Nourriture>& nourritures) {
         cin >> nombreDAnimaux;
     }
     int choix;
-    cout << "---" << endl << "Les espces apres Loup sont juste des exmples pour l'instant" << endl << "---" << endl;
     string noms[25] = { "Loup", "Lapin", "Ours", "Biche", "Renard","Chevre", "Cheval", "Lynx", "Panda", "Tigre", "Koala", "Ecureuil", "Puma", "Coyote", "Rat", "Bison", "Lama", "Aigle", "Elephant", "Fennec", "Jaguar", "Zebre", "Castor", "Lion", "Capybara" };
     string nomAnimal;
     for (int i = 0; i < nombreDAnimaux; ++i) {
@@ -80,66 +80,67 @@ void Jeu::Init(vector<Animal>& animaux, vector<Nourriture>& nourritures) {
 
 void Jeu::BoucleDeJeu(vector<Animal>& animaux, int& tour, bool debug, Joueur& joueur, vector<Nourriture>& nourritures) {
     const int rayonReperage = 25;
-    const int rayonBouffe = 30; //(2 * rayonReperage) / 3.14; pour un rayon nourriture plus étroit que rayon animal
-    int interAnimal = 0;
-    bool seNourrit = false;
-    while (tour < 10) {
+    const int rayonBouffe = 30;
+    int interConte = 0;
+    string periode;
+    while (1) {
         if (!debug) { system("cls"); }
         tour++;
-        cout << endl << "Tour : " << tour << endl;
+        estJour ? periode = "Jour" : periode = "Nuit";
+        string affichageTour = "Tour : " + to_string(tour);
+        string affichagePeriode = "Meteo : " + periode;
+        string affichageSaisonDesAmours = "Saison des amours > " + to_string(joueur.compteurAmour) + " jour(s) restant(s)";
+        // --- AFFICHAGES INFOS EN-TETE --- //
+        cout << affichageTour << endl;
+        cout << affichagePeriode << endl;
+        if (joueur.saisonDesAmours && joueur.compteurAmour > 0) {
+            cout << affichageSaisonDesAmours << endl;
+            joueur.incrCompteur();
+        }
+        // --- FIN AFFICHAGE EN-TETE -- //
         int choixJoueur = joueur.afficherInfos(animaux);
         if (joueur.choixJoueur(choixJoueur, animaux) == 'Q') { exit(0); }
         for (unsigned int i = 0; i < animaux.size(); ++i) {
-            if (animaux[i].estEnVie()) {
-                estJour ? animaux[i].deplacement() : animaux[i].enTrainDeDormir();
-                if (debug) { animaux[i].afficherPosition(); }
-                //--- RECHERCHE D'ANIMAL DANS UN RAYON DE (rayonReperage) blocs ---//
-                bool animalTrouve = false;
-                while (!animalTrouve) {
-                    for (int x = -rayonReperage; x < rayonReperage; ++x) {
-                        for (int y = -rayonReperage; y < rayonReperage; ++y) {
-                            for (auto& animal : animaux) {
-                                if (animal.estEnVie() == true && (animaux[i].getPosX() - animal.getPosX()) == x && (animaux[i].getPosY() - animal.getPosY()) == y) {
-                                    if (x != 0 && y != 0) {
-                                        animaux[i].interagir(animal);
-                                        // Intéragit si et seulement si l'animal n'a jamais été concerné pendant cette itération
-                                        interAnimal++;
-                                        if (animal.estEnVie() == false) { seNourrit = true; } // si y'a eu contact dans l'interaction alors l'animal a mangé
-                                        animalTrouve = true;
-                                    }
+            estJour ? animaux[i].deplacement() : animaux[i].enTrainDeDormir();
+            if (debug) { animaux[i].afficherPosition(); }
+            //--- RECHERCHE D'ANIMAL DANS UN RAYON DE (rayonReperage) blocs ---//
+            bool animalTrouve = false;
+            while (!animalTrouve) {
+                for (int x = -rayonReperage; x < rayonReperage; ++x) {
+                    for (int y = -rayonReperage; y < rayonReperage; ++y) {
+                        for (auto animal : animaux) {
+                            if ((animaux[i].getPosX() - animal.getPosX()) == x && (animaux[i].getPosY() - animal.getPosY()) == y) {
+                                if (x != 0 && y != 0) {
+                                    animaux[i].interagir(animal);
+                                    // Intéragit si et seulement si l'animal n'a jamais été concerné pendant cette itération
+                                    interConte++;
+                                    animalTrouve = true;
                                 }
                             }
                         }
                     }
-                    animalTrouve = true;
                 }
-
-                //--- FIN DE RECHERCHE ---//
-                if (interAnimal == 0 && animaux[i].aFaimStatus() == true) {
-                    bool nourrTrouve = false;
-                    while (!nourrTrouve) {
-                        for (int x = -rayonBouffe; x < rayonBouffe; ++x) {
-                            for (int y = -rayonBouffe; y < rayonBouffe; ++y) {
-                                for (auto& nourrElem : nourritures) {
-                                    if (nourrElem.getEtat() == true && (animaux[i].getPosX() - nourrElem.getPosX()) == x && (animaux[i].getPosY() - nourrElem.getPosY()) == y) {
-                                        animaux[i].cherchNourr(nourrElem, nourritures);
-                                        nourrTrouve = true;
-                                        if (nourrElem.getEtat() == false) { seNourrit = true; } // si y'a eu contact dans l'interaction alors l'animal a mangé
-                                    }
-                                }
-                            }
-                        }
-                        nourrTrouve = true; //pour arreter de chercher si y'a rien
-                    }
-                }
-                interAnimal = 0; //pour reset le conte d'interaction pour le prochain animal
-                if (!seNourrit) { animaux[i].setFaimCount(1); } // +1 dans le conte de jour sans manger
-                else { animaux[i].setFaimCount(0); } // conte de jour sans manger = 0 pour reset
-
-                seNourrit = false; //pour reset et voir si il mange au prochain tour
-
-                if (animaux[i].getFaimCount() == 20) { animaux[i].setVie(false); } //si l'animal n'a rien mangé pendant 20 tours, il meurt
+                animalTrouve = true;
             }
+
+            //--- FIN DE RECHERCHE ---//
+            if (interConte == 0 && animaux[i].aFaimStatus() == true) {
+                bool nourrTrouve = false;
+                while (!nourrTrouve) {
+                    for (int x = -rayonBouffe; x < rayonBouffe; ++x) {
+                        for (int y = -rayonBouffe; y < rayonBouffe; ++y) {
+                            for (auto nourrElem : nourritures) {
+                                if ((animaux[i].getPosX() - nourrElem.getPosX()) == x && (animaux[i].getPosY() - nourrElem.getPosY()) == y) {
+                                    animaux[i].cherchNourr(nourrElem, nourritures);
+                                    nourrTrouve = true;
+                                }
+                            }
+                        }
+                    }
+                    nourrTrouve = true; //pour arreter de chercher si y'a rien
+                }
+            }
+            interConte = 0; //pour reset le conte d'interaction pour le prochain animal
         }
         system("PAUSE");
         estJour = !estJour;

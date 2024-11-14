@@ -1,16 +1,23 @@
 #ifndef JOUEUR_H
 #define JOUEUR_H
 
-#include "CentrerTexte.h"
-#include "Animal.h"
 #include <vector>
+
+#include "Animal.h"
+#include "CentrerTexte.h"
 
 class Joueur
 {
 private:
-    string menu[8] = { "1. Nourrir", "2. Tuer", "3. Provoquer un conflit", "4. Reproduction", "5. Creer un animal", "6. Rapprocher deux animaux", "7. Ne rien faire", "8. Quitter"};
+    string menu[9] = { "1. Nourrir", "2. Tuer", "3. Provoquer un conflit", "4. Reproduction", "5. Creer un animal", "6. Rapprocher deux animaux", "7. Saison des amours", "8. Ne rien faire", "9. Quitter"};
 public:
+    bool saisonDesAmours = false;
+    int compteurAmour = 0;
+    bool getPeriodeDeReproduction() const;
+    void setPeriodeDeReproduction(bool prd);
+    void incrCompteur();
     void choixDebugMode(bool& debugMode);
+    void CreerUnAnimal(std::vector<Animal>& animaux);
     int afficherInfos(std::vector<Animal>& animaux) const;
     void afficherInfosSolo(std::vector<Animal>& animaux);
     int WhileCinFail(unsigned int var, std::vector<Animal>& animaux);

@@ -16,7 +16,6 @@ private:
     string regime;
     bool aFaim;
     bool enVie;
-    int aFaimCount;
 
 protected:
     int x, y;
@@ -32,7 +31,8 @@ public:
     virtual void interagir(Animal& autre);
     void cherchNourr(Nourriture& nourr, vector<Nourriture>& nourritures);
     void afficherPosition() const;
-
+    void deplacerVers(Animal& AnimalUn, Animal& AnimalDeux);
+    void setPosition(int newPosX, int newPosY);
     // GETTERS
     std::string getNom()    const;
     std::string getEspece() const;
@@ -41,14 +41,12 @@ public:
     bool aFaimStatus()      const;
     int getPosX()           const;
     int getPosY()           const;
-    int getFaimCount()     const;
 
     // SETTERS
     void setVie(bool etat);
     void setFaim(bool etat);
     void setID(int idSet);
     void setNom(std::string nomSet);
-    void setFaimCount(int nb);
 };
 
 #endif
