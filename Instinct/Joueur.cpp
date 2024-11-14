@@ -63,6 +63,9 @@ int Joueur::WhileCinFail(unsigned int var, vector<Animal>& animaux) {
 char Joueur::choixJoueur(int choix, vector<Animal>& animaux) {
     unsigned int choixSpecifique(0);
     unsigned int choixAnimalUn(0), choixAnimalDeux(0);
+    int choixRandom;
+    string animauxRandEspece[2]; string animauxRandRegime[2];
+    string especeDuBebe; string regimeDuBebe; string nomDuBebe;
     switch (choix) {
     case 1: // Option : 'Nourrir' -> Rajouter des vérifications
         cout << "Tu as choisi de nourrir un animal, quel animal veux-tu nourrir ? ";
@@ -138,7 +141,24 @@ char Joueur::choixJoueur(int choix, vector<Animal>& animaux) {
         cout << "Quels animaux veux-tu se faire reproduire ? \n\n - Animal 1 > ";
         cin >> choixAnimalUn;
         if (cin.fail() || choixAnimalUn < 1 || choixAnimalUn > animaux.size()) { choixAnimalUn = WhileCinFail(choixAnimalUn, animaux); }
-        // Continuer ICI (Dylan Hollemaert) le 14/11/2024 à 9h
+        cout << endl << " - Animal 2 > ";
+        cin >> choixAnimalDeux;
+        while (cin.fail() || choixAnimalDeux < 1 || choixAnimalDeux > animaux.size() || choixAnimalDeux == choixAnimalUn) {
+            if (choixAnimalDeux == choixAnimalUn) { cout << "Un animal ne peut pas se reproduire lui meme\n"; }
+            cin.clear();
+            cin.ignore(9999, '\n');
+            cout << "Fais un choix correct, entre 1 et " << animaux.size() << " > ";
+            cin >> choixAnimalDeux;
+        }
+        animauxRandEspece[0] = animaux[choixAnimalUn-1].getEspece(); animauxRandEspece[1] = animaux[choixAnimalDeux-1].getEspece();
+        animauxRandRegime[0] = animaux[choixAnimalUn-1].getRegime(); animauxRandRegime[1] = animaux[choixAnimalDeux-1].getRegime();
+        choixRandom = rand() % 2; // A fixer
+        especeDuBebe = animauxRandEspece[choixRandom];
+        regimeDuBebe = animauxRandRegime[choixRandom];
+        nomDuBebe = animaux[choixRandom].getNom() + " Jr.";
+        animaux.push_back(Animal::Animal(nomDuBebe, especeDuBebe, regimeDuBebe));
+        cout << endl << nomDuBebe << " (" << especeDuBebe << ", " << regimeDuBebe << ") est le resultat de l'amour passionnel entre "
+            << animaux[choixAnimalUn - 1].getNom() << " et " << animaux[choixAnimalDeux - 1].getNom() << endl;
         break;
     case 5: // Option : 'Creer un animal'
         break;
