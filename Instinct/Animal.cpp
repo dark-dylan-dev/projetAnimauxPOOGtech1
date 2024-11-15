@@ -74,6 +74,11 @@ void Animal::interagir(Animal& autre) {
         if ((y - autre.y) < 0) { y--; }
         else if ((y - autre.y) > 0) { y++; }
 
+        if (x < 0) { x = 100; }
+        if (x > 100) { x = 0; }
+        if (y < 0) { y = 100; }
+        if (y > 100) { y = 0; }
+
         if (distanceAvec(autre) == 0 && autre.aFaimStatus() == true) {
             enVie = false;
             autre.setFaim(false);
