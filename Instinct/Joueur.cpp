@@ -110,7 +110,7 @@ void Joueur::afficherInfosSolo(vector<Animal>& animaux) {
     cout << endl;
 }
 int Joueur::WhileCinFail(unsigned int var, vector<Animal>& animaux) {
-    while (cin.fail() || var < 1 || var > animaux.size()) {
+    while (cin.fail() || var < 1 || var > animaux.size() || animaux[var - 1].estEnVie() == false) {
         cin.clear();
         cin.ignore(9999, '\n');
         cout << "Fais un choix correct, entre 1 et " << animaux.size() << " > ";
@@ -131,7 +131,7 @@ void Joueur::effetTornade(vector<Animal>& animaux, int tailleMap) {
             float dx = (float)(endX - startX);
             float dy = (float)(endY - startY);
             float distance = abs(dy * animal.getPosX() - dx * animal.getPosY() + endX * startY - endY * startX) / sqrt(dx * dx + dy * dy); // calcul bizarre pour le rayon
-            if (distance <= 5) {
+            if (distance <= 5 && animal.estEnVie() == true) {
                 cout << animal.getNom() << " a ete tue par la tornade !" << endl;
                 return true;
             }
@@ -148,7 +148,7 @@ void Joueur::effetMeteorite(vector<Animal>& animaux, int tailleMap) {
         std::remove_if(animaux.begin(), animaux.end(), [&](Animal& animal) {
             float distance = (float)(sqrt(pow(animal.getPosX() - impactX, 2) + pow(animal.getPosY() - impactY, 2))); // calcul bizarre pour le rayon
 
-            if (distance <= 20) {
+            if (distance <= 20 && animal.estEnVie() == true) {
                 cout << animal.getNom() << " a ete tue par la meteorite !" << endl;
                 return true;
             }
@@ -161,6 +161,7 @@ char Joueur::choixJoueur(int choix, vector<Animal>& animaux) {
     unsigned int choixSpecifique(0);
     unsigned int choixAnimalUn(0), choixAnimalDeux(0);
     int choixRandom;
+    int animauxEnVie(0);
     string animauxRandEspece[2]; string animauxRandRegime[2];
     string especeDuBebe; string regimeDuBebe; string nomDuBebe;
     Animal temp("Default", "Default", "Default");
@@ -172,7 +173,7 @@ char Joueur::choixJoueur(int choix, vector<Animal>& animaux) {
         cout << endl;
         cout << "Ton choix > ";
         cin >> choixSpecifique;
-        if (cin.fail() || choixSpecifique < 1 || choixSpecifique > animaux.size()) { choixSpecifique = WhileCinFail(choixSpecifique, animaux); }
+        if (cin.fail() || choixSpecifique < 1 || choixSpecifique > animaux.size() || animaux[choixSpecifique - 1].estEnVie() == false) { choixSpecifique = WhileCinFail(choixSpecifique, animaux); }
         if (!animaux[choixSpecifique - 1].aFaimStatus()) { cout << endl << animaux[choixSpecifique - 1].getNom() << " n'a pas besoin de manger pour l'instant" << endl << endl; break; }
         animaux[choixSpecifique - 1].setFaim(false);
         cout << endl;
@@ -245,6 +246,15 @@ char Joueur::choixJoueur(int choix, vector<Animal>& animaux) {
         }
         break;
     case 4: // Option : 'Reproduction'
+        for (int i = 0; i < animaux.size(); ++i) {
+            if (animaux[i].estEnVie() == true) {
+                animauxEnVie++;
+            }
+        }
+        if (animauxEnVie < 2) {
+            cout << endl << "Il est seul miskine" << endl;
+            break;
+        }
         cout << endl;
         cout << "Tu as choisi de se faire reproduire entre eux deux animaux" << endl;
         afficherInfosSolo(animaux);
