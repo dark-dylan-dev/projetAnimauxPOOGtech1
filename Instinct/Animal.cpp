@@ -7,7 +7,7 @@
 #include "Nourriture.h"
 
 Animal::Animal(const string& nom, const string& espece, const string& regime)
-    : nom(nom), espece(espece), regime(regime), aFaim(false), enVie(true), x(0), y(0), id(-1), aFaimCount(0) {
+    : nom(nom), espece(espece), regime(regime), aFaim(false), enVie(true), x(0), y(0), id(-1), aFaimCount(0), pasFaim(0) {
     x = rand() % 100;
     y = rand() % 100;
 }
@@ -21,6 +21,7 @@ string Animal::getRegime() const { return regime; }
 int Animal::getPosX() const { return x; }
 int Animal::getPosY() const { return y; }
 int Animal::getFaimCount() const { return aFaimCount; }
+int Animal::getPasFaim() const { return pasFaim; }
 
 void Animal::deplacement() {
     x += (rand() % 3) - 1;
@@ -46,12 +47,13 @@ float Animal::distanceAvecNourr(const Nourriture& nourriture) const {
 }
 
 void Animal::interagir(Animal& autre) {
-    if (regime == "predateur" && autre.getRegime() == "proie" && aFaim) {
+    if (regime == "predateur" && autre.getRegime() == "proie" && aFaim) { //effacer soit ce aFaim, soit celui de if(distanceAvec) == 0 selon l'agressivité
         cout << nom << " chasse " << autre.getNom() << "\n";
-        autre.x += 2*(autre.x - x);
-        autre.y += 2*(autre.y - y);
-        if (distanceAvec(autre) == 0) {
+        autre.x += 2 * (autre.x - x);
+        autre.y += 2 * (autre.y - y); //pb si prédateur juste à côté de proie : il va la dépasser
+        if (distanceAvec(autre) == 0 && aFaim == true) {
             autre.setVie(false);
+            aFaim = false;
             cout << autre.getNom() << " est mort, chasse par " << getNom() << " (" << getEspece() << ")" << endl << endl;
         }
     }
@@ -61,6 +63,7 @@ void Animal::interagir(Animal& autre) {
         y += (y - autre.y);
         if (distanceAvec(autre) == 0) {
             enVie = false;
+            autre.setFaim(false);
             cout << nom << " est mort\n" << endl;
         }
     }
@@ -101,4 +104,8 @@ void Animal::setNom(string nomSet) { nom = nomSet; }
 void Animal::setFaimCount(int nb) {
     if (nb != 0) { aFaimCount += nb; }
     else { aFaimCount = nb; } //pour à la fois ajouter au conte si nb = 1 et le reset si nb = 0
+}
+void Animal::setPasFaim(int nb) {
+    if (nb != 0) { pasFaim += nb; }
+    else { pasFaim = nb; }
 }

@@ -82,7 +82,7 @@ void Jeu::BoucleDeJeu(vector<Animal>& animaux, int& tour, bool debug, Joueur& jo
     const int rayonReperageAnimaux = 15;
     const int rayonReperageNourriture = 20;
     int nbInteractions = 0;
-    int demieJourneeNumero = 0;
+
     string periode;
     bool seNourrit = false;
     while (true) {
@@ -123,7 +123,7 @@ void Jeu::BoucleDeJeu(vector<Animal>& animaux, int& tour, bool debug, Joueur& jo
                 }
             }
             //--- RECHERCHE DE NOURRITURE (si aucun animal rencontré) ---//
-            if (nbInteractions == 0 && animaux[i].aFaimStatus() && animaux[i].estEnVie()) {
+            if (nbInteractions == 0 && animaux[i].aFaimStatus() && animaux[i].estEnVie()) { //check si vivant pour qu'une proie chassée dans le meme tour ne puisse pas manger de la nourriture
                 for (int x = -rayonReperageNourriture; x < rayonReperageNourriture; ++x) {
                     for (int y = -rayonReperageNourriture; y < rayonReperageNourriture; ++y) {
                         for (auto& nourriture : nourritures) {
@@ -136,21 +136,23 @@ void Jeu::BoucleDeJeu(vector<Animal>& animaux, int& tour, bool debug, Joueur& jo
                     }
                 }
             }
-            sortie:
+        sortie:
             nbInteractions = 0;
-            if (!seNourrit)
-                animaux[i].setFaimCount(1);
+            if (!seNourrit && animaux[i].aFaimStatus()) //si l'animal a faim mais ne s'est pas nourrit
+                animaux[i].setFaimCount(1); //on compte le nombre de demi journées passées sans manger
             else {
-                animaux[i].setFaimCount(0); 
+                animaux[i].setFaimCount(0);
             }
             seNourrit = false;
-            if (animaux[i].getFaimCount() == 20) 
+            if (animaux[i].getFaimCount() == 20) //surement trop grand comme nombre ?
                 animaux[i].setVie(false);
-            if (!animaux[i].aFaimStatus() && demieJourneeNumero % 4 == 0)
+            if (!animaux[i].aFaimStatus()) { animaux[i].setPasFaim(1); }
+            if (animaux[i].getPasFaim() == 4) {
                 animaux[i].setFaim(true);
+                animaux[i].setPasFaim(0);
+            }
         }
         system("PAUSE");
         estJour = !estJour;
-        demieJourneeNumero++;
     }
 }
