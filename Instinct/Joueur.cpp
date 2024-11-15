@@ -78,7 +78,7 @@ void Joueur::CreerUnAnimal(vector<Animal>& animaux) { // Copier-coller de la mê
         default: break;
         }
         for (unsigned int i = 0; i < animaux.size(); ++i) {
-            animaux[i].id = i + 1; // Réattribution des ID pour accueuillir ke nouvel animal
+            animaux[i].id = i + 1; // Réattribution des ID pour accueuillir le nouvel animal
         }
     }
 }
@@ -86,11 +86,11 @@ void Joueur::CreerUnAnimal(vector<Animal>& animaux) { // Copier-coller de la mê
 int Joueur::afficherInfos(vector<Animal>& animaux) const {
     int choix(0);
     centrerTexte("---------------------------");
-                  for (int i = 0; i < 10; ++i) {
-                     centrerTexte(menu[i]);
-                     if(i < 9)
-                         cout << endl;
-                  }
+    for (int i = 0; i < 10; ++i) {
+        centrerTexte(menu[i]);
+        if(i < 9)
+            cout << endl;
+    }
     centrerTexte("---------------------------");
     cout << endl << "\nQue voulez-vous faire durant ce tour ? > ";
     cin >> choix;
