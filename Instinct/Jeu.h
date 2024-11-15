@@ -11,6 +11,7 @@ private:
     bool enCours;
     bool estJour;
     string meteo;
+    int test = rand() % 3;
 public:
     Jeu() : enCours(true), estJour(true) {}
     ~Jeu() {}
