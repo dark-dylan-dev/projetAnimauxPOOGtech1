@@ -78,7 +78,7 @@ void Joueur::CreerUnAnimal(vector<Animal>& animaux) { // Copier-coller de la mê
         default: break;
         }
         for (unsigned int i = 0; i < animaux.size(); ++i) {
-            animaux[i].id = i + 1; // Réattribution des ID pour accueuillir le nouvel animal
+            animaux[i].id = i + 1; // Réattribution des ID pour accueuillir ke nouvel animal
         }
     }
 }
@@ -86,11 +86,11 @@ void Joueur::CreerUnAnimal(vector<Animal>& animaux) { // Copier-coller de la mê
 int Joueur::afficherInfos(vector<Animal>& animaux) const {
     int choix(0);
     centrerTexte("---------------------------");
-    for (int i = 0; i < 10; ++i) {
-        centrerTexte(menu[i]);
-        if(i < 9)
-            cout << endl;
-    }
+                  for (int i = 0; i < 10; ++i) {
+                     centrerTexte(menu[i]);
+                     if(i < 9)
+                         cout << endl;
+                  }
     centrerTexte("---------------------------");
     cout << endl << "\nQue voulez-vous faire durant ce tour ? > ";
     cin >> choix;
@@ -124,15 +124,15 @@ void Joueur::effetTornade(vector<Animal>& animaux, int tailleMap) {
     int endX = rand() % tailleMap;
     int endY = rand() % tailleMap;
 
-    cout << "Une tornade se deplace de (" << startX << ", " << startY << ") à (" << endX << ", " << endY << ")" << endl;
+    cout << "Une tornade se deplace de (" << startX << ", " << startY << ") a (" << endX << ", " << endY << ")" << endl;
 
     animaux.erase(
-        remove_if(animaux.begin(), animaux.end(), [&](Animal& animal) {
+        std::remove_if(animaux.begin(), animaux.end(), [&](Animal& animal) {
             float dx = (float)(endX - startX);
             float dy = (float)(endY - startY);
             float distance = abs(dy * animal.getPosX() - dx * animal.getPosY() + endX * startY - endY * startX) / sqrt(dx * dx + dy * dy); // calcul bizarre pour le rayon
             if (distance <= 5) {
-                cout << animal.getNom() << " (" << animal.getEspece() << ") a ete tue par la tornade !" << endl;
+                cout << animal.getNom() << " a ete tue par la tornade !" << endl;
                 return true;
             }
             return false;
@@ -145,11 +145,11 @@ void Joueur::effetMeteorite(vector<Animal>& animaux, int tailleMap) {
     int impactY = rand() % tailleMap;
     cout << "Une meteorite frappe la position (" << impactX << ", " << impactY << ")" << endl;
     animaux.erase(
-        remove_if(animaux.begin(), animaux.end(), [&](Animal& animal) {
+        std::remove_if(animaux.begin(), animaux.end(), [&](Animal& animal) {
             float distance = (float)(sqrt(pow(animal.getPosX() - impactX, 2) + pow(animal.getPosY() - impactY, 2))); // calcul bizarre pour le rayon
 
             if (distance <= 20) {
-                cout << animal.getNom() << " (" << animal.getEspece() << ") a ete tue par la meteorite !" << endl;
+                cout << animal.getNom() << " a ete tue par la meteorite !" << endl;
                 return true;
             }
             return false;
@@ -187,8 +187,17 @@ char Joueur::choixJoueur(int choix, vector<Animal>& animaux) {
         cin >> choixSpecifique;
         if (cin.fail() || choixSpecifique < 1 || choixSpecifique > animaux.size()) { choixSpecifique = WhileCinFail(choixSpecifique, animaux); }
         animaux[choixSpecifique - 1].setVie(false);
+        animaux.erase(
+            std::remove_if(animaux.begin(), animaux.end(), [&](animaux[choixSpecifique - 1]) {
+                if (animaux[choixSpecifique - 1].estEnVie() == false) {
+                    return true;
+                }
+                return false;
+                }),
+            animaux.end()
+        );
         cout << endl;
-        cout << " - Tu as ote la vie de " << animaux[choixSpecifique - 1].getNom() << " (" << animaux[choixSpecifique - 1].getEspece() << "). "<< endl ;
+        cout << " - Tu as ote la vie de " << animaux[choixSpecifique - 1].getNom() << endl << endl;
         break;
     case 3: // Option : 'Provoquer un conflit' -> Rajouter des vérifications
         cout << endl;
@@ -215,12 +224,30 @@ char Joueur::choixJoueur(int choix, vector<Animal>& animaux) {
                 cout << endl << " - " << animaux[choixAnimalUn - 1].getNom()   << " (" << animaux[choixAnimalUn - 1].getEspece()   << ") a battu " 
                                       << animaux[choixAnimalDeux - 1].getNom() << " (" << animaux[choixAnimalDeux - 1].getEspece() << ")" << endl;
                 animaux[choixAnimalDeux - 1].setVie(false);
+                animaux.erase(
+                    std::remove_if(animaux.begin(), animaux.end(), [&](animaux[choixAnimalDeux - 1]) {
+                        if (animaux[choixAnimalDeux - 1].estEnVie() == false) {
+                            return true;
+                        }
+                        return false;
+                        }),
+                    animaux.end()
+                );
                 animaux[choixAnimalUn - 1].setFaim(false);
                 break;
             }
             cout << endl << " - " << animaux[choixAnimalDeux - 1].getNom() << " (" << animaux[choixAnimalDeux - 1].getEspece() << ") a battu " 
                                   << animaux[choixAnimalUn - 1].getNom()   << " (" << animaux[choixAnimalUn - 1].getEspece()   << ")" << endl;
             animaux[choixAnimalUn - 1].setVie(false);
+            animaux.erase(
+                std::remove_if(animaux.begin(), animaux.end(), [&](animaux[choixAnimalUn - 1]) {
+                    if (animaux[choixAnimalUn - 1].estEnVie() == false) {
+                        return true;
+                    }
+                    return false;
+                    }),
+                animaux.end()
+            );
             animaux[choixAnimalDeux - 1].setFaim(false);
         }
         else if (animaux[choixAnimalUn - 1].getRegime() == "predateur") { 
@@ -228,6 +255,15 @@ char Joueur::choixJoueur(int choix, vector<Animal>& animaux) {
             unsigned int combattants[2] = { choixAnimalUn, choixAnimalDeux };
             unsigned int choixRandom = rand() % 2;
             animaux[combattants[choixRandom]].setVie(false);
+            animaux.erase(
+                std::remove_if(animaux.begin(), animaux.end(), [&](animaux[combattants[choixRandom]]) {
+                    if (animaux[combattants[choixRandom]].estEnVie() == false) {
+                        return true;
+                    }
+                    return false;
+                    }),
+                animaux.end()
+            );
             if (choixRandom == 0) {
                 cout << endl << " - " << animaux[choixAnimalDeux - 1].getNom() << " (" << animaux[choixAnimalDeux - 1].getEspece() << ") a battu "
                                       << animaux[choixAnimalUn - 1].getNom()   << " (" << animaux[choixAnimalUn - 1].getEspece()   << ")" << endl;

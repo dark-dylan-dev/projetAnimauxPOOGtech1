@@ -26,6 +26,10 @@ int Animal::getPasFaim() const { return pasFaim; }
 void Animal::deplacement() {
     x += (rand() % 3) - 1;
     y += (rand() % 3) - 1;
+    if (x < 0) { x = 100; }
+    if (x > 100) { x = 0; }
+    if (y < 0) { y = 100; }
+    if (y > 100) { y = 0; }
 }
 
 void Animal::enTrainDeDormir() const {

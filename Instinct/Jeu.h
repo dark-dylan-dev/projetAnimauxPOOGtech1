@@ -10,8 +10,6 @@ class Jeu {
 private:
     bool enCours;
     bool estJour;
-    string meteo;
-    int test;
 public:
     Jeu() : enCours(true), estJour(true) {}
     ~Jeu() {}
