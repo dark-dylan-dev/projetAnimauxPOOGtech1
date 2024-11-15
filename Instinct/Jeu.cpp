@@ -106,6 +106,7 @@ void Jeu::BoucleDeJeu(vector<Animal>& animaux, int& tour, bool debug, Joueur& jo
             cout << affichageSaisonDesAmours << endl;
             joueur.incrCompteur();
         }
+        cout << meteo << endl;
         // --- FIN AFFICHAGE EN-TETE -- //
         int choixJoueur = joueur.afficherInfos(animaux);
         if (joueur.choixJoueur(choixJoueur, animaux) == 'Q') { exit(0); }

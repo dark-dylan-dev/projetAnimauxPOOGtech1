@@ -26,10 +26,6 @@ int Animal::getPasFaim() const { return pasFaim; }
 void Animal::deplacement() {
     x += (rand() % 3) - 1;
     y += (rand() % 3) - 1;
-    if (x < 0) { x = 100; }
-    if (x > 100) { x = 0; }
-    if (y < 0) { y = 100; }
-    if (y > 100) { y = 0; }
 }
 
 void Animal::enTrainDeDormir() const {
@@ -51,10 +47,19 @@ float Animal::distanceAvecNourr(const Nourriture& nourriture) const {
 }
 
 void Animal::interagir(Animal& autre) {
-    if (regime == "predateur" && autre.getRegime() == "proie" && aFaim) { //effacer soit ce aFaim, soit celui de if(distanceAvec) == 0 selon l'agressivité
-        cout << nom << " (" << espece << ") chasse " << autre.getNom() << " (" << autre.getEspece() << ")\n";
-        autre.x += 2 * (autre.x - x);
-        autre.y += 2 * (autre.y - y); //pb si prédateur juste à côté de proie : il va la dépasser
+    if (regime == "predateur" && autre.getRegime() == "proie") {
+        cout << nom << " chasse " << autre.getNom() << "\n";
+
+        if ((x - autre.x) < -1) { x += 2; }
+        else if ((x - autre.x) > 1) { x -= 2; }
+        if ((y - autre.y) < -1) { y += 2; }
+        else if ((y - autre.y) > 1) { y -= 2; }
+
+        if ((x - autre.x) == -1) { x++; }
+        else if ((x - autre.x) == 1) { x--; }
+        if ((y - autre.y) == -1) { y++; }
+        else if ((y - autre.y) == 1) { y--; }
+
         if (distanceAvec(autre) == 0 && aFaim == true) {
             autre.setVie(false);
             aFaim = false;
@@ -63,9 +68,13 @@ void Animal::interagir(Animal& autre) {
     }
     else if (regime == "proie" && autre.getRegime() == "predateur") {
         cout << nom << " (" << getEspece() << ") essaie de fuir " << autre.getNom() << " (" << autre.getEspece() << ")" << endl << endl;
-        x += (x - autre.x);
-        y += (y - autre.y);
-        if (distanceAvec(autre) == 0) {
+
+        if ((x - autre.x) < 0) { x--; }
+        else if ((x - autre.x) > 0) { x++; }
+        if ((y - autre.y) < 0) { y--; }
+        else if ((y - autre.y) > 0) { y++; }
+
+        if (distanceAvec(autre) == 0 && autre.aFaimStatus() == true) {
             enVie = false;
             autre.setFaim(false);
             cout << nom << " est mort\n" << endl;
@@ -89,11 +98,15 @@ void Animal::deplacerVers(Animal& AnimalUn, Animal& AnimalDeux) {
 }
 
 void Animal::cherchNourr(Nourriture& nourr, vector<Nourriture>& nourritures) {
-    cout << nom << " (" << espece << ") se dirige vers : " << nourr.getType() << endl;
-    x += (x - nourr.getPosX());
-    y += (y - nourr.getPosY());
+    cout << nom << " se dirige vers : " << nourr.getType() << endl;
+
+    if ((x - nourr.getPosX()) < 0) { x++; }
+    else if ((x - nourr.getPosX()) > 0) { x--; }
+    if ((y - nourr.getPosY()) < 0) { y++; }
+    else if ((y - nourr.getPosY()) > 0) { y--; }
+
     if (Animal::distanceAvecNourr(nourr) == 0) {
-        cout << nom << " (" << espece << ") mange : " << nourr.getType() << endl;
+        cout << nom << " mange : " << nourr.getType() << endl;
         aFaim = false;
         nourr.setEtat(false);
     }

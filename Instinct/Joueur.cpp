@@ -124,7 +124,7 @@ void Joueur::effetTornade(vector<Animal>& animaux, int tailleMap) {
     int endX = rand() % tailleMap;
     int endY = rand() % tailleMap;
 
-    cout << "Une tornade se deplace de (" << startX << ", " << startY << ") a (" << endX << ", " << endY << ")" << endl;
+    cout << "Une tornade se deplace de (" << startX << ", " << startY << ") à (" << endX << ", " << endY << ")" << endl;
 
     animaux.erase(
         std::remove_if(animaux.begin(), animaux.end(), [&](Animal& animal) {
@@ -187,15 +187,6 @@ char Joueur::choixJoueur(int choix, vector<Animal>& animaux) {
         cin >> choixSpecifique;
         if (cin.fail() || choixSpecifique < 1 || choixSpecifique > animaux.size()) { choixSpecifique = WhileCinFail(choixSpecifique, animaux); }
         animaux[choixSpecifique - 1].setVie(false);
-        animaux.erase(
-            std::remove_if(animaux.begin(), animaux.end(), [&](animaux[choixSpecifique - 1]) {
-                if (animaux[choixSpecifique - 1].estEnVie() == false) {
-                    return true;
-                }
-                return false;
-                }),
-            animaux.end()
-        );
         cout << endl;
         cout << " - Tu as ote la vie de " << animaux[choixSpecifique - 1].getNom() << endl << endl;
         break;
@@ -224,30 +215,12 @@ char Joueur::choixJoueur(int choix, vector<Animal>& animaux) {
                 cout << endl << " - " << animaux[choixAnimalUn - 1].getNom()   << " (" << animaux[choixAnimalUn - 1].getEspece()   << ") a battu " 
                                       << animaux[choixAnimalDeux - 1].getNom() << " (" << animaux[choixAnimalDeux - 1].getEspece() << ")" << endl;
                 animaux[choixAnimalDeux - 1].setVie(false);
-                animaux.erase(
-                    std::remove_if(animaux.begin(), animaux.end(), [&](animaux[choixAnimalDeux - 1]) {
-                        if (animaux[choixAnimalDeux - 1].estEnVie() == false) {
-                            return true;
-                        }
-                        return false;
-                        }),
-                    animaux.end()
-                );
                 animaux[choixAnimalUn - 1].setFaim(false);
                 break;
             }
             cout << endl << " - " << animaux[choixAnimalDeux - 1].getNom() << " (" << animaux[choixAnimalDeux - 1].getEspece() << ") a battu " 
                                   << animaux[choixAnimalUn - 1].getNom()   << " (" << animaux[choixAnimalUn - 1].getEspece()   << ")" << endl;
             animaux[choixAnimalUn - 1].setVie(false);
-            animaux.erase(
-                std::remove_if(animaux.begin(), animaux.end(), [&](animaux[choixAnimalUn - 1]) {
-                    if (animaux[choixAnimalUn - 1].estEnVie() == false) {
-                        return true;
-                    }
-                    return false;
-                    }),
-                animaux.end()
-            );
             animaux[choixAnimalDeux - 1].setFaim(false);
         }
         else if (animaux[choixAnimalUn - 1].getRegime() == "predateur") { 
@@ -255,15 +228,6 @@ char Joueur::choixJoueur(int choix, vector<Animal>& animaux) {
             unsigned int combattants[2] = { choixAnimalUn, choixAnimalDeux };
             unsigned int choixRandom = rand() % 2;
             animaux[combattants[choixRandom]].setVie(false);
-            animaux.erase(
-                std::remove_if(animaux.begin(), animaux.end(), [&](animaux[combattants[choixRandom]]) {
-                    if (animaux[combattants[choixRandom]].estEnVie() == false) {
-                        return true;
-                    }
-                    return false;
-                    }),
-                animaux.end()
-            );
             if (choixRandom == 0) {
                 cout << endl << " - " << animaux[choixAnimalDeux - 1].getNom() << " (" << animaux[choixAnimalDeux - 1].getEspece() << ") a battu "
                                       << animaux[choixAnimalUn - 1].getNom()   << " (" << animaux[choixAnimalUn - 1].getEspece()   << ")" << endl;
