@@ -124,7 +124,7 @@ void Joueur::effetTornade(vector<Animal>& animaux, int tailleMap) {
     int endX = rand() % tailleMap;
     int endY = rand() % tailleMap;
 
-    cout << "Une tornade se deplace de (" << startX << ", " << startY << ") à (" << endX << ", " << endY << ")" << endl;
+    cout << "Une tornade se deplace de (" << startX << ", " << startY << ") a (" << endX << ", " << endY << ")" << endl;
 
     animaux.erase(
         std::remove_if(animaux.begin(), animaux.end(), [&](Animal& animal) {

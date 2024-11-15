@@ -12,6 +12,10 @@ public:
     void deplacement() override {
         x += (rand() % 5) - 1;
         y += (rand() % 5) - 1;
+        if (x < 0) { x = 100; }
+        if (x > 100) { x = 0; }
+        if (y < 0) { y = 100; }
+        if (y > 100) { y = 0; }
     }
 };
 class Lapin : public Animal {
@@ -20,6 +24,10 @@ public:
     void deplacement() override {
         x += (rand() % 5) - 2;
         y += (rand() % 5) - 2;
+        if (x < 0) { x = 100; }
+        if (x > 100) { x = 0; }
+        if (y < 0) { y = 100; }
+        if (y > 100) { y = 0; }
     }
 };
 class Chevre : public Animal {
@@ -28,6 +36,10 @@ public:
     void deplacement() override {
         x += (rand() % 6) - 2;
         y += (rand() % 6) - 2;
+        if (x < 0) { x = 100; }
+        if (x > 100) { x = 0; }
+        if (y < 0) { y = 100; }
+        if (y > 100) { y = 0; }
     }
 };
 class Biche : public Animal {
@@ -36,6 +48,10 @@ public:
     void deplacement() override {
         x += (rand() % 5) - 2;
         y += (rand() % 5) - 2;
+        if (x < 0) { x = 100; }
+        if (x > 100) { x = 0; }
+        if (y < 0) { y = 100; }
+        if (y > 100) { y = 0; }
     }
 };
 class Ours : public Animal {
@@ -44,6 +60,10 @@ public:
     void deplacement() override {
         x += (rand() % 3) - 1;
         y += (rand() % 3) - 1;
+        if (x < 0) { x = 100; }
+        if (x > 100) { x = 0; }
+        if (y < 0) { y = 100; }
+        if (y > 100) { y = 0; }
     }
 };
 class Renard : public Animal {
@@ -52,6 +72,10 @@ public:
     void deplacement() override {
         x += (rand() % 6) - 1;
         y += (rand() % 6) - 1;
+        if (x < 0) { x = 100; }
+        if (x > 100) { x = 0; }
+        if (y < 0) { y = 100; }
+        if (y > 100) { y = 0; }
     }
 };
 class Cheval : public Animal {
@@ -60,6 +84,10 @@ public:
     void deplacement() override {
         x += (rand() % 10) - 2;
         y += (rand() % 10) - 2;
+        if (x < 0) { x = 100; }
+        if (x > 100) { x = 0; }
+        if (y < 0) { y = 100; }
+        if (y > 100) { y = 0; }
     }
 };
 class Lynx : public Animal {
@@ -68,6 +96,10 @@ public:
     void deplacement() override {
         x += (rand() % 7) - 1;
         y += (rand() % 7) - 1;
+        if (x < 0) { x = 100; }
+        if (x > 100) { x = 0; }
+        if (y < 0) { y = 100; }
+        if (y > 100) { y = 0; }
     }
 };
 class Panda : public Animal {
@@ -76,6 +108,10 @@ public:
     void deplacement() override {
         x += (rand() % 3) - 2;
         y += (rand() % 3) - 2;
+        if (x < 0) { x = 100; }
+        if (x > 100) { x = 0; }
+        if (y < 0) { y = 100; }
+        if (y > 100) { y = 0; }
     }
 };
 class Tigre : public Animal {
@@ -84,6 +120,10 @@ public:
     void deplacement() override {
         x += (rand() % 8) - 1;
         y += (rand() % 8) - 1;
+        if (x < 0) { x = 100; }
+        if (x > 100) { x = 0; }
+        if (y < 0) { y = 100; }
+        if (y > 100) { y = 0; }
     }
 };
 class Koala : public Animal {
@@ -92,6 +132,10 @@ public:
     void deplacement() override {
         x += (rand() % 3) - 2;
         y += (rand() % 3) - 2;
+        if (x < 0) { x = 100; }
+        if (x > 100) { x = 0; }
+        if (y < 0) { y = 100; }
+        if (y > 100) { y = 0; }
     }
 };
 class Ecureuil : public Animal {
@@ -100,6 +144,10 @@ public:
     void deplacement() override {
         x += (rand() % 6) - 2;
         y += (rand() % 6) - 2;
+        if (x < 0) { x = 100; }
+        if (x > 100) { x = 0; }
+        if (y < 0) { y = 100; }
+        if (y > 100) { y = 0; }
     }
 };
 class Puma : public Animal {
@@ -108,6 +156,10 @@ public:
     void deplacement() override {
         x += (rand() % 6) - 1;
         y += (rand() % 6) - 1;
+        if (x < 0) { x = 100; }
+        if (x > 100) { x = 0; }
+        if (y < 0) { y = 100; }
+        if (y > 100) { y = 0; }
     }
 };
 class Coyote : public Animal {
@@ -116,6 +168,10 @@ public:
     void deplacement() override {
         x += (rand() % 6) - 1;
         y += (rand() % 6) - 1;
+        if (x < 0) { x = 100; }
+        if (x > 100) { x = 0; }
+        if (y < 0) { y = 100; }
+        if (y > 100) { y = 0; }
     }
 };
 class Rat : public Animal {
@@ -124,6 +180,10 @@ public:
     void deplacement() override {
         x += (rand() % 6) - 2;
         y += (rand() % 6) - 2;
+        if (x < 0) { x = 100; }
+        if (x > 100) { x = 0; }
+        if (y < 0) { y = 100; }
+        if (y > 100) { y = 0; }
     }
 };
 class Bison : public Animal {
@@ -132,6 +192,10 @@ public:
     void deplacement() override {
         x += (rand() % 3) - 2;
         y += (rand() % 3) - 2;
+        if (x < 0) { x = 100; }
+        if (x > 100) { x = 0; }
+        if (y < 0) { y = 100; }
+        if (y > 100) { y = 0; }
     }
 };
 class Lama : public Animal {
@@ -140,6 +204,10 @@ public:
     void deplacement() override {
         x += (rand() % 5) - 2;
         y += (rand() % 5) - 2;
+        if (x < 0) { x = 100; }
+        if (x > 100) { x = 0; }
+        if (y < 0) { y = 100; }
+        if (y > 100) { y = 0; }
     }
 };
 class Aigle : public Animal {
@@ -148,6 +216,10 @@ public:
     void deplacement() override {
         x += (rand() % 7) - 1;
         y += (rand() % 7) - 1;
+        if (x < 0) { x = 100; }
+        if (x > 100) { x = 0; }
+        if (y < 0) { y = 100; }
+        if (y > 100) { y = 0; }
     }
 };
 class Elephant : public Animal {
@@ -156,6 +228,10 @@ public:
     void deplacement() override {
         x += (rand() % 4) - 2;
         y += (rand() % 4) - 2;
+        if (x < 0) { x = 100; }
+        if (x > 100) { x = 0; }
+        if (y < 0) { y = 100; }
+        if (y > 100) { y = 0; }
     }
 };
 class Fennec : public Animal {
@@ -164,6 +240,10 @@ public:
     void deplacement() override {
         x += (rand() % 8) - 1;
         y += (rand() % 8) - 1;
+        if (x < 0) { x = 100; }
+        if (x > 100) { x = 0; }
+        if (y < 0) { y = 100; }
+        if (y > 100) { y = 0; }
     }
 };
 class Jaguar : public Animal {
@@ -172,6 +252,10 @@ public:
     void deplacement() override {
         x += (rand() % 8) - 1;
         y += (rand() % 8) - 1;
+        if (x < 0) { x = 100; }
+        if (x > 100) { x = 0; }
+        if (y < 0) { y = 100; }
+        if (y > 100) { y = 0; }
     }
 };
 class Zebre : public Animal {
@@ -180,6 +264,10 @@ public:
     void deplacement() override {
         x += (rand() % 5) - 2;
         y += (rand() % 5) - 2;
+        if (x < 0) { x = 100; }
+        if (x > 100) { x = 0; }
+        if (y < 0) { y = 100; }
+        if (y > 100) { y = 0; }
     }
 };
 class Castor : public Animal {
@@ -188,6 +276,10 @@ public:
     void deplacement() override {
         x += (rand() % 4) - 2;
         y += (rand() % 4) - 2;
+        if (x < 0) { x = 100; }
+        if (x > 100) { x = 0; }
+        if (y < 0) { y = 100; }
+        if (y > 100) { y = 0; }
     }
 };
 class Lion : public Animal {
@@ -196,6 +288,10 @@ public:
     void deplacement() override {
         x += (rand() % 7) - 1;
         y += (rand() % 7) - 1;
+        if (x < 0) { x = 100; }
+        if (x > 100) { x = 0; }
+        if (y < 0) { y = 100; }
+        if (y > 100) { y = 0; }
     }
 };
 class Capybara : public Animal {
@@ -204,6 +300,10 @@ public:
     void deplacement() override {
         x += (rand() % 4) - 2;
         y += (rand() % 4) - 2;
+        if (x < 0) { x = 100; }
+        if (x > 100) { x = 0; }
+        if (y < 0) { y = 100; }
+        if (y > 100) { y = 0; }
     }
 };
 #endif
