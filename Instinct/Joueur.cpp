@@ -185,7 +185,7 @@ char Joueur::choixJoueur(int choix, vector<Animal>& animaux) {
         cout << endl;
         cout << "Ton choix > ";
         cin >> choixSpecifique;
-        if (cin.fail() || choixSpecifique < 1 || choixSpecifique > animaux.size()) { choixSpecifique = WhileCinFail(choixSpecifique, animaux); }
+        if (cin.fail() || choixSpecifique < 1 || choixSpecifique > animaux.size() || animaux[choixSpecifique - 1].estEnVie() == false) { choixSpecifique = WhileCinFail(choixSpecifique, animaux); }
         animaux[choixSpecifique - 1].setVie(false);
         cout << endl;
         cout << " - Tu as ote la vie de " << animaux[choixSpecifique - 1].getNom() << endl << endl;
@@ -196,10 +196,10 @@ char Joueur::choixJoueur(int choix, vector<Animal>& animaux) {
         afficherInfosSolo(animaux);
         cout << "Ton choix pour le combattant numero 1 > ";
         cin >> choixAnimalUn;
-        if (cin.fail() || choixAnimalUn < 1 || choixAnimalUn > animaux.size()) { choixAnimalUn = WhileCinFail(choixAnimalUn, animaux); }
+        if (cin.fail() || choixAnimalUn < 1 || choixAnimalUn > animaux.size() || animaux[choixAnimalUn - 1].estEnVie() == false) { choixAnimalUn = WhileCinFail(choixAnimalUn, animaux); }
         cout << endl << "Ton choix pour le combattant numero 2 > ";
         cin >> choixAnimalDeux;
-        while (cin.fail() || choixAnimalDeux < 1 || choixAnimalDeux > animaux.size() || choixAnimalDeux == choixAnimalUn) {
+        while (cin.fail() || choixAnimalDeux < 1 || choixAnimalDeux > animaux.size() || choixAnimalDeux == choixAnimalUn || animaux[choixAnimalDeux - 1].estEnVie() == false) {
             cin.clear();
             cin.ignore(9999, '\n');
             cout << "Fais un choix correct, entre 1 et " << animaux.size() << " et different du combattant numero 1 > ";
@@ -250,10 +250,10 @@ char Joueur::choixJoueur(int choix, vector<Animal>& animaux) {
         afficherInfosSolo(animaux);
         cout << endl << "Quels animaux veux-tu se faire reproduire ? \n\n - Animal 1 > ";
         cin >> choixAnimalUn;
-        if (cin.fail() || choixAnimalUn < 1 || choixAnimalUn > animaux.size()) { choixAnimalUn = WhileCinFail(choixAnimalUn, animaux); }
+        if (cin.fail() || choixAnimalUn < 1 || choixAnimalUn > animaux.size() || animaux[choixAnimalUn - 1].estEnVie() == false) { choixAnimalUn = WhileCinFail(choixAnimalUn, animaux); }
         cout << endl << " - Animal 2 > ";
         cin >> choixAnimalDeux;
-        while (cin.fail() || choixAnimalDeux < 1 || choixAnimalDeux > animaux.size() || choixAnimalDeux == choixAnimalUn) {
+        while (cin.fail() || choixAnimalDeux < 1 || choixAnimalDeux > animaux.size() || choixAnimalDeux == choixAnimalUn || animaux[choixAnimal - 1].estEnVie() == false) {
             if (choixAnimalDeux == choixAnimalUn) { cout << "Un animal ne peut pas se reproduire lui meme\n"; }
             cin.clear();
             cin.ignore(9999, '\n');
@@ -287,10 +287,10 @@ char Joueur::choixJoueur(int choix, vector<Animal>& animaux) {
         cout << endl;
         cout << "Quels animaux veux-tu rapprocher ? \n\n - Animal 1 >";
         cin >> choixAnimalUn;
-        if (cin.fail() || choixAnimalUn < 1 || choixAnimalUn > animaux.size()) { choixAnimalUn = WhileCinFail(choixAnimalUn, animaux); }
+        if (cin.fail() || choixAnimalUn < 1 || choixAnimalUn > animaux.size() || animaux[choixAnimalUn - 1].estEnVie() == false) { choixAnimalUn = WhileCinFail(choixAnimalUn, animaux); }
         cout << " - Animal 2 > ";
         cin >> choixAnimalDeux;
-        while (cin.fail() || choixAnimalDeux < 1 || choixAnimalDeux > animaux.size() || choixAnimalDeux == choixAnimalUn) {
+        while (cin.fail() || choixAnimalDeux < 1 || choixAnimalDeux > animaux.size() || choixAnimalDeux == choixAnimalUn || animaux[choixAnimalDeux - 1].estEnVie() == false) {
             if (choixAnimalDeux == choixAnimalUn) { cout << "Un animal ne peut pas se rapprocher de lui même\n"; }
             cin.clear();
             cin.ignore(9999, '\n');
