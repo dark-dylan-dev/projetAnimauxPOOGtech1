@@ -127,12 +127,12 @@ void Joueur::effetTornade(vector<Animal>& animaux, int tailleMap) {
     cout << "Une tornade se deplace de (" << startX << ", " << startY << ") à (" << endX << ", " << endY << ")" << endl;
 
     animaux.erase(
-        std::remove_if(animaux.begin(), animaux.end(), [&](Animal& animal) {
+        remove_if(animaux.begin(), animaux.end(), [&](Animal& animal) {
             float dx = (float)(endX - startX);
             float dy = (float)(endY - startY);
             float distance = abs(dy * animal.getPosX() - dx * animal.getPosY() + endX * startY - endY * startX) / sqrt(dx * dx + dy * dy); // calcul bizarre pour le rayon
             if (distance <= 5) {
-                cout << animal.getNom() << " a ete tue par la tornade !" << endl;
+                cout << animal.getNom() << " (" << animal.getEspece() << ") a ete tue par la tornade !" << endl;
                 return true;
             }
             return false;
@@ -145,11 +145,11 @@ void Joueur::effetMeteorite(vector<Animal>& animaux, int tailleMap) {
     int impactY = rand() % tailleMap;
     cout << "Une meteorite frappe la position (" << impactX << ", " << impactY << ")" << endl;
     animaux.erase(
-        std::remove_if(animaux.begin(), animaux.end(), [&](Animal& animal) {
+        remove_if(animaux.begin(), animaux.end(), [&](Animal& animal) {
             float distance = (float)(sqrt(pow(animal.getPosX() - impactX, 2) + pow(animal.getPosY() - impactY, 2))); // calcul bizarre pour le rayon
 
             if (distance <= 20) {
-                cout << animal.getNom() << " a ete tue par la meteorite !" << endl;
+                cout << animal.getNom() << " (" << animal.getEspece() << ") a ete tue par la meteorite !" << endl;
                 return true;
             }
             return false;
@@ -188,7 +188,7 @@ char Joueur::choixJoueur(int choix, vector<Animal>& animaux) {
         if (cin.fail() || choixSpecifique < 1 || choixSpecifique > animaux.size()) { choixSpecifique = WhileCinFail(choixSpecifique, animaux); }
         animaux[choixSpecifique - 1].setVie(false);
         cout << endl;
-        cout << " - Tu as ote la vie de " << animaux[choixSpecifique - 1].getNom() << endl << endl;
+        cout << " - Tu as ote la vie de " << animaux[choixSpecifique - 1].getNom() << " (" << animaux[choixSpecifique - 1].getEspece() << "). "<< endl ;
         break;
     case 3: // Option : 'Provoquer un conflit' -> Rajouter des vérifications
         cout << endl;
