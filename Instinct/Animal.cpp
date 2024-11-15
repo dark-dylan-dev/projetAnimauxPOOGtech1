@@ -48,7 +48,7 @@ float Animal::distanceAvecNourr(const Nourriture& nourriture) const {
 
 void Animal::interagir(Animal& autre) {
     if (regime == "predateur" && autre.getRegime() == "proie" && aFaim) { //effacer soit ce aFaim, soit celui de if(distanceAvec) == 0 selon l'agressivité
-        cout << nom << " chasse " << autre.getNom() << "\n";
+        cout << nom << " (" << espece << ") chasse " << autre.getNom() << " (" << autre.getEspece() << ")\n";
         autre.x += 2 * (autre.x - x);
         autre.y += 2 * (autre.y - y); //pb si prédateur juste à côté de proie : il va la dépasser
         if (distanceAvec(autre) == 0 && aFaim == true) {
@@ -85,11 +85,11 @@ void Animal::deplacerVers(Animal& AnimalUn, Animal& AnimalDeux) {
 }
 
 void Animal::cherchNourr(Nourriture& nourr, vector<Nourriture>& nourritures) {
-    cout << nom << " se dirige vers : " << nourr.getType() << endl;
+    cout << nom << " (" << espece << ") se dirige vers : " << nourr.getType() << endl;
     x += (x - nourr.getPosX());
     y += (y - nourr.getPosY());
     if (Animal::distanceAvecNourr(nourr) == 0) {
-        cout << nom << " mange : " << nourr.getType() << endl;
+        cout << nom << " (" << espece << ") mange : " << nourr.getType() << endl;
         aFaim = false;
         nourr.setEtat(false);
     }
