@@ -253,7 +253,7 @@ char Joueur::choixJoueur(int choix, vector<Animal>& animaux) {
         if (cin.fail() || choixAnimalUn < 1 || choixAnimalUn > animaux.size() || animaux[choixAnimalUn - 1].estEnVie() == false) { choixAnimalUn = WhileCinFail(choixAnimalUn, animaux); }
         cout << endl << " - Animal 2 > ";
         cin >> choixAnimalDeux;
-        while (cin.fail() || choixAnimalDeux < 1 || choixAnimalDeux > animaux.size() || choixAnimalDeux == choixAnimalUn || animaux[choixAnimal - 1].estEnVie() == false) {
+        while (cin.fail() || choixAnimalDeux < 1 || choixAnimalDeux > animaux.size() || choixAnimalDeux == choixAnimalUn || animaux[choixAnimalDeux - 1].estEnVie() == false) {
             if (choixAnimalDeux == choixAnimalUn) { cout << "Un animal ne peut pas se reproduire lui meme\n"; }
             cin.clear();
             cin.ignore(9999, '\n');
