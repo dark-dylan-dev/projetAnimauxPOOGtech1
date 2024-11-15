@@ -97,6 +97,8 @@ void Jeu::BoucleDeJeu(vector<Animal>& animaux, int& tour, bool debug, Joueur& jo
         if (test == 1) { meteo = "Pluie"; }
         if (test == 2) { meteo = "Tempete"; }
         if (test == 3) { meteo = "Orage"; }
+        if (test == 4) { meteo = "nuageux"; }
+        if (test == 5) { meteo = "venteux"; }
         // --- AFFICHAGES INFOS EN-TETE --- //
         cout << affichageTour << endl;
         cout << affichagePeriode << endl;
