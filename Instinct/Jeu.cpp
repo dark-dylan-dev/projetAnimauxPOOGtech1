@@ -92,6 +92,13 @@ void Jeu::BoucleDeJeu(vector<Animal>& animaux, int& tour, bool debug, Joueur& jo
         string affichageTour = "Tour : " + to_string(tour);
         string affichagePeriode = "Meteo : " + periode;
         string affichageSaisonDesAmours = "Saison des amours > " + to_string(joueur.compteurAmour) + " jour(s) restant(s)";
+        test = rand() % 5;
+        if (test == 0) { meteo = "Beau temps"; }
+        if (test == 1) { meteo = "Pluie"; }
+        if (test == 2) { meteo = "Tempete"; }
+        if (test == 3) { meteo = "Orage"; }
+        if (test == 4) { meteo = "Nuageux"; }
+        if (test == 5) { meteo = "Venteux"; }
         // --- AFFICHAGES INFOS EN-TETE --- //
         cout << affichageTour << endl;
         cout << affichagePeriode << endl;
