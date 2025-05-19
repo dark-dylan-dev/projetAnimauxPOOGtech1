@@ -2,7 +2,11 @@
 
 <p align="center"><i>C++ OOP Project | G.TECH 1</i></p>
 
-<h5 align="right"><a src="README.fr.md">Version française</a></h5>
+<div align="right">
+
+##### [Version française](README.fr.md)
+
+</div>
 
 ## Informations :
  - C++ project with usage of classes on the theme of animal species life simulation.

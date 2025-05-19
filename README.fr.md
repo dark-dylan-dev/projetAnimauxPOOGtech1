@@ -2,7 +2,11 @@
 
 <p align="center"><i>Projet POO C++ | G.TECH 1</i></p>
 
-<h5 align="right"><a src="README.md">English translation</a></h5>
+<div align="right">
+
+##### [English translation](README.md)
+
+</div>
 
 ## Informations :
  - Projet en C++ avec utilisation de classes sur le thème de la simulation d'évolution d'espèces animales.
